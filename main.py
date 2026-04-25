@@ -395,21 +395,22 @@ try:
     cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50),
-    email VARCHAR(100),
-    password TEXT,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255),
+    coins INT DEFAULT 0,
+    xp INT DEFAULT 0,
+    level INT DEFAULT 1,
+    streak INT DEFAULT 0,
     logins INT DEFAULT 0,
     password_used INT DEFAULT 0,
     website_used INT DEFAULT 0,
     quiz_used INT DEFAULT 0,
-    checker_used INT DEFAULT 0,
-    coins INT DEFAULT 0,
     puzzle_wins INT DEFAULT 0,
-    level INT DEFAULT 1,
-    xp INT DEFAULT 0,
-    streak INT DEFAULT 0,
     last_play_date DATE
 )
+""")
+db.commit()
 """)
 
     db.commit()
