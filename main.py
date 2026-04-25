@@ -553,8 +553,6 @@ def login():
         user = cursor.fetchone()
 
         if user and check_password_hash(user[3], password):
-           session['user'] = user[1]
-           return redirect('/home')
 
             # 🔥 safe update
             try:
