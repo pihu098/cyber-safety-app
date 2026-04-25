@@ -501,8 +501,8 @@ quiz_levels = {
 def ai_response(msg):
     msg = msg.lower()
     if "fraud" in msg or "scam" in msg:
-        return """🚨 If you are victim of cyber fraud:
-👉 Report here: https://cybercrime.gov.in
+        return """ [ALERT] If you are victim of cyber fraud:
+👉 🚨Report here: https://cybercrime.gov.in
 👉 Call: 1930 (India Helpline)
 Stay calm & act fast!"""
 
