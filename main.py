@@ -373,6 +373,9 @@ quiz = [
 import mysql.connector
 import os
 
+db = None
+cursor = None
+
 try:
     db = mysql.connector.connect(
         host=os.getenv("MYSQLHOST"),
@@ -385,11 +388,13 @@ try:
     cursor = db.cursor(buffered=True)
     print("✅ Database Connected")
 
-except Exception as e:
-    print("❌ Database Error:", e)
-
 except mysql.connector.Error as err:
     print("❌ Database Error:", err)
+    db = None
+    cursor = None
+
+except Exception as e:
+    print("❌ General Error:", e)
     db = None
     cursor = None
 # ---------------- CYBER TIPS ----------------
