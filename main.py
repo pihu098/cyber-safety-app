@@ -7,8 +7,8 @@ import re
 import mysql.connector
 import time
 import requests
+import os
 
- 
 app = Flask(__name__)
 app.secret_key = "secret123"
 print("🔥 App starting...")
@@ -17,8 +17,6 @@ print("🔥 App starting...")
 @app.route('/')
 def home_page():
     return render_template("index.html")
-
-import os
 
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
