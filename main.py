@@ -411,7 +411,8 @@ try:
     db.commit()
 
     print("✅ Users table ready")
-
+    cursor.execute("DROP TABLE IF EXISTS users")
+    db.commit()
 except mysql.connector.Error as err:
     print("❌ Database Error:", err)
     db = None
