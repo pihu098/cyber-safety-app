@@ -396,7 +396,11 @@ try:
     # 🔥 TABLE AUTO CREATE
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(100),
+        email VARCHAR(100),
+        password VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
     )
     """)
 
