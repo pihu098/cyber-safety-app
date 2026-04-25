@@ -398,7 +398,7 @@ try:
     CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100),
-        email VARCHAR(100),
+        email VARCHAR(100) UNIQUE,
         password VARCHAR(255),
         coins INT DEFAULT 0,
         xp INT DEFAULT 0,
@@ -553,6 +553,8 @@ def login():
         user = cursor.fetchone()
 
         if user and check_password_hash(user[3], password):
+           session['user'] = user[1]
+           return redirect('/home')
 
             # 🔥 safe update
             try:
