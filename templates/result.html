@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Result</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(-45deg, #141e30, #243b55, #000000);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    color: white;
+    text-align: center;
+}
+
+@keyframes gradient {
+    0% {background-position: 0%}
+    50% {background-position: 100%}
+    100% {background-position: 0%}
+}
+
+.container {
+    margin-top: 120px;
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 15px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+    width: 300px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 8px;
+    border: none;
+    background: #00c6ff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #0072ff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>{{result}}</h2>
+<p>{{extra}}</p>
+
+<a href="/home">
+<button>⬅ Back to Dashboard</button>
+</a>
+
+<a href="/">
+<button>🏠 Go to Login</button>
+</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Community</title>
+</head>
+
+<body style="background:#0f2027;color:white;text-align:center;">
+
+<h2>💬 Cyber Community</h2>
+
+<!-- POST FORM -->
+<form method="POST">
+<input type="text" name="content" placeholder="Write something..." required>
+<button type="submit">Post</button>
+</form>
+
+<hr>
+
+<!-- POSTS SHOW -->
+{% for p in posts %}
+<p>
+<b>{{p[1]}}</b>: {{p[2]}}
+</p>
+{% endfor %}
+
+<br>
+<a href="/home"><button>Back</button></a>
+
+</body>
+</html>

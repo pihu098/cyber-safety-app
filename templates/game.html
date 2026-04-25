@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cyber Game</title>
+
+<style>
+body {
+    background: #0f2027;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+}
+button {
+    padding: 10px;
+    margin: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🎮 Cyber Training Game</h2>
+
+<div class="card">
+
+<h3>Question {{index}} / {{total}}</h3>
+
+<p>{{q.q}}</p>
+
+<form method="POST" action="/game/check">
+
+{% for opt in q.options %}
+<button name="answer" value="{{opt}}">{{opt}}</button><br>
+{% endfor %}
+
+</form>
+
+</div>
+<style>
+body {
+    background: black;
+    color: white;
+}
+</style>
+
+</body>
+</html>

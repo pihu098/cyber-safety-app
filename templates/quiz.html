@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black;color:white;text-align:center;">
+
+<h2>🎯 Cyber Quiz</h2>
+<h1 style="color:red;">TEST QUIZ PAGE</h1>
+<form method="POST" action="/quiz_submit">
+{% for q in quiz %}
+    <div style="margin-bottom:20px; text-align:left;">
+        <p><b>{{loop.index}}. {{q.q}}</b></p>
+
+        <label><input type="radio" name="q{{loop.index0}}" value="yes"> Yes</label><br>
+        <label><input type="radio" name="q{{loop.index0}}" value="no"> No</label><br>
+        <label><input type="radio" name="q{{loop.index0}}" value="fake"> Fake</label>
+    </div>
+{% endfor %}
+
+<button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

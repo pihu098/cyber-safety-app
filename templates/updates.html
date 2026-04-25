@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Updates</title>
+
+<style>
+body {
+    background: #0f2027;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>📢 Cyber Updates</h2>
+
+<a href="/home"><button>⬅ Back</button></a>
+
+{% if updates %}
+
+    {% for u in updates %}
+
+    <div class="card">
+
+        <h3>{{ u[1] }}</h3>
+
+        {% if u[2] and u[2] != u[1] %}
+            <p>{{ u[2] }}</p>
+        {% endif %}
+
+        {% if u[3] and u[3] != "None" %}
+            <a href="{{ url_for('static', filename='uploads/' + u[3]) }}" target="_blank">
+                📄 View File
+            </a>
+            <br>
+            <a href="{{ url_for('static', filename='uploads/' + u[3]) }}" download>
+                📥 Download
+            </a>
+        {% endif %}
+
+        <br>
+        <a href="/delete_update/{{ u[0] }}" style="color:red;">🗑 Delete</a>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+    <p>😢 No updates yet. Check back later!</p>
+{% endif %}
+
+</body>
+</html>

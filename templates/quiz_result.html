@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz Result</title>
+<style>
+body { font-family: Arial; background:#0f2027; color:white; text-align:center; }
+.card { background:rgba(255,255,255,0.1); margin:20px; padding:20px; border-radius:10px; }
+</style>
+</head>
+
+<body>
+
+<h2>🎯 Your Score: {{score}} / 5</h2>
+
+{% for r in results %}
+<div style="border:1px solid white; margin:10px; padding:10px;">
+    <p><b>Q:</b> {{r.question}}</p>
+    <p>Your Answer: {{r.your}}</p>
+    <p>Correct Answer: {{r.correct}}</p>
+    <p>{{r.status}}</p>
+</div>
+{% endfor %}
+
+<a href="/home"><button>Back</button></a>
+
+</body>
+</html>

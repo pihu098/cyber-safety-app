@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Signup</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(-45deg, #141e30, #243b55, #000000);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    color: white;
+    text-align: center;
+}
+
+@keyframes gradient {
+    0% {background-position: 0%}
+    50% {background-position: 100%}
+    100% {background-position: 0%}
+}
+
+.container {
+    margin-top: 100px;
+    background: rgba(255,255,255,0.1);
+    padding: 30px;
+    border-radius: 15px;
+    display: inline-block;
+    backdrop-filter: blur(10px);
+}
+
+input {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 80%;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #00c6ff;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #0072ff;
+}
+
+a {
+    color: #00c6ff;
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>📝 Create Account</h2>
+
+<form method="POST">
+<input name="name" placeholder="Name" required><br>
+<input type="email" name="email" placeholder="Email" required><br>
+<input type="password" name="password" placeholder="Password" required><br>
+
+<button>Create Account</button>
+</form>
+
+<p>Already have an account?</p>
+<a href="/">
+<button>Login</button>
+</a>
+
+</div>
+
+</body>
+</html>

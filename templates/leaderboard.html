@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Leaderboard</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #111;
+    color: white;
+    text-align: center;
+}
+
+table {
+    margin: auto;
+    width: 60%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid white;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🏆 Cyber Leaderboard</h2>
+
+<table border="1" style="margin:auto; color:white;">
+    <tr>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Coins</th>
+        <th>Wins</th>
+    </tr>
+
+    {% for user in users %}
+    <tr {% if user[0] == current_user %} style="background: gold; color:black;" {% endif %}>
+        <td>{{ loop.index }}</td>
+
+        <td>
+            {{ user[0] }}
+            {% if user[0] == current_user %}
+                ⭐ (You)
+            {% endif %}
+        </td>
+
+        <td>{{ user[1] }}</td>
+        <td>{{ user[2] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

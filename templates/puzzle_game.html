@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cyber Puzzle Learning</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: white;
+    text-align: center;
+}
+
+.card {
+    width: 400px;
+    margin: auto;
+    margin-top: 60px;
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+button {
+    width: 90%;
+    padding: 12px;
+    margin: 8px;
+    border: none;
+    border-radius: 10px;
+    background: #00c6ff;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input {
+    width: 90%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 10px;
+}
+
+.progress {
+    width: 100%;
+    background: #444;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #00ffcc;
+    border-radius: 10px;
+}
+
+.lives {
+    color: #ff4d4d;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+
+<div class="card">
+
+    <h2>🧠 Cyber Puzzle Game</h2>
+
+    <!-- 🔥 Progress -->
+    <div class="progress">
+        <div class="progress-bar" 
+             style="width: {{ (index/total)*100 }}%">
+        </div>
+    </div>
+
+    <p>Question {{index}} / {{total}}</p>
+
+    <!-- ❤️ Lives -->
+    <p class="lives">❤️ Lives: {{lives}}</p>
+
+    
+
+   
+</div>
+
+{% if mode == "mcq" %}
+
+    <h3>{{ q.q }}</h3>
+
+    <form method="POST" action="/game/puzzle/check">
+        {% for opt in q.options %}
+            <button type="submit" name="answer" value="{{opt}}">
+                {{opt}}
+            </button>
+        {% endfor %}
+    </form>
+
+{% elif mode == "word" %}
+
+    <h3>Arrange the word:</h3>
+    <h2>{{ q.jumbled }}</h2>
+
+    <form method="POST" action="/game/puzzle/check">
+        <input type="text" name="answer" placeholder="Enter correct word">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+{% elif mode == "sentence" %}
+
+    <h3>{{ q.question }}</h3>
+
+    <p>
+        {% for word in q.words %}
+            <span style="background:#222; padding:6px 10px; margin:5px; border-radius:6px;">
+                {{ word }}
+            </span>
+        {% endfor %}
+    </p>
+
+    <form method="POST" action="/game/puzzle/check">
+        <input type="text" name="answer" placeholder="Type your answer">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+{% elif mode == "sentence_click" %}
+
+    <h3>{{ q.question }}</h3>
+
+    <div id="wordBox">
+        {% for word in q.words %}
+            <button type="button" onclick="addWord('{{word}}')">
+                {{word}}
+            </button>
+        {% endfor %}
+    </div>
+
+    <input type="text" id="answerInput" readonly>
+
+    <form method="POST" action="/game/puzzle/check">
+        <input type="hidden" name="answer" id="finalAnswer">
+        <br>
+        <button type="submit" onclick="submitAnswer()">Submit</button>
+    </form>
+
+{% else %}
+
+    <h3 style="color:red;">⚠️ No Question Loaded</h3>
+
+{% endif %}
+
+<script>
+let answer = "";
+
+function addWord(word){
+    answer += word + " ";
+    document.getElementById("answerInput").value = answer;
+}
+
+function submitAnswer(){
+    document.getElementById("finalAnswer").value = answer.trim();
+    answer = "";
+}
+</script>
+
+</body>
+</html>
