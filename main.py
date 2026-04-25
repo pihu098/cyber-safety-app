@@ -387,28 +387,25 @@ try:
 
     cursor = db.cursor(buffered=True)
     print("✅ Database Connected")
-   cursor.execute("DROP TABLE IF EXISTS users")
-   db.commit()
-   
 
-    # 🔥 TABLE AUTO CREATE (IMPORTANT)
-   cursor.execute("""
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100),
-    password VARCHAR(100),
-    coins INT DEFAULT 0,
-    xp INT DEFAULT 0,
-    level INT DEFAULT 1,
-    streak INT DEFAULT 0,
-    logins INT DEFAULT 0,
-    last_play_date DATE
-)
-""")
-db.commit()
+    # 🔥 TABLE AUTO CREATE
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100),
+        email VARCHAR(100),
+        password VARCHAR(100),
+        coins INT DEFAULT 0,
+        xp INT DEFAULT 0,
+        level INT DEFAULT 1,
+        streak INT DEFAULT 0,
+        logins INT DEFAULT 0,
+        last_play_date DATE
+    )
+    """)
+    db.commit()
+
     print("✅ Users table ready")
- 
 
 except mysql.connector.Error as err:
     print("❌ Database Error:", err)
