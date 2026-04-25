@@ -387,6 +387,9 @@ try:
 
     cursor = db.cursor(buffered=True)
     print("✅ Database Connected")
+   cursor.execute("DROP TABLE IF EXISTS users")
+   db.commit()
+   
 
     # 🔥 TABLE AUTO CREATE (IMPORTANT)
     cursor.execute("""
@@ -404,6 +407,7 @@ try:
     """)
     db.commit()
     print("✅ Users table ready")
+ 
 
 except mysql.connector.Error as err:
     print("❌ Database Error:", err)
