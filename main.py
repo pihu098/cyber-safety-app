@@ -397,6 +397,10 @@ except Exception as e:
     print("❌ General Error:", e)
     db = None
     cursor = None
+
+print("HOST =", os.getenv("MYSQLHOST"))
+print("USER =", os.getenv("MYSQLUSER"))
+print("DB =", os.getenv("MYSQLDATABASE"))
 # ---------------- CYBER TIPS ----------------
 tips_list = [
 "Use strong passwords 🔐","Never share OTP 🚫","Check HTTPS before login 🌐",
