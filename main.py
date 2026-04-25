@@ -392,20 +392,21 @@ try:
    
 
     # 🔥 TABLE AUTO CREATE (IMPORTANT)
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100),
-        email VARCHAR(100),
-        password VARCHAR(100),
-        coins INT DEFAULT 0,
-        xp INT DEFAULT 0,
-        level INT DEFAULT 1,
-        streak INT DEFAULT 0,
-        last_play_date DATE
-    )
-    """)
-    db.commit()
+   cursor.execute("""
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    password VARCHAR(100),
+    coins INT DEFAULT 0,
+    xp INT DEFAULT 0,
+    level INT DEFAULT 1,
+    streak INT DEFAULT 0,
+    logins INT DEFAULT 0,
+    last_play_date DATE
+)
+""")
+db.commit()
     print("✅ Users table ready")
  
 
@@ -537,8 +538,9 @@ Stay calm & act fast!"""
     else:
         return "🤖 I can help with cyber safety topics like passwords, phishing, hacking, suspicious links, and more!🌐"
 
-# ---------------- LOGIN ----------------
-@app.route('/', methods=['GET', 'POST'])
+# ---------------- LOGIN --------------
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
@@ -548,11 +550,17 @@ def login():
         user = cursor.fetchone()
 
         if user and check_password_hash(user[3], password):
-            cursor.execute("UPDATE users SET logins = logins + 1 WHERE email=%s", (email,))
-            db.commit()
+
+            # 🔥 safe update
+            try:
+                cursor.execute("UPDATE users SET logins = logins + 1 WHERE email=%s", (email,))
+                db.commit()
+            except:
+                pass  # ignore if column issue
 
             session['user'] = user[1]
             return redirect('/home')
+
         else:
             return render_template("result.html",
                                    result="❌ Invalid Login",
@@ -568,20 +576,25 @@ def signup():
         email = request.form['email']
         password = generate_password_hash(request.form['password'])
 
-        try:
-            cursor.execute("INSERT INTO users(name,email,password) VALUES(%s,%s,%s)",
-                           (name, email, password))
-            db.commit()
-        except:
+        # 🔍 pehle check karo email exist hai ya nahi
+        cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
             return render_template("result.html",
                                    result="❌ Email already exists",
                                    extra="Try another email")
 
+        # ✅ new user insert
+        cursor.execute(
+            "INSERT INTO users(name,email,password) VALUES(%s,%s,%s)",
+            (name, email, password)
+        )
+        db.commit()
+
         return render_template("result.html",
                                result="✅ Signup Successful",
                                extra="Now login")
-
-    return render_template("signup.html")
 
 # ---------------- HOME ----------------
 
