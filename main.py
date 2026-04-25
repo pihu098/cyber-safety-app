@@ -394,12 +394,16 @@ try:
     print("✅ Database Connected")
 
     # 🔥 TABLE AUTO CREATE
-    
-    print("✅ Users table ready")
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS users ( ... )
+    CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY
+    )
     """)
-   db.commit()
+
+    db.commit()
+
+    print("✅ Users table ready")
+
 except mysql.connector.Error as err:
     print("❌ Database Error:", err)
     db = None
