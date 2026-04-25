@@ -392,15 +392,25 @@ try:
     print("✅ Database Connected")
 
     # 🔥 TABLE AUTO CREATE
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        username VARCHAR(100),
-        email VARCHAR(100),
-        password VARCHAR(255),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP    
-    )
-    """)
+   cursor.execute("""
+   CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(50),
+      email VARCHAR(100),
+      password TEXT,
+      logins INT DEFAULT 0,
+      password_used INT DEFAULT 0,
+      website_used INT DEFAULT 0,
+      quiz_used INT DEFAULT 0,
+      checker_used INT DEFAULT 0,
+      coins INT DEFAULT 0,
+      puzzle_wins INT DEFAULT 0,
+      level INT DEFAULT 1,
+      xp INT DEFAULT 0,
+      streak INT DEFAULT 0,
+      last_play_date DATE
+)
+""")
 
     db.commit()
 
@@ -496,7 +506,7 @@ def ai_response(msg):
 Stay calm & act fast!"""
 
     elif "hlo" in msg or "hello" in msg:
-        return "👋 Hello! buddy,how are you?,.If you have any queries about cyber safety, tell me. I'll try my best to help you."
+        return "👋 Hello! buddy,how are you?.If you have any queries about cyber safety, tell me. I'll try my best to help you."
     elif "otp" in msg:
         return "🚫 Never share OTP!"
     elif "phishing" in msg:
@@ -535,31 +545,40 @@ Stay calm & act fast!"""
         return "🤖 I can help with cyber safety topics like passwords, phishing, hacking, suspicious links, and more!🌐"
 
 # ---------------- LOGIN --------------
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
 
+        cursor = db.cursor(buffered=True)
+
+        # 🔥 safe query
         cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
         user = cursor.fetchone()
 
-        if user and check_password_hash(user[3], password):
+        if not user:
+            return render_template("result.html",
+                                   result="❌ User not found",
+                                   extra="Try again")
 
-            # 🔥 safe update
-            try:
-                cursor.execute("UPDATE users SET logins = logins + 1 WHERE email=%s", (email,))
-                db.commit()
-            except:
-                pass  # ignore if column issue
+        # 🔥 password check (assuming password is column 3)
+        if check_password_hash(user[3], password):
+
+            # 🔥 update login count safely
+            cursor.execute(
+                "UPDATE users SET logins = COALESCE(logins,0) + 1 WHERE email=%s",
+                (email,)
+            )
+            db.commit()
 
             session['user'] = user[1]
+
             return redirect('/home')
 
         else:
             return render_template("result.html",
-                                   result="❌ Invalid Login",
+                                   result="❌ Wrong Password",
                                    extra="Try again")
 
     return render_template("index.html")
