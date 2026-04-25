@@ -13,6 +13,11 @@ app = Flask(__name__)
 app.secret_key = "secret123"
 print("🔥 App starting...")
 
+# 🔥 ADD THIS
+@app.route('/')
+def home_page():
+    return render_template("index.html")
+
 import os
 
 UPLOAD_FOLDER = 'static/uploads'
