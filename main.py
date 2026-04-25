@@ -573,7 +573,6 @@ def signup():
         email = request.form['email']
         password = generate_password_hash(request.form['password'])
 
-        # 🔍 pehle check karo email exist hai ya nahi
         cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
         existing_user = cursor.fetchone()
 
@@ -582,7 +581,6 @@ def signup():
                                    result="❌ Email already exists",
                                    extra="Try another email")
 
-        # ✅ new user insert
         cursor.execute(
             "INSERT INTO users(name,email,password) VALUES(%s,%s,%s)",
             (name, email, password)
@@ -593,6 +591,8 @@ def signup():
                                result="✅ Signup Successful",
                                extra="Now login")
 
+    # 🔥 IMPORTANT (GET request ke liye)
+    return render_template("signup.html")
 # ---------------- HOME ----------------
 
 @app.route('/home')
