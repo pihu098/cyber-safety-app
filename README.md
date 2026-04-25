@@ -22,4 +22,4 @@ Cyber Safety Advisor is a web-based cybersecurity platform that helps users dete
 git clone https://github.com/your-username/cyber-safety-app.git
 cd cyber-safety-app
 pip install -r requirements.txt
-python app.py
+python app.py  
