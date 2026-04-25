@@ -394,7 +394,7 @@ try:
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100),
         email VARCHAR(100),
-        password VARCHAR(100),
+        password VARCHAR(255),
         coins INT DEFAULT 0,
         xp INT DEFAULT 0,
         level INT DEFAULT 1,
