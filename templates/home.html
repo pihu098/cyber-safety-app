@@ -353,7 +353,17 @@ window.onload = function() {
     }
 }
 
-
+<script>
+function toggleHelp(){
+    let box = document.getElementById("helpBox");
+    if(box.style.display === "block"){
+        box.style.display = "none";
+    } else {
+        box.style.display = "block";
+    }
+}
+</script>
+    
 <script>
 function loadTips(){
     fetch('/get_tip')
