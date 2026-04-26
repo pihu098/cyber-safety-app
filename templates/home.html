@@ -77,30 +77,19 @@ button:hover {
 <h3>💡 Cyber Safety Dashboard</h3>
 </div>
 
-<div style="display:flex; gap:20px; margin-top:20px; align-items:flex-start;">
+    <div style="display:flex; gap:20px; margin-top:20px; align-items:flex-start;">
 
-    <!-- SMART TIPS -->
-    <div style="
-        flex:1;
-        background:#1e293b;
-        color:white;
-        padding:15px;
-        border-radius:10px;
-        height:auto;
-    ">
-        <h3>💡 Smart Tips</h3>
-        <p id="tips">Loading tips...</p>
+    <!-- SMART TIPS (TERA ORIGINAL STYLE) -->
+    <div class="card" style="flex:1;">
+        <h3>💡 Smart Tips Panel</h3>
+
+        <button onclick="showTips()">Show Tips</button>
+
+        <div id="tipsBox" style="margin-top:10px;"></div>
     </div>
 
-    <!-- HELPLINES -->
-    <div style="
-        flex:1;
-        background:#0f172a;
-        color:white;
-        padding:15px;
-        border-radius:10px;
-        height:auto;
-    ">
+    <!-- HELPLINE PANEL -->
+    <div class="card" style="flex:1;">
         <h3>🚨 Helplines</h3>
 
         <p>👩 Women: <a href="tel:1091">1091</a></p>
@@ -112,6 +101,7 @@ button:hover {
     </div>
 
 </div>
+
 
 <div class="card">
 <h3>🧠 Cyber Awareness Mode</h3>
