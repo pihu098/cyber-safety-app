@@ -458,6 +458,7 @@ tips_list = [
 "📧 Check email spelling carefully",
 "🔗 Fake links look real — double check URL",
 "📱 Don't install unknown apps",
+" DO NOT CLICK RANDOM MESSAGES....",    
 "🔒 Always lock your device when not in use",
 "🧾 Regularly check bank statements for unknown activity",
 "📵 Disable app permissions you don't need",
