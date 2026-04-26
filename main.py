@@ -521,50 +521,95 @@ quiz_levels = {
 # ---------------- AI RESPONSE ----------------
 def ai_response(msg):
     msg = msg.lower()
+
     if "fraud" in msg or "scam" in msg:
-        return """ [ALERT] If you are victim of cyber fraud:
- Report here: https://cybercrime.gov.in
- Call: 1930 (India Helpline)
+        return """🚨 If you are victim of cyber fraud:
+👉 Report: https://cybercrime.gov.in
+📞 Call: 1930
 Stay calm & act fast!"""
 
     elif "hlo" in msg or "hello" in msg:
-        return "👋 Hello! buddy,how are you?.If you have any queries about cyber safety, tell me. I'll try my best to help you."
+        return "👋 Hello buddy! If you have any cyber safety queries, ask me."
+
     elif "otp" in msg:
         return "🚫 Never share OTP!"
+
     elif "phishing" in msg:
         return "🎣 Phishing is fake message to steal data"
+
     elif "how are you" in msg:
         return "😊 I'm good! Ready to help you stay safe online."
+
     elif "virus" in msg:
         return "🛡️ Use antivirus and avoid unknown downloads"
+
     elif "safe" in msg:
         return "🔐 Use HTTPS and strong passwords"
+
     elif "link" in msg:
         return "⚠️ Suspicious link ho sakta hai"
+
     elif "password" in msg:
         return "💪 Use strong password with symbols"
+
     elif "hi" in msg or "brother" in msg:
-        return "Hlo brother/sister do you have any question about cyber safety? "
+        return "Hlo brother/sister, do you have any question about cyber safety?"
+
     elif "hack" in msg or "hacked" in msg:
         return "⚠️ Stay safe! Avoid suspicious links and enable 2FA."
+
     elif "wifi" in msg:
         return "📶 Avoid public WiFi for sensitive activities like banking."
 
     elif "bank" in msg or "payment" in msg:
         return "💳 Use secure websites (HTTPS) and never share bank details."
+
     elif "cyber" in msg:
         return "🌐 Cyber safety means protecting your data and privacy online."
+
+    # ---------------- HELPLINE SYSTEM (SMART ADDON) ----------------
+
+    elif any(word in msg for word in ["women", "woman", "lady", "girl", "mahila", "harassment", "abuse"]):
+        return "👩 Women Helpline: 📞 1091"
+
+    elif any(word in msg for word in ["child", "kid", "bacha", "minor", "children"]):
+        return "🧒 Child Helpline: 📞 1098"
+
+    elif any(word in msg for word in ["police", "theft", "crime", "attack", "danger"]):
+        return "🚓 Police Helpline: 📞 100"
+
+    elif any(word in msg for word in ["ambulance", "medical", "hospital", "injury"]):
+        return "🚑 Ambulance: 📞 102 / 108"
+
+    elif any(word in msg for word in ["fire", "aag", "blast"]):
+        return "🔥 Fire Emergency: 📞 101"
+
+    elif any(word in msg for word in ["help", "helpline", "emergency", "number"]):
+        return """📞 Important Helplines:
+
+👩 Women: 1091  
+🧒 Child: 1098  
+🚓 Police: 100  
+🚑 Ambulance: 102 / 108  
+🔥 Fire: 101  
+💻 Cyber Crime: 1930"""
+
+    # ---------------- NORMAL FLOW ----------------
+
     elif "yes" in msg:
-        return "okay Feel free to ask anything — I’ll try my best to assist you."
+        return "Okay! Feel free to ask anything."
+
     elif "have a question" in msg:
-        return "Sure! You can ask me about cyber safety topics like suspicious links, passwords, and more."
+        return "Sure! Ask me anything about cyber safety."
+
     elif "no" in msg:
-        return "🙂 No problem! Ask me something else about cyber safety."
+        return "🙂 No problem! Ask something else."
 
     elif "thanks" in msg or "thank you" in msg:
         return "😊 You're welcome! Stay safe online."
+
     else:
-        return "🤖 I can help with cyber safety topics like passwords, phishing, hacking, suspicious links, and more!🌐"
+        return "🤖 I can help with cyber safety, scams, passwords, suspicious links and helplines!"
 
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
