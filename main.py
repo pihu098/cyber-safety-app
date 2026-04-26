@@ -697,7 +697,7 @@ def community():
 
         if content:
             cursor.execute(
-                "INSERT INTO posts(username, content) VALUES(%s,%s)",
+                "INSERT INTO posts(user, content) VALUES(%s,%s)",
                 (session['user'], content)
             )
             db.commit()
