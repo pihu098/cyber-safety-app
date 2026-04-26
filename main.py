@@ -391,11 +391,9 @@ try:
     cursor = db.cursor(buffered=True)
     print("✅ Database Connected")
 
-    # 🔥 TABLE RESET + CREATE (INSIDE TRY BLOCK)
-    cursor.execute("DROP TABLE IF EXISTS users")
-
+    # ================= USERS TABLE =================
     cursor.execute("""
-        CREATE TABLE users (
+        CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100),
             email VARCHAR(100) UNIQUE,
@@ -413,8 +411,29 @@ try:
         )
     """)
 
+    # ================= UPDATES TABLE =================
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS updates (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255),
+            content TEXT,
+            filename VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+    # ================= POSTS TABLE =================
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS posts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user VARCHAR(100),
+            content TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
     db.commit()
-    print("✅ Users table reset & recreated")
+    print("✅ All tables ready (users + updates + posts)")
 
 except mysql.connector.Error as err:
     print("❌ Database Error:", err)
@@ -425,7 +444,9 @@ except Exception as e:
     print("❌ General Error:", e)
     db = None
     cursor = None
+    
 
+   
 # 🔥 DEBUG
 print("HOST =", os.getenv("DB_HOST"))
 print("USER =", os.getenv("DB_USER"))
