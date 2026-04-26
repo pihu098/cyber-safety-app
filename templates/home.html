@@ -101,7 +101,18 @@ button:hover {
 <p>⭐ XP: {{xp}}</p>
 </div>
 
+    
+<div class="card">
+    <h3>🚨 Helplines</h3>
 
+    <p><a href="tel:1091">👩 Women: 1091</a></p>
+    <p><a href="tel:1098">🧒 Child: 1098</a></p>
+    <p><a href="tel:100">🚓 Police: 100</a></p>
+    <p><a href="tel:102">🚑 Ambulance: 102 / 108</a></p>
+    <p><a href="tel:101">🔥 Fire: 101</a></p>
+    <p><a href="tel:1930">💻 Cyber: 1930</a></p>
+</div>
+    
 <!-- 🔥 MAIN FEATURES -->
 <div class="container">
     <div class="card">
@@ -366,8 +377,42 @@ if (localStorage.getItem("tips_on") === "on") {
 // page load pe auto run
 showTips();
 </script>
+    
+<div id="helpBox" style="
+display:none;
+position:fixed;
+bottom:80px;
+right:20px;
+background:#0f172a;
+color:white;
+padding:15px;
+border-radius:10px;
+width:220px;
+z-index:999;
+">
+<h4>🚨 Helplines</h4>
 
-
+<p><a href="tel:1091">👩 Women: 1091</a></p>
+<p><a href="tel:1098">🧒 Child: 1098</a></p>
+<p><a href="tel:100">🚓 Police: 100</a></p>
+<p><a href="tel:102">🚑 Ambulance</a></p>
+<p><a href="tel:101">🔥 Fire</a></p>
+<p><a href="tel:1930">💻 Cyber</a></p>
+</div>
+    
+<div onclick="toggleHelp()" style="
+position:fixed;
+bottom:20px;
+right:20px;
+background:red;
+color:white;
+padding:15px;
+border-radius:50%;
+cursor:pointer;
+font-size:20px;
+z-index:999;">
+📞
+</div>
 
 </body>
 </html>
