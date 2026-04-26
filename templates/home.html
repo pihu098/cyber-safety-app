@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <title>Dashboard</title>
@@ -10,6 +9,10 @@ body {
     background: #0f2027;
     color: white;
     text-align: center;
+}
+
+.header {
+    margin-top: 20px;
 }
 
 .logout {
@@ -39,6 +42,14 @@ body {
     box-shadow: 0 0 20px #00c6ff;
 }
 
+input {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    border: none;
+    width: 80%;
+}
+
 button {
     padding: 10px;
     border-radius: 8px;
@@ -52,7 +63,6 @@ button:hover {
     background: #0072ff;
 }
 </style>
-
 </head>
 
 <body>
@@ -61,10 +71,11 @@ button:hover {
 <a href="/logout"><button>Logout</button></a>
 </div>
 
+<div class="header">
 <h2>Welcome {{name}} 👋</h2>
+<p>{{message}}</p>
 <h3>💡 Cyber Safety Dashboard</h3>
-
-<!-- SMART TIPS -->
+</div>
 
 <div class="card">
 <h3>💡 Smart Tips Panel</h3>
@@ -72,23 +83,28 @@ button:hover {
 <div id="tipsBox"></div>
 </div>
 
-<!-- HELPLINE PANEL -->
-
 <div class="card">
-<h3>🚨 Emergency Helplines</h3>
-<p>👩 Women: <a href="tel:1091">1091</a></p>
-<p>🧒 Child: <a href="tel:1098">1098</a></p>
-<p>🚓 Police: <a href="tel:100">100</a></p>
-<p>🚑 Ambulance: <a href="tel:102">102 / 108</a></p>
-<p>🔥 Fire: <a href="tel:101">101</a></p>
-<p>💻 Cyber: <a href="tel:1930">1930</a></p>
+<h3>🧠 Cyber Awareness Mode</h3>
+<button onclick="toggleTips()">Toggle Tips</button>
 </div>
 
-<!-- FEATURES -->
-
-<div class="container">
-
+<!-- 📊 STATS -->
 <div class="card">
+<h3>📊 Your Stats</h3>
+
+<p>Quiz Used: {{quiz_used}}</p>
+<p>Password Generator Used: {{password_used}}</p>
+<p>Website Checker Used: {{website_used}}</p>
+
+<p>🪙 Coins: {{coins}}</p>
+<p>📊 Level: {{level}}</p>
+<p>⭐ XP: {{xp}}</p>
+</div>
+
+
+<!-- 🔥 MAIN FEATURES -->
+<div class="container">
+    <div class="card">
 <h3>💬 Community</h3>
 <a href="/community"><button>Open</button></a>
 </div>
@@ -99,18 +115,65 @@ button:hover {
 </div>
 
 <div class="card">
-<h3>🧩 Puzzle Game</h3>
+<h3>📊 Your Activity Graph</h3>
+
+<canvas id="myChart" width="300" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+let password_used = {{password_used}};
+let website_used = {{website_used}};
+let quiz_used = {{quiz_used}};
+const data = {
+    labels: ['Password', 'Website', 'Quiz'],
+    datasets: [{
+        label: 'Usage',
+        data: [password_used, website_used, quiz_used]
+    }]
+};
+
+
+
+
+
+const config = {
+    type: 'bar',
+    data: data
+};
+
+new Chart(document.getElementById('myChart'), config);
+</script>
+
+</div>
+
+<div class="card">
+<h3>🧩 Cyber Puzzle Game</h3>
 <a href="/game/puzzle/start"><button>Play</button></a>
 </div>
 
+<!-- PASSWORD -->
 <div class="card">
 <h3>🔐 Password Generator</h3>
 <form method="POST" action="/password">
 <input type="number" name="length" placeholder="Length" required><br>
+
+<label><input type="checkbox" name="upper"> A-Z</label><br>
+<label><input type="checkbox" name="lower"> a-z</label><br>
+<label><input type="checkbox" name="digits"> 0-9</label><br>
+<label><input type="checkbox" name="symbols"> @#$</label><br><br>
+
 <button>Generate</button>
 </form>
 </div>
 
+
+<div class="card">
+<h3>🔥 Streak</h3>
+<p>Current Streak: {{streak}} days</p>
+</div>
+
+<!-- WEBSITE CHECK -->
 <div class="card">
 <h3>🌐 Website Checker</h3>
 <form method="POST" action="/check">
@@ -120,88 +183,191 @@ button:hover {
 </div>
 
 <div class="card">
-<h3>🎯 Quiz</h3>
-<a href="/quiz"><button>Start</button></a>
+<h3>📧 Email Checker</h3>
+<form method="POST" action="/check_email">
+<textarea name="email" placeholder="Paste email..."></textarea><br>
+<button>Check</button>
+</form>
 </div>
 
+<div class="card">
+<h3>📁 File Scanner</h3>
+<form method="POST" action="/scan_file" enctype="multipart/form-data">
+<input type="file" name="file"><br>
+<button>Scan</button>
+</form>
 </div>
 
-<!-- CHATBOT -->
+<!-- QUIZ -->
+<div class="card">
+   <h3>🎯 Cyber Quiz</h3>
+   <a href="/quiz"><button>Start Quiz</button></a>
+</div>
 
+<div class="card">
+<h3>📢 Updates</h3>
+<a href="/updates"><button>View Updates</button></a>
+</div>
+
+
+</div> <!-- ✅ container close -->
+
+<!-- 💡 CYBER TIP -->
+ <script>
+function showTips() {
+
+    fetch('/get_tip')
+    .then(res => res.json())
+    .then(data => {
+
+        document.querySelectorAll(".tipBox").forEach(el => el.remove());
+        let box = document.createElement("div");
+ 
+        box.className = "tipBox";
+        let tipsHTML = "";
+
+        data.tips.forEach(t => {
+            tipsHTML += "👉 " + t + "<br>";
+        });
+
+        tipsHTML += "<br>🔥 Stay Smart, Stay Safe Online!";
+
+        box.innerHTML = tipsHTML;
+
+        // 🎨 STYLE
+        box.style.position = "fixed";
+        box.style.bottom = "20px";
+        box.style.left = "20px";
+        box.style.background = "#111";
+        box.style.color = "white";
+        box.style.padding = "15px";
+        box.style.borderRadius = "10px";
+        box.style.boxShadow = "0 0 10px #00c6ff";
+        box.style.transition = "opacity 1s";   // 🔥 smooth fade
+        box.style.opacity = "1";
+
+        document.body.appendChild(box);
+
+        // ⏱️ Fade after 12 sec
+        setTimeout(() => {
+            box.style.opacity = "0";
+        }, 12000);
+
+        // ❌ Remove after 13 sec
+        setTimeout(() => {
+            box.remove();
+        }, 13000);
+    });
+}
+</script>
+
+<!-- 🤖 AI CHATBOT -->
 <h3>🤖 AI Chatbot</h3>
-<input id="msg" placeholder="Ask something...">
+
+<input id="msg" name="message" placeholder="Ask something...">
 <button onclick="sendMsg()">Send</button>
+
 <p id="reply"></p>
 
-<!-- FLOATING BUTTON -->
-
-<div onclick="toggleHelp()" style="
-position:fixed;
-bottom:20px;
-right:20px;
-background:red;
-color:white;
-padding:15px;
-border-radius:50%;
-cursor:pointer;
-font-size:20px;
-z-index:999;">
-📞
-</div>
-
-<!-- POPUP -->
-
-<div id="helpBox" style="
-display:none;
-position:fixed;
-bottom:80px;
-right:20px;
-background:#0f172a;
-color:white;
-padding:15px;
-border-radius:10px;
-width:220px;
-z-index:999;">
-<h4>🚨 Helplines</h4>
-<p><a href="tel:1091">Women: 1091</a></p>
-<p><a href="tel:1098">Child: 1098</a></p>
-<p><a href="tel:100">Police: 100</a></p>
-<p><a href="tel:102">Ambulance</a></p>
-<p><a href="tel:101">Fire</a></p>
-<p><a href="tel:1930">Cyber</a></p>
-</div>
-
-<!-- JS -->
-
 <script>
-function toggleHelp(){
-let box = document.getElementById("helpBox");
-box.style.display = box.style.display === "block" ? "none" : "block";
-}
-
 async function sendMsg(){
 let msg = document.getElementById("msg").value;
 
 let res = await fetch("/chat", {
-method:"POST",
-headers:{"Content-Type":"application/x-www-form-urlencoded"},
-body:"message="+encodeURIComponent(msg)
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: "message=" + encodeURIComponent(msg)
 });
 
 let data = await res.text();
 document.getElementById("reply").innerText = data;
 }
+</script>
 
-function showTips(){
-fetch('/get_tip')
-.then(res=>res.json())
-.then(data=>{
-let html="";
-data.tips.forEach(t=> html += "👉 "+t+"<br>");
-document.getElementById("tipsBox").innerHTML = html;
-});
+
+<div class="card">
+<h3>📄 Updates (PDF)</h3>
+<a href="/admin"><button>Admin Panel</button></a>
+</div>
+
+<script>
+
+
+
+        tipsHTML += "<br>🔥 Stay Smart, Stay Safe Online!";
+
+        box.innerHTML = tipsHTML;
+
+        box.style.position = "fixed";
+        box.style.bottom = "20px";
+        box.style.left = "20px";
+        box.style.background = "#111";
+        box.style.padding = "15px";
+        box.style.borderRadius = "10px";
+        box.style.boxShadow = "0 0 10px #00c6ff";
+
+        document.body.appendChild(box);
+
+        setTimeout(() => box.remove(), 7000);
+    });
 }
 </script>
+
+<script>
+function toggleTips(){
+
+    let status = localStorage.getItem("tips_on");
+
+    // 👉 agar already ON hai to kuch mat karo
+    if(status === "on"){
+        alert("✅ Tips already enabled");
+        showTips();
+        return;
+    }
+
+    // 👉 first time ON karo
+    localStorage.setItem("tips_on","on");
+    alert("✅ Tips Enabled");
+
+    showTips();   // start tips
+}
+</script>
+
+<script>
+window.onload = function() {
+    if(localStorage.getItem("tips_on") === "on"){
+        showTips();
+    }
+}
+
+
+<script>
+function loadTips(){
+    fetch('/get_tip')
+    .then(res => res.json())
+    .then(data => {
+        let html = "";
+        data.tips.forEach(t => {
+            html += "👉 " + t + "<br>";
+        });
+        document.getElementById("tipsBox").innerHTML = html;
+    });
+}
+
+/* ✅ YE LAST ME ADD KAR */
+if (localStorage.getItem("tips_on") === "on") {
+    showTips();
+}
+</script>
+
+<script>
+// page load pe auto run
+showTips();
+</script>
+
+
 
 </body>
 </html>
