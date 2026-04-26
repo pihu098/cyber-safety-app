@@ -241,10 +241,6 @@ function showTips() {
             tipsHTML += "👉 " + t + "<br>";
         });
 
-        tipsHTML += "<br>🔥 Stay Smart, Stay Safe Online!";
-
-        box.innerHTML = tipsHTML;
-
         // 🎨 STYLE
         box.style.position = "fixed";
         box.style.bottom = "20px";
@@ -307,10 +303,7 @@ document.getElementById("reply").innerText = data;
 
 
 
-        tipsHTML += "<br>🔥 Stay Smart, Stay Safe Online!";
-
-        box.innerHTML = tipsHTML;
-
+       
         box.style.position = "fixed";
         box.style.bottom = "20px";
         box.style.left = "20px";
@@ -353,16 +346,7 @@ window.onload = function() {
     }
 }
 
-<script>
-function toggleHelp(){
-    let box = document.getElementById("helpBox");
-    if(box.style.display === "block"){
-        box.style.display = "none";
-    } else {
-        box.style.display = "block";
-    }
-}
-</script>
+
     
 <script>
 function loadTips(){
