@@ -393,28 +393,25 @@ try:
 
     # 🔥 TABLE AUTO CREATE
     cursor.execute("""
-CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100),
-    email VARCHAR(100) UNIQUE,
-    password VARCHAR(255),
-    coins INT DEFAULT 0,
-    xp INT DEFAULT 0,
-    level INT DEFAULT 1,
-    streak INT DEFAULT 0,
-    logins INT DEFAULT 0,
-    password_used INT DEFAULT 0,
-    website_used INT DEFAULT 0,
-    quiz_used INT DEFAULT 0,
-    puzzle_wins INT DEFAULT 0,
-    last_play_date DATE
-)
-""")
-db.commit()
-""")
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100),
+            email VARCHAR(100) UNIQUE,
+            password VARCHAR(255),
+            coins INT DEFAULT 0,
+            xp INT DEFAULT 0,
+            level INT DEFAULT 1,
+            streak INT DEFAULT 0,
+            logins INT DEFAULT 0,
+            password_used INT DEFAULT 0,
+            website_used INT DEFAULT 0,
+            quiz_used INT DEFAULT 0,
+            puzzle_wins INT DEFAULT 0,
+            last_play_date DATE
+        )
+    """)
 
     db.commit()
-
     print("✅ Users table ready")
 
 except mysql.connector.Error as err:
