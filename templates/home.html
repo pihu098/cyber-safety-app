@@ -62,6 +62,25 @@ button {
 button:hover {
     background: #0072ff;
 }
+   #cyberThought {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: linear-gradient(45deg, #00c6ff, #0072ff);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    box-shadow: 0 0 10px #00c6ff;
+    z-index: 999;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+} 
 </style>
 </head>
 
@@ -372,6 +391,21 @@ if (localStorage.getItem("tips_on") === "on") {
 showTips();
 </script>
     
+<script>
+let thoughts = [
+"🛡️ Your Safety is Your Responsibility",
+"⚠️ Think Before You Click",
+"🔐 Strong Password = Strong Security",
+"🚨 Your Data = Your Identity",
+"💻 Hackers Need One Mistake",
+"🔍 Verify Before You Trust"
+];
 
+let i = 0;
+setInterval(() => {
+    document.getElementById("cyberThought").innerText = thoughts[i];
+    i = (i + 1) % thoughts.length;
+}, 88000);
+</script>
 </body>
 </html>
