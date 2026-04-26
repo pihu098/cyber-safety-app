@@ -391,9 +391,11 @@ try:
     cursor = db.cursor(buffered=True)
     print("✅ Database Connected")
 
-    # 🔥 TABLE AUTO CREATE
+    # 🔥 TABLE RESET + CREATE (INSIDE TRY BLOCK)
+    cursor.execute("DROP TABLE IF EXISTS users")
+
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100),
             email VARCHAR(100) UNIQUE,
@@ -412,7 +414,7 @@ try:
     """)
 
     db.commit()
-    print("✅ Users table ready")
+    print("✅ Users table reset & recreated")
 
 except mysql.connector.Error as err:
     print("❌ Database Error:", err)
