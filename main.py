@@ -686,48 +686,52 @@ def signup():
     # 🔥 IMPORTANT (GET request ke liye)
     return render_template("signup.html")
 # ---------------- HOME ----------------
-
 @app.route('/home')
 def home():
-    if 'user' in session:
-         
-        
-        cursor.execute("SELECT COUNT(*) FROM users")
-        total_users = cursor.fetchone()[0]
+    if 'user' not in session:
+        return redirect('/')
 
-        cursor.execute("SELECT SUM(logins) FROM users")
-        total_logins = cursor.fetchone()[0] or 0
+    db = get_db()  # 🔥 fresh connection
+    cursor = db.cursor(buffered=True)
 
-        cursor.execute("SELECT password_used, website_used, quiz_used FROM users WHERE name=%s", (session['user'],))
-        data = cursor.fetchone()
+    # 🔹 total users
+    cursor.execute("SELECT COUNT(*) FROM users")
+    total_users = cursor.fetchone()[0]
 
-        password_used = data[0]
-        website_used = data[1]
-        quiz_used = data[2]
+    # 🔹 total logins
+    cursor.execute("SELECT SUM(logins) FROM users")
+    total_logins = cursor.fetchone()[0] or 0
 
-        cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (session['user'],))
-        data2 = cursor.fetchone()
+    # 🔹 user stats
+    cursor.execute(
+        "SELECT password_used, website_used, quiz_used, coins, level, xp, streak FROM users WHERE name=%s",
+        (session['user'],)
+    )
+    data = cursor.fetchone()
 
-        cursor.execute("SELECT streak FROM users WHERE name=%s", (session['user'],))
-        streak = cursor.fetchone()[0]
+    if data:
+        password_used, website_used, quiz_used, coins, level, xp, streak = data
+    else:
+        password_used = website_used = quiz_used = 0
+        coins = level = xp = streak = 0
 
-        coins = data2[0]
-        level = data2[1]
-        xp = data2[2]
- 
+    db.close()  # 🔥 important
 
-        return render_template("home.html",
-                               name=session['user'],
-                               message="✅ Welcome to Cyber Safety Platform",
-                               total_users=total_users,
-                               total_logins=total_logins,
-                               quiz_used=quiz_used,
-                               password_used=password_used,
-                               coins=coins,
-                               level=level,
-                               xp=xp,
-                               website_used=website_used,
-                               streak=streak)
+    return render_template(
+        "home.html",
+        name=session['user'],
+        message="✅ Welcome to Cyber Safety Platform",
+        total_users=total_users,
+        total_logins=total_logins,
+        quiz_used=quiz_used,
+        password_used=password_used,
+        coins=coins,
+        level=level,
+        xp=xp,
+        website_used=website_used,
+        streak=streak
+    )
+
     return redirect('/')
 
 # ---------------- LOGOUT ----------------
