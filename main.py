@@ -4,16 +4,14 @@ from werkzeug.utils import secure_filename
 import random
 import string
 import re
-import mysql.connector
 import time
 import requests
-import os
 
 app = Flask(__name__)
 app.secret_key = "secret123"
 print("🔥 App starting...")
 
-init_db()
+
 
 
 # 🔥 ADD THIS
@@ -398,6 +396,7 @@ def init_db():
     try:
         db = get_db()
         cursor = db.cursor()
+        
 
         # ================= USERS TABLE =================
         cursor.execute("""
@@ -458,7 +457,7 @@ print("USER =", os.getenv("DB_USER"))
 print("DB =", os.getenv("DB_NAME"))
 
 
-
+init_db()
 # ---------------- CYBER TIPS ----------------
 tips_list = [
 "Use strong passwords 🔐","Never share OTP 🚫","Check HTTPS before login 🌐",
