@@ -13,6 +13,9 @@ app = Flask(__name__)
 app.secret_key = "secret123"
 print("🔥 App starting...")
 
+init_db()
+
+
 # 🔥 ADD THIS
 @app.route('/')
 def home_page():
@@ -376,81 +379,86 @@ quiz = [
 import mysql.connector
 import os
 
-db = None
-cursor = None
-
-try:
+# 🔥 DB CONNECTION FUNCTION
+def get_db():
     db = mysql.connector.connect(
         host=os.getenv("DB_HOST"),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASS"),
         database=os.getenv("DB_NAME"),
-        port=int(os.getenv("DB_PORT", 3306))
+        port=int(os.getenv("DB_PORT", 3306)),
+        autocommit=True
     )
+    db.ping(reconnect=True)  # auto reconnect
+    return db
 
-    cursor = db.cursor(buffered=True)
-    print("✅ Database Connected")
 
-    # ================= USERS TABLE =================
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(100),
-            email VARCHAR(100) UNIQUE,
-            password VARCHAR(255),
-            coins INT DEFAULT 0,
-            xp INT DEFAULT 0,
-            level INT DEFAULT 1,
-            streak INT DEFAULT 0,
-            logins INT DEFAULT 0,
-            password_used INT DEFAULT 0,
-            website_used INT DEFAULT 0,
-            quiz_used INT DEFAULT 0,
-            puzzle_wins INT DEFAULT 0,
-            last_play_date DATE
-        )
-    """)
+# 🔥 INIT TABLES (RUN ON START)
+def init_db():
+    try:
+        db = get_db()
+        cursor = db.cursor()
 
-    # ================= UPDATES TABLE =================
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS updates (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            title VARCHAR(255),
-            content TEXT,
-            filename VARCHAR(255),
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
+        # ================= USERS TABLE =================
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(100),
+                email VARCHAR(100) UNIQUE,
+                password VARCHAR(255),
+                coins INT DEFAULT 0,
+                xp INT DEFAULT 0,
+                level INT DEFAULT 1,
+                streak INT DEFAULT 0,
+                logins INT DEFAULT 0,
+                password_used INT DEFAULT 0,
+                website_used INT DEFAULT 0,
+                quiz_used INT DEFAULT 0,
+                puzzle_wins INT DEFAULT 0,
+                last_play_date DATE
+            )
+        """)
 
-    # ================= POSTS TABLE =================
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS posts (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            user VARCHAR(100),
-            content TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
+        # ================= UPDATES TABLE =================
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS updates (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                title VARCHAR(255),
+                content TEXT,
+                filename VARCHAR(255),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
 
-    db.commit()
-    print("✅ All tables ready (users + updates + posts)")
+        # ================= POSTS TABLE =================
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS posts (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user VARCHAR(100),
+                content TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
 
-except mysql.connector.Error as err:
-    print("❌ Database Error:", err)
-    db = None
-    cursor = None
+        db.commit()
+        db.close()
 
-except Exception as e:
-    print("❌ General Error:", e)
-    db = None
-    cursor = None
-    
+        print("✅ All tables ready (users + updates + posts)")
 
-   
-# 🔥 DEBUG
+    except mysql.connector.Error as err:
+        print("❌ Database Error:", err)
+
+    except Exception as e:
+        print("❌ General Error:", e)
+
+
+# 🔥 DEBUG (optional)
 print("HOST =", os.getenv("DB_HOST"))
 print("USER =", os.getenv("DB_USER"))
 print("DB =", os.getenv("DB_NAME"))
+
+
+
 # ---------------- CYBER TIPS ----------------
 tips_list = [
 "Use strong passwords 🔐","Never share OTP 🚫","Check HTTPS before login 🌐",
@@ -618,21 +626,20 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
+        db = get_db()  # 🔥 fresh connection
         cursor = db.cursor(buffered=True)
 
-        # 🔥 safe query
         cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
         user = cursor.fetchone()
 
         if not user:
+            db.close()
             return render_template("result.html",
                                    result="❌ User not found",
                                    extra="Try again")
 
-        # 🔥 password check (assuming password is column 3)
         if check_password_hash(user[3], password):
 
-            # 🔥 update login count safely
             cursor.execute(
                 "UPDATE users SET logins = COALESCE(logins,0) + 1 WHERE email=%s",
                 (email,)
@@ -641,9 +648,11 @@ def login():
 
             session['user'] = user[1]
 
+            db.close()
             return redirect('/home')
 
         else:
+            db.close()
             return render_template("result.html",
                                    result="❌ Wrong Password",
                                    extra="Try again")
