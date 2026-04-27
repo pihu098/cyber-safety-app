@@ -6,7 +6,8 @@ import string
 import re
 import time
 import requests
-
+import mysql.connector
+import os 
 app = Flask(__name__)
 app.secret_key = "secret123"
 print("🔥 App starting...")
@@ -374,8 +375,6 @@ quiz = [
 ]
 
 # ---------------- DATABASE ----------------
-import mysql.connector
-import os
 
 # 🔥 DB CONNECTION FUNCTION
 def get_db():
