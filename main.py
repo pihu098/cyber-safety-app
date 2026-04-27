@@ -1036,36 +1036,44 @@ def scan_file():
         extra=" | ".join(warnings)
     )
 
-
-
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
+        try:
+            password = request.form.get('password')
+            if password != ADMIN_PASSWORD:
+                return "❌ Wrong Password"
 
-        password = request.form.get('password')
-        if password != ADMIN_PASSWORD:
-            return "❌ Wrong Password"
+            title = request.form.get('title')
+            content = request.form.get('content')
 
-        title = request.form.get('title')
-        content = request.form.get('content')
+            file = request.files.get('file')
+            filename = None
 
-        file = request.files.get('file')
-        filename = None   # 🔥 default
+            # 📁 FILE UPLOAD
+            if file and file.filename != "":
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(filepath)
 
-        # 📁 FILE UPLOAD
-        if file and file.filename != "":
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
+            # 🔥 DB CONNECT (IMPORTANT)
+            db = get_db()
+            cursor = db.cursor(buffered=True)
 
-        # 📝 ALWAYS SAVE (IMPORTANT 🔥)
-        cursor.execute(
-            "INSERT INTO updates (title, content, filename) VALUES (%s, %s, %s)",
-            (title, content, filename)
-        )
-        db.commit()
+            cursor.execute(
+                "INSERT INTO updates (title, content, filename) VALUES (%s, %s, %s)",
+                (title, content, filename)
+            )
 
-        return "✅ Update Posted Successfully"
+            db.commit()
+
+            cursor.close()
+            db.close()
+
+            return "✅ Update Posted Successfully"
+
+        except Exception as e:
+            return f"❌ ERROR: {str(e)}"
 
     return render_template("admin.html")
 
@@ -1074,20 +1082,31 @@ def delete_update(id):
     if 'user' not in session:
         return redirect('/')
 
-    # file naam nikaal
-    cursor.execute("SELECT filename FROM updates WHERE id=%s", (id,))
-    data = cursor.fetchone()
+    try:
+        db = get_db()
+        cursor = db.cursor(buffered=True)
 
-    if data and data[0]:
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], data[0])
-        if os.path.exists(filepath):
-            os.remove(filepath)
+        # file naam nikaal
+        cursor.execute("SELECT filename FROM updates WHERE id=%s", (id,))
+        data = cursor.fetchone()
 
-    # DB se delete
-    cursor.execute("DELETE FROM updates WHERE id=%s", (id,))
-    db.commit()
+        if data and data[0]:
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], data[0])
+            if os.path.exists(filepath):
+                os.remove(filepath)
 
-    return redirect('/updates')
+        # DB se delete
+        cursor.execute("DELETE FROM updates WHERE id=%s", (id,))
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+        return redirect('/updates')
+
+    except Exception as e:
+        return f"❌ ERROR: {str(e)}"
+
 
 @app.route('/updates')
 def updates():
@@ -1096,7 +1115,7 @@ def updates():
 
     cursor.execute("SELECT * FROM updates ORDER BY id DESC")
     data = cursor.fetchall()
-
+    cursor.close()
     db.close()
 
     return render_template("updates.html", updates=data)
