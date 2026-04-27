@@ -747,6 +747,9 @@ def community():
     if 'user' not in session:
         return redirect('/')
 
+    db=get_db()
+    cursor = db.cursor(buffered=True)
+    
     # POST = jab user kuch likh ke bhejega
     if request.method == 'POST':
         content = request.form.get('content')
@@ -762,6 +765,7 @@ def community():
     cursor.execute("SELECT * FROM posts ORDER BY id DESC")
     posts = cursor.fetchall()
 
+    db.close()
     return render_template("community.html", posts=posts)
 
 # ---------------- CHATBOT ----------------
@@ -1138,6 +1142,9 @@ def puzzle_win():
 #-------------leaderboard system-----------
 @app.route('/leaderboard')
 def leaderboard():
+    db = get_db()
+    cursor = db.cursor(buffered=True)
+
     cursor.execute("""
         SELECT 
             name,
@@ -1150,6 +1157,8 @@ def leaderboard():
 
     data = cursor.fetchall()
     current_user = session.get("user")
+
+    db.close()
 
     return render_template(
         "leaderboard.html",
