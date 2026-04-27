@@ -20,27 +20,35 @@ body {
 }
 
 .container {
-    margin-top: 120px;
+    margin-top: 100px;
     background: rgba(255,255,255,0.1);
     padding: 30px;
     border-radius: 15px;
     display: inline-block;
     backdrop-filter: blur(10px);
-    width: 300px;
+    width: 320px;
+    box-shadow: 0 0 20px rgba(0,255,255,0.3);
 }
 
 h2 {
     margin-bottom: 10px;
+    color: #00ffd5;
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
 }
 
 p {
-    font-size: 14px;
-    color: #ccc;
+    font-size: 15px;
+    color: #ddd;
+    margin-bottom: 20px;
 }
 
 button {
     padding: 10px 20px;
-    margin: 10px;
+    margin: 8px;
     border-radius: 8px;
     border: none;
     background: #00c6ff;
@@ -60,16 +68,18 @@ button:hover {
 
 <div class="container">
 
-<h2>{{result}}</h2>
-<p>{{extra}}</p>
+<div class="icon">🎉</div>
 
-<a href="/home">
-<button>⬅ Back to Dashboard</button>
-</a>
+<h2>{{ result }}</h2>
+<p>{{ extra }}</p>
 
-<a href="/">
-<button>🏠 Go to Login</button>
-</a>
+<button onclick="window.location.href='/home'">
+    ⬅ Back to Dashboard
+</button>
+
+<button onclick="window.location.href='/'">
+    🏠 Go to Login
+</button>
 
 </div>
 
