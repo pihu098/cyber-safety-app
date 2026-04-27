@@ -618,31 +618,7 @@ Stay calm & act fast!"""
         return "🤖 I can help with cyber safety, scams, passwords, suspicious links and helplines!"
 
 
-@app.route('/admin', methods=['GET', 'POST'])
-def admin():
-    try:
-        if request.method == 'POST':
-            title = request.form.get('title')
-            content = request.form.get('content')
 
-            if title and content:
-                db = get_db()
-                cursor = db.cursor(buffered=True)
-
-                cursor.execute(
-                    "INSERT INTO updates(title, content) VALUES(%s,%s)",
-                    (title, content)
-                )
-                db.commit()
-                db.close()
-
-                return "✅ Update Added Successfully"
-
-        return render_template("admin.html")
-
-    except Exception as e:
-        return f"❌ Error: {e}"
-    
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
