@@ -1149,7 +1149,10 @@ def puzzle_start():
 @app.route('/game/puzzle_win', methods=['POST'])
 def puzzle_win():
     if 'user' not in session:
-        return redirect('/')
+        return {"status": "error"}
+
+    db = get_db()  # 🔥 add this
+    cursor = db.cursor(buffered=True)
 
     cursor.execute("""
         UPDATE users 
@@ -1159,6 +1162,7 @@ def puzzle_win():
     """, (session['user'],))
 
     db.commit()
+    db.close()  # 🔥 important
 
     return {"status": "win", "coins": 10}
 
