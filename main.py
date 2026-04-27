@@ -899,34 +899,51 @@ def quiz_page():
 #-------------------quiz submit --------------
 @app.route('/quiz_submit', methods=['POST'])
 def quiz_submit():
-    score = 0
-    quiz_set = session.get('quiz_set', [])
+    try:
+        score = 0
+        quiz_set = session.get('quiz_set', [])
 
-    results = []
+        if 'user' not in session:
+            return redirect('/')
 
-    for i in range(len(quiz_set)):
-        user_ans = request.form.get(f"q{i}")
-        correct_ans = quiz_set[i]['a']
+        results = []
 
-        if user_ans and user_ans.lower() == correct_ans:
-            score += 1
-            status = "✅ Correct"
-        else:
-            status = "❌ Wrong"
-       
+        for i in range(len(quiz_set)):
+            user_ans = request.form.get(f"q{i}")
+            correct_ans = quiz_set[i]['a']
 
-        results.append({
-            "question": quiz_set[i]['q'],
-            "your": user_ans,
-            "correct": correct_ans,
-            "status": status
-        })
+            if user_ans and user_ans.lower() == correct_ans.lower():
+                score += 1
+                status = "✅ Correct"
+            else:
+                status = "❌ Wrong"
 
-    cursor.execute("UPDATE users SET quiz_used = quiz_used + 1 WHERE name=%s", (session['user'],))
-    db.commit()
-    return render_template("quiz_result.html",
-                           score=score,
-                           results=results)
+            results.append({
+                "question": quiz_set[i]['q'],
+                "your": user_ans,
+                "correct": correct_ans,
+                "status": status
+            })
+
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute(
+            "UPDATE users SET quiz_used = quiz_used + 1 WHERE name=%s",
+            (session['user'],)
+        )
+        db.commit()
+        db.close()
+
+        return render_template(
+            "quiz_result.html",
+            score=score,
+            results=results
+        )
+
+    except Exception as e:
+        print("Quiz Error:", e)
+        return "⚠️ Something went wrong in quiz system"
 
 # ---------------- TIP ----------------
 @app.route('/get_tip')
