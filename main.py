@@ -808,45 +808,53 @@ def password():
 
 @app.route('/check', methods=['POST'])
 def check():
-    url = request.form['url']
+    import requests
+    import re
+
+    url = request.form.get('url', '').strip()
 
     score = 100
     warnings = []
 
-    # 🔥 fix URL (http add if missing)
+    if not url:
+        return "❌ No URL provided"
+
+    # 🔥 FIX URL
     if not url.startswith("http"):
         url = "http://" + url
 
-    # 🌐 TRY TO CONNECT WEBSITE
+    # 🌐 WEBSITE CHECK
     try:
         res = requests.get(url, timeout=5)
 
-        # status check
         if res.status_code != 200:
             score -= 20
             warnings.append("Website not responding properly")
 
-        # HTTPS check
         if not url.startswith("https"):
             score -= 20
             warnings.append("No HTTPS (Not Secure)")
 
-    except:
+    except requests.exceptions.RequestException:
         score -= 50
         warnings.append("Website not reachable")
 
-    # 🔍 OLD LOGIC (KEEP THIS)
+    # 🔍 extract domain only (IMPORTANT FIX)
+    domain = re.sub(r'https?://', '', url).split('/')[0].lower()
+
     bad_words = ["login", "verify", "bank", "free", "win"]
+
     for word in bad_words:
-        if word in url.lower():
+        if word in domain:
             score -= 10
             warnings.append(f"Suspicious word: {word}")
 
+    # ⚠️ URL checks
     if len(url) > 50:
         score -= 10
         warnings.append("Too long URL")
 
-    if "-" in url:
+    if "-" in domain:
         score -= 5
         warnings.append("Hyphen suspicious")
 
@@ -854,13 +862,12 @@ def check():
         score -= 20
         warnings.append("@ symbol found")
 
-    if url.count('.') > 3:
+    if domain.count('.') > 3:
         score -= 10
         warnings.append("Too many subdomains")
 
-    import re
     ip_pattern = r'\d+\.\d+\.\d+\.\d+'
-    if re.search(ip_pattern, url):
+    if re.search(ip_pattern, domain):
         score -= 25
         warnings.append("IP address used")
 
@@ -872,20 +879,29 @@ def check():
     else:
         result = "❌ Dangerous Website"
 
-    # 📊 usage count
-    if 'user' in session:
-        cursor.execute(
-            "UPDATE users SET website_used = website_used + 1 WHERE name=%s",
-            (session['user'],)
-        )
-        db.commit()
+    # 📊 SAFE DB UPDATE
+    try:
+        if 'user' in session:
+            db = get_db()
+            cursor = db.cursor()
+
+            cursor.execute(
+                "UPDATE users SET website_used = website_used + 1 WHERE name=%s",
+                (session['user'],)
+            )
+
+            db.commit()
+            db.close()
+
+    except Exception as e:
+        print("DB Error:", e)
 
     return render_template(
         "result.html",
         result=f"{result} (Score: {score}/100)",
         extra=" | ".join(warnings)
     )
-
+      
 # ---------------- QUIZ ----------------
 @app.route('/quiz')
 def quiz_page():
