@@ -93,7 +93,7 @@ button:hover {
 <div class="header">
 <h2>Welcome {{name}} 👋</h2>
 <p>{{message}}</p>
-<h3>💡 Cyber Safety Dashboard</h3>
+<h3> Cyber Safety Dashboard</h3>
 </div>
 
 <div class="card">
@@ -102,10 +102,8 @@ button:hover {
 <div id="tipsBox"></div>
 </div>
 
-<div class="card">
-<h3>🧠 Cyber Awareness Mode</h3>
-<button onclick="toggleTips()">Toggle Tips</button>
-</div>
+
+
 
 <!-- 📊 STATS -->
 <div class="card">
@@ -380,7 +378,7 @@ function loadTips(){
     });
 }
 
-/* ✅ YE LAST ME ADD KAR */
+
 if (localStorage.getItem("tips_on") === "on") {
     showTips();
 }
@@ -390,6 +388,7 @@ if (localStorage.getItem("tips_on") === "on") {
 // page load pe auto run
 showTips();
 </script>
+
     
 <script>
 let thoughts = [
