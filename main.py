@@ -653,7 +653,7 @@ def login():
 
     # 🔥 already logged in → skip login page
     if 'user' in session:
-        return redirect('/home')
+        return redirect('/welcome')
 
     if request.method == 'POST':
         email = request.form['email']
@@ -695,6 +695,12 @@ def login():
                                    extra="Try again")
 
     return render_template("index.html")
+
+@app.route('/welcome')
+def welcome():
+    if 'user' not in session:
+        return redirect('/')
+    return render_template("welcome.html", name=session['user'])
 #---------------auto login check---------------
 @app.route('/')
 def index():
