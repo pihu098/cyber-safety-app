@@ -1217,6 +1217,18 @@ def puzzle_start():
     if 'user' not in session:
         return redirect('/')
 
+    # 🔁 RESET if coming from restart (game over)
+    if session.get('puzzle_failed'):
+        session['puzzle_failed'] = False
+        questions = session.get('puzzle_game', [])
+
+        # 💾 restart same game
+        session['puzzle_index'] = 0
+        session['puzzle_score'] = 0
+        session['lives'] = 5
+
+        return redirect('/game/puzzle/play')
+
     # 🔥 safe game counter
     session['game_count'] = session.get('game_count', 0) + 1
     game_count = session['game_count']
@@ -1238,12 +1250,12 @@ def puzzle_start():
     for k in puzzle_levels:
         all_questions.extend(puzzle_levels[k])
 
-    # 🔥 safe dedup (NO CRASH)
+    # 🔥 safe dedup
     seen = set()
     unique_questions = []
 
     for q in all_questions:
-        key = q.get('q', str(q))   # safe fallback
+        key = q.get('q', str(q))
         if key not in seen:
             seen.add(key)
             unique_questions.append(q)
@@ -1386,18 +1398,40 @@ def puzzle_check():
     session['puzzle_index'] = i + 1
 
     if lives <= 0:
+        session['puzzle_failed'] = True
         return redirect('/game/puzzle/result')
 
     return redirect('/game/puzzle/play')
 #--------game result----------------
 @app.route('/game/puzzle/result')
 def puzzle_result():
+
     from datetime import date, timedelta
 
     if 'user' not in session:
         return redirect('/')
 
     user = session['user']
+
+    # 💀 CHECK IF GAME FAILED
+    failed = session.get('puzzle_failed', False)
+
+    # =========================
+    # 💀 LOSS CASE (NO REWARD)
+    # =========================
+    if failed:
+        session['puzzle_failed'] = False
+
+        return render_template(
+            "result.html",
+            result="💀 Game Over!",
+            extra="❌ You lost all lives",
+            restart=True
+        )
+
+    # =========================
+    # ✅ WIN CASE (REWARDS)
+    # =========================
     score = session.get('puzzle_score', 0)
 
     coins_gain = score
@@ -1422,7 +1456,7 @@ def puzzle_result():
     if last_date and not isinstance(last_date, date):
         last_date = date.fromisoformat(str(last_date))
 
-    # 🔥 streak system
+    # 🔥 streak logic
     if last_date is None:
         streak = 1
     elif last_date == today:
@@ -1432,7 +1466,7 @@ def puzzle_result():
     else:
         streak = 1
 
-    # 🔥 xp system
+    # 🔥 XP system
     xp += xp_gain
     if xp >= 10:
         level += 1
@@ -1468,7 +1502,8 @@ def puzzle_result():
     return render_template(
         "result.html",
         result="🎯 Puzzle Completed!",
-        extra=f"🪙 +{coins_gain} Coins | ⭐ XP Updated | 🔥 Streak: {streak} | {msg} | 📊 Level: {level}"
+        extra=f"🪙 +{coins_gain} Coins | ⭐ XP Updated | 🔥 Streak: {streak} | {msg} | 📊 Level: {level}",
+        restart=False
     )
 # ---------------- RUN ----------------
 if __name__ == '__main__':
