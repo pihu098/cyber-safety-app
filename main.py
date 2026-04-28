@@ -4,10 +4,12 @@ from werkzeug.utils import secure_filename
 import random
 import string
 import re
+from datetime import date, timedelta
 import time
 import requests
 import mysql.connector
-import os 
+
+os 
 app = Flask(__name__)
 app.secret_key = "secret123"
 print("🔥 App starting...")
@@ -667,10 +669,14 @@ def signup():
         email = request.form['email']
         password = generate_password_hash(request.form['password'])
 
+        db = get_db()
+        cursor = db.cursor()
+
         cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
         existing_user = cursor.fetchone()
 
         if existing_user:
+            db.close()
             return render_template("result.html",
                                    result="❌ Email already exists",
                                    extra="Try another email")
@@ -679,13 +685,14 @@ def signup():
             "INSERT INTO users(name,email,password) VALUES(%s,%s,%s)",
             (name, email, password)
         )
+
         db.commit()
+        db.close()
 
         return render_template("result.html",
                                result="✅ Signup Successful",
                                extra="Now login")
 
-    # 🔥 IMPORTANT (GET request ke liye)
     return render_template("signup.html")
 # ---------------- HOME ----------------
 @app.route('/home')
@@ -779,6 +786,7 @@ def chat():
 # ---------------- PASSWORD GENERATOR ----------------
 @app.route('/password', methods=['POST'])
 def password():
+
     import random
     import string
 
@@ -792,32 +800,17 @@ def password():
     if 'digits' in request.form:
         chars += string.digits
     if 'symbols' in request.form:
-        chars += string.punctuation
-
-    if chars == "":
-        return render_template("result.html",
-                               result="❌ Select options",
-                               extra="")
+        chars += "@#$%&*!?"
 
     pwd = ''.join(random.choice(chars) for _ in range(length))
 
-    # 🔥 FIX ADDED HERE
-    db = get_db()
-    cursor = db.cursor()
-
     if 'user' in session:
-        cursor.execute(
+        execute_query(
             "UPDATE users SET password_used = password_used + 1 WHERE name=%s",
             (session['user'],)
         )
-        db.commit()
-        db.close()
 
-    return render_template(
-        "result.html",
-        result=f"Password: {pwd}",
-        extra="🔐 Strong password generated"
-    )
+    return render_template("result.html", result=pwd)
 # ---------------- WEBSITE CHECK ----------------
 
 @app.route('/check', methods=['POST'])
@@ -929,56 +922,44 @@ def quiz_page():
 #-------------------quiz submit --------------
 @app.route('/quiz_submit', methods=['POST'])
 def quiz_submit():
-    try:
-        score = 0
-        quiz_set = session.get('quiz_set', [])
 
-        if 'user' not in session:
-            return redirect('/')
+    score = 0
+    quiz_set = session.get('quiz_set', [])
+    results = []
 
-        results = []
+    for i in range(len(quiz_set)):
 
-        for i in range(len(quiz_set)):
-            user_ans = request.form.get(f"q{i}")
-            correct_ans = quiz_set[i]['a']
+        user_ans = (request.form.get(f"q{i}") or "").strip().lower()
+        correct_ans = quiz_set[i]['a'].strip().lower()
 
-            if user_ans and user_ans.lower() == correct_ans.lower():
-                score += 1
-                status = "✅ Correct"
-            else:
-                status = "❌ Wrong"
+        if user_ans == correct_ans:
+            score += 1
+            status = "✅ Correct"
+        else:
+            status = "❌ Wrong"
 
-            results.append({
-                "question": quiz_set[i]['q'],
-                "your": user_ans,
-                "correct": correct_ans,
-                "status": status
-            })
+        results.append({
+            "question": quiz_set[i]['q'],
+            "your": user_ans,
+            "correct": correct_ans,
+            "status": status
+        })
 
-        db = get_db()
-        cursor = db.cursor()
-
-        cursor.execute(
+    if 'user' in session:
+        execute_query(
             "UPDATE users SET quiz_used = quiz_used + 1 WHERE name=%s",
             (session['user'],)
         )
-        db.commit()
-        db.close()
 
-        return render_template(
-            "quiz_result.html",
-            score=score,
-            results=results
-        )
-
-    except Exception as e:
-        print("Quiz Error:", e)
-        return "⚠️ Something went wrong in quiz system"
-
+    return render_template("quiz_result.html", score=score, results=results)
 # ---------------- TIP ----------------
+from flask import jsonify
+
 @app.route('/get_tip')
 def get_tip():
-     return {"tips":random.sample(tips_list, min(3, len(tips_list)))}
+    return jsonify({
+        "tips": random.sample(tips_list, min(3, len(tips_list)))
+    })
 
 
 @app.route('/check_email', methods=['POST'])
@@ -1098,6 +1079,7 @@ def scan_file():
         print("File Scan Error:", e)
         return "❌ File scan failed"
         
+@app.route('/admin', methods=['GET', 'POST'])        
 def admin():
     if request.method == 'POST':
         try:
