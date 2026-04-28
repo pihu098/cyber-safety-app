@@ -8,7 +8,7 @@ Cyber Safety Advisor is a web-based cybersecurity platform that helps users dete
 - Email verification system  
 - File scanning support  
 - Cyber safety learning tools  
-- Simple and interactive UI  
+- Simple and interactive UI.  
 
 ## 🛠️ Tech Stack
 - Python (Flask)  
