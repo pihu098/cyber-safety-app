@@ -1045,45 +1045,59 @@ def check_email():
         result=f"{result} (Score: {score}/100)",
         extra=" | ".join(warnings)
     )
-
+#--------file scan ----------------------
 @app.route('/scan_file', methods=['POST'])
 def scan_file():
 
-    file = request.files['file']   # ✅ ADD THIS LINE
+    try:
+        if 'file' not in request.files:
+            return "❌ No file uploaded"
 
-    content = file.read().decode(errors='ignore').lower()
+        file = request.files['file']
 
-    score = 100
-    warnings = []
+        if file.filename == '':
+            return "❌ No selected file"
 
-    bad_words = ["virus", "hack", "crack", "password", "keylogger"]
+        content = file.read().decode(errors='ignore').lower()
 
-    for word in bad_words:
-        if word in content:
-            score -= 15
-            warnings.append(f"⚠️ Suspicious: {word}")
+        score = 100
+        warnings = []
 
-    if file.filename.endswith(".exe"):
-        score -= 20
-        warnings.append("⚠️ Executable file")
+        bad_words = ["virus", "hack", "crack", "password", "keylogger"]
 
-    if score >= 80:
-        result = "✅ Safe File"
-        level = "Low Risk 🟢"
-    elif score >= 50:
-        result = "⚠️ Suspicious File"
-        level = "Medium Risk 🟡"
-    else:
-        result = "❌ Dangerous File"
-        level = "High Risk 🔴"
+        for word in bad_words:
+            if word in content:
+                score -= 15
+                warnings.append(f"⚠️ Suspicious: {word}")
 
-    return render_template(
-        "result.html",
-        result=f"{result} ({level})",
-        extra=" | ".join(warnings)
-    )
+        if file.filename.endswith(".exe"):
+            score -= 20
+            warnings.append("⚠️ Executable file")
 
-@app.route('/admin', methods=['GET', 'POST'])
+        if len(content.strip()) == 0:
+            score -= 30
+            warnings.append("⚠️ Empty or unreadable file")
+
+        if score >= 80:
+            result = "✅ Safe File"
+            level = "Low Risk 🟢"
+        elif score >= 50:
+            result = "⚠️ Suspicious File"
+            level = "Medium Risk 🟡"
+        else:
+            result = "❌ Dangerous File"
+            level = "High Risk 🔴"
+
+        return render_template(
+            "result.html",
+            result=f"{result} ({level})",
+            extra=" | ".join(warnings)
+        )
+
+    except Exception as e:
+        print("File Scan Error:", e)
+        return "❌ File scan failed"
+        
 def admin():
     if request.method == 'POST':
         try:
