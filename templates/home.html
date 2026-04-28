@@ -443,6 +443,26 @@ window.onload = function() {
 
 }
 </script>
+
+    <script>
+let welcomed = localStorage.getItem("welcomed");
+
+document.body.addEventListener("click", function() {
+
+    if(!welcomed){
+        let msg = new SpeechSynthesisUtterance(
+            "Welcome to Cyber Safety Guard. Hope it improves your knowledge and keeps you safe online."
+        );
+
+        msg.volume = 0.3;
+        speechSynthesis.speak(msg);
+
+        localStorage.setItem("welcomed", "yes");
+        welcomed = "yes";
+    }
+
+}, { once: true });  // 🔥 only first click
+</script>
     
 </body>
 </html>
