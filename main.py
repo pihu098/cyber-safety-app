@@ -1351,27 +1351,41 @@ def puzzle_check():
 @app.route('/game/puzzle/result')
 def puzzle_result():
 
-    score = session.get('puzzle_score', 0)
+    from datetime import date, timedelta
+
+    if 'user' not in session:
+        return redirect('/')
+
     user = session['user']
+
+    score = session.get('puzzle_score', 0)
 
     coins = score
     xp_gain = score
 
+    # 🔥 DB CONNECTION FIX
+    db = get_db()
+    cursor = db.cursor()
+
     # fetch user stats
-    cursor.execute("SELECT level, xp FROM users WHERE name=%s", (user,))
+    cursor.execute(
+        "SELECT level, xp FROM users WHERE name=%s",
+        (user,)
+    )
     data = cursor.fetchone()
 
-    level = data[0] or 1
-    xp = data[1] or 0
+    level = data[0] if data and data[0] else 1
+    xp = data[1] if data and data[1] else 0
 
     xp += xp_gain
 
-    # 🔥 DATE
-    from datetime import date, timedelta
     today = date.today()
 
-    # 🔥 streak fetch
-    cursor.execute("SELECT streak, last_play_date FROM users WHERE name=%s", (user,))
+    # streak fetch
+    cursor.execute(
+        "SELECT streak, last_play_date FROM users WHERE name=%s",
+        (user,)
+    )
     data2 = cursor.fetchone()
 
     if data2:
@@ -1381,33 +1395,25 @@ def puzzle_result():
         streak = 0
         last_date = None
 
-    # convert if string
     if last_date and not isinstance(last_date, date):
         last_date = date.fromisoformat(str(last_date))
 
-    # 🔥 STREAK LOGIC
     if last_date is None:
         streak = 1
-
     elif last_date == today:
         pass
-
     elif last_date == today - timedelta(days=1):
         streak += 1
-
     else:
         streak = 1
 
-    # 🔥 BONUS (NOW SAFE)
     if streak > 0 and streak % 7 == 0:
         coins += 20
 
-    # 🔥 LEVEL SYSTEM
     if xp >= 10:
         level += 1
         xp = 0
 
-    # update DB
     cursor.execute("""
         UPDATE users 
         SET coins = coins + %s,
@@ -1419,8 +1425,8 @@ def puzzle_result():
     """, (coins, level, xp, streak, today, user))
 
     db.commit()
+    db.close()
 
-    # 🔥 MESSAGE
     if streak == 1:
         msg = "🔥 Great start!"
     elif streak < 5:
