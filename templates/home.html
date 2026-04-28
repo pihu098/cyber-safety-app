@@ -366,24 +366,44 @@ window.onload = function() {
 
     
 <script>
-function loadTips(){
+function showTips(){
+
     fetch('/get_tip')
     .then(res => res.json())
     .then(data => {
-        let html = "";
+
+        let box = document.getElementById("tipsBox");
+
+        if(!box){
+            console.log("tipsBox not found");
+            return;
+        }
+
+        let html = "<h4>💡 Cyber Tips</h4>";
+
         data.tips.forEach(t => {
             html += "👉 " + t + "<br>";
         });
-        document.getElementById("tipsBox").innerHTML = html;
+
+        box.innerHTML = html;
+
+        box.style.padding = "10px";
+        box.style.background = "rgba(0,0,0,0.5)";
+        box.style.borderRadius = "10px";
+        box.style.marginTop = "10px";
+        box.style.color = "white";
+    })
+    .catch(err => {
+        console.log("Tips error:", err);
     });
 }
 
-
-if (localStorage.getItem("tips_on") === "on") {
-    loadTips();
-}
+// auto load on page open
+window.onload = function(){
+    showTips();
+};
 </script>
-
+    
 <script>
 // page load pe auto run
 showTips();
