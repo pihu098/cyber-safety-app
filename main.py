@@ -681,10 +681,10 @@ def login():
             db.commit()
 
             # 🔥 SESSION (MAIN PART)
-            session.permanent = True
+            
             session['user'] = user[1]     # name
             session['email'] = user[2]
-
+            session.permanent = True
             db.close()
             return redirect('/home')
 
@@ -776,8 +776,6 @@ def home():
         "home.html",
         name=session['user'],
         message="✅ Welcome to Cyber Safety Platform",
-        total_users=total_users,
-        total_logins=total_logins,
         quiz_used=quiz_used,
         password_used=password_used,
         coins=coins,
