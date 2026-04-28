@@ -1175,24 +1175,32 @@ def puzzle_start():
     if 'user' not in session:
         return redirect('/')
 
-    # 🔥 user ka level (default = 1)
-    level = session.get('level', 1)
+    # 🔥 safe level fetch
+    level = session.get('level')
 
-    # 🔥 questions fetch (level wise)
-    questions = puzzle_levels.get(level, puzzle_levels[1])
+    if not level:
+        level = 1
+        session['level'] = 1
 
-    # 🔀 random shuffle
+    # 🔥 get questions safely
+    questions = puzzle_levels.get(level)
+
+    # ⚠️ fallback if level empty
+    if not questions:
+        questions = puzzle_levels[1]
+
+    # 🔀 shuffle copy (IMPORTANT FIX)
+    questions = questions[:]  
     random.shuffle(questions)
 
-    # 🎯 session me save
+    # 🎯 reset game state
     session['puzzle_game'] = questions
     session['puzzle_index'] = 0
     session['puzzle_score'] = 0
-    session['lives'] = 5 
-    # 🚀 start game
-    return redirect('/game/puzzle/play')
+    session['lives'] = 5
 
-#---------submit result game-----------
+    return redirect('/game/puzzle/play')
+ #-------------puzzle win----------------   
 @app.route('/game/puzzle_win', methods=['POST'])
 def puzzle_win():
     if 'user' not in session:
@@ -1250,52 +1258,36 @@ def puzzle_play():
     if not game:
         return redirect('/game/puzzle/start')
 
+    if i >= len(game):
+        return redirect('/game/puzzle/result')
+
     if lives <= 0:
         return redirect('/game/puzzle/result')
 
-    # 🔥 FIXED MODE LOGIC
-    if i < 3:
-        q = game[i]
+    q = game[i]
+
+    # 🔥 auto detect type (SMART SYSTEM)
+    if "options" in q:
         mode = "mcq"
 
-    elif i < 5:
-        idx = i - 3
-        if idx < len(word_puzzles):
-            q = word_puzzles[idx]
-            mode = "word"
-        else:
-            return redirect('/game/puzzle/result')
+    elif "words" in q:
+        mode = "word"
 
-    elif i < 7:
-        idx = i - 5
-        if idx < len(sentence_puzzles):
-            q = sentence_puzzles[idx]
+        words = q["words"][:]
+        random.shuffle(words)
+        q["words"] = words
 
-        mode = random.choice(["sentence", "sentence_click"])
-
-        if "words" in q and isinstance(q["words"], list):
-            words = q["words"][:]
-            random.shuffle(words)
-            q["words"] = words
     else:
-        return redirect('/game/puzzle/result')
-        
-
-
-    print("INDEX:", i)
-    print("MODE:", mode)
-    print("QUESTION:", q)
+        mode = "sentence"
 
     return render_template(
         "puzzle_game.html",
         q=q,
         mode=mode,
         index=i + 1,
-        total=7,
+        total=len(game),
         lives=lives
     )
-
-
 
 # 🔥 PUZZLE CHECK
 # -------------------------------
@@ -1309,36 +1301,23 @@ def puzzle_check():
 
     answer = request.form.get("answer", "").strip().lower()
 
-    # 🧠 MCQ
-    if i < 3:
-        correct = game[i]['a'].strip().lower()   # ⚠️ ensure 'a' exists
-        if answer == correct:
-            score += 2
-        else:
-            lives -= 1
+    if not game or i >= len(game):
+        return redirect('/game/puzzle/result')
 
-    # 🧩 WORD
-    elif i < 5:
-        correct = word_puzzles[i - 3]['answer'].strip().lower()
-        if answer == correct:
-            score += 3
-        else:
-            lives -= 1
+    q = game[i]
 
-    # 🧠 SENTENCE
-    elif i < 7:
-        correct = sentence_puzzles[i - 5]['answer'].strip().lower()
-        if answer == correct:
-            score += 5
-        else:
-            lives -= 1
+    # 🔥 UNIVERSAL ANSWER KEY FIX
+    correct = q.get('a') or q.get('answer', '')
 
-    # 🔥 UPDATE SESSION
+    if answer == correct.strip().lower():
+        score += 5
+    else:
+        lives -= 1
+
     session['puzzle_score'] = score
     session['lives'] = lives
     session['puzzle_index'] = i + 1
 
-    # 💀 GAME OVER
     if lives <= 0:
         return redirect('/game/puzzle/result')
 
