@@ -420,6 +420,29 @@ setInterval(() => {
     i = (i + 1) % thoughts.length;
 }, 88000);
 </script>
+
+<script>
+window.onload = function() {
+
+    // 🔥 check first visit (repeat na ho)
+    if(!localStorage.getItem("welcomed")){
+
+        let msg = new SpeechSynthesisUtterance(
+            "Welcome to Cyber Safety Guard. Hope it improves your knowledge and keeps you safe online."
+        );
+
+        msg.rate = 1;
+        msg.pitch = 1;
+        msg.volume = 1;
+
+        speechSynthesis.speak(msg);
+
+        // ✅ mark as done
+        localStorage.setItem("welcomed", "yes");
+    }
+
+}
+</script>
     
 </body>
 </html>
