@@ -8,7 +8,7 @@ from datetime import date, timedelta
 import time
 import requests
 import mysql.connector
-
+import os
 os 
 app = Flask(__name__)
 app.secret_key = "secret123"
