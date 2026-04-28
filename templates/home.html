@@ -242,49 +242,43 @@ new Chart(document.getElementById('myChart'), config);
 
 <!-- 💡 CYBER TIP -->
  <script>
-function showTips() {
+function showTips(){
 
     fetch('/get_tip')
     .then(res => res.json())
     .then(data => {
 
-        document.querySelectorAll(".tipBox").forEach(el => el.remove());
-        let box = document.createElement("div");
- 
-        box.className = "tipBox";
-        let tipsHTML = "";
+        const box = document.getElementById("tipsBox");
+
+        if(!box){
+            console.log("tipsBox missing");
+            return;
+        }
+
+        let html = "<h4>💡 Cyber Tips</h4>";
 
         data.tips.forEach(t => {
-            tipsHTML += "👉 " + t + "<br>";
+            html += "👉 " + t + "<br>";
         });
 
-        // 🎨 STYLE
-        box.style.position = "fixed";
-        box.style.bottom = "20px";
-        box.style.left = "20px";
-        box.style.background = "#111";
-        box.style.color = "white";
-        box.style.padding = "15px";
+        box.innerHTML = html;
+
+        box.style.padding = "10px";
+        box.style.background = "rgba(0,0,0,0.5)";
         box.style.borderRadius = "10px";
-        box.style.boxShadow = "0 0 10px #00c6ff";
-        box.style.transition = "opacity 1s";   // 🔥 smooth fade
-        box.style.opacity = "1";
-
-        document.body.appendChild(box);
-
-        // ⏱️ Fade after 12 sec
-        setTimeout(() => {
-            box.style.opacity = "0";
-        }, 12000);
-
-        // ❌ Remove after 13 sec
-        setTimeout(() => {
-            box.remove();
-        }, 13000);
-    });
+        box.style.marginTop = "10px";
+        box.style.color = "white";
+    })
+    .catch(err => console.log("Tip error:", err));
 }
-</script>
 
+
+// 🔥 SAFE AUTO LOAD (IMPORTANT FIX)
+document.addEventListener("DOMContentLoaded", function () {
+    showTips();
+});
+
+</script>
 <!-- 🤖 AI CHATBOT -->
 <h3>🤖 AI Chatbot</h3>
 
