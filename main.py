@@ -496,7 +496,7 @@ tips_list = [
 "🧑‍💻 Use different passwords for different accounts",
 "🛑 Avoid saving passwords on shared devices",
 "📡 Turn off WiFi & Bluetooth when not needed",
-"🔍 Google unknown websites before trusting them",
+"🔍 check Google unknown websites before trusting them",
 "🧠 Don't panic in urgent messages — think first",
 "📦 Beware of fake delivery/scam messages",
 "🎮 Don't trust free game hacks or cheats",
