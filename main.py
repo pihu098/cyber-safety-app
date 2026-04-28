@@ -1175,25 +1175,46 @@ def puzzle_start():
     if 'user' not in session:
         return redirect('/')
 
-    # 🔥 safe level fetch
-    level = session.get('level')
+    # 🔥 increase play count
+    session['game_count'] = session.get('game_count', 0) + 1
 
-    if not level:
-        level = 1
-        session['level'] = 1
+    # 🔥 level = number of times played
+    level = session['game_count']
 
-    # 🔥 get questions safely
-    questions = puzzle_levels.get(level)
+    # cap level max 4 (optional safety)
+    if level > 4:
+        level = 4
 
-    # ⚠️ fallback if level empty
-    if not questions:
-        questions = puzzle_levels[1]
+    session['level'] = level
 
-    # 🔀 shuffle copy (IMPORTANT FIX)
-    questions = questions[:]  
-    random.shuffle(questions)
+    # 🔥 combine ALL questions
+    all_questions = []
 
-    # 🎯 reset game state
+    for k in puzzle_levels:
+        all_questions.extend(puzzle_levels[k])
+
+    # 🔥 remove duplicates (VERY IMPORTANT)
+    unique_questions = []
+    seen = set()
+
+    for q in all_questions:
+        key = q['q']
+        if key not in seen:
+            unique_questions.append(q)
+            seen.add(key)
+
+    # 🔀 shuffle
+    random.shuffle(unique_questions)
+
+    # 🔥 LEVEL BASED QUESTION COUNT
+    if level == 1:
+        questions = unique_questions[:5]
+    elif level == 2:
+        questions = unique_questions[:7]
+    else:
+        questions = unique_questions[:10]
+
+    # 🎯 reset session
     session['puzzle_game'] = questions
     session['puzzle_index'] = 0
     session['puzzle_score'] = 0
