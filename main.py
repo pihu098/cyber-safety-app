@@ -376,9 +376,8 @@ quiz = [
 {"q":"Click unknown USB devices?", "a":"no"}
 ]
 
-# ---------------- DATABASE ----------------
+# ---------------- DATABASE ---------------
 
-# 🔥 DB CONNECTION FUNCTION
 def get_db():
     db = mysql.connector.connect(
         host=os.getenv("DB_HOST"),
@@ -388,69 +387,94 @@ def get_db():
         port=int(os.getenv("DB_PORT", 3306)),
         autocommit=True
     )
-    db.ping(reconnect=True)  # auto reconnect
+    db.ping(reconnect=True)
     return db
 
+def execute_query(query, params=(), fetch=False):
+    db = get_db()
+    cursor = db.cursor()
 
-# 🔥 INIT TABLES (RUN ON START)
+    cursor.execute(query, params)
+
+    if fetch:
+        data = cursor.fetchall()
+        db.close()
+        return data
+
+    db.commit()
+    db.close()
+
 def init_db():
     try:
         db = get_db()
         cursor = db.cursor()
-        
 
         # ================= USERS TABLE =================
         cursor.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100),
-                email VARCHAR(100) UNIQUE,
-                password VARCHAR(255),
-                coins INT DEFAULT 0,
-                xp INT DEFAULT 0,
-                level INT DEFAULT 1,
-                streak INT DEFAULT 0,
-                logins INT DEFAULT 0,
-                password_used INT DEFAULT 0,
-                website_used INT DEFAULT 0,
-                quiz_used INT DEFAULT 0,
-                puzzle_wins INT DEFAULT 0,
-                last_play_date DATE
-            )
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100),
+            email VARCHAR(100) UNIQUE,
+            password VARCHAR(255),
+
+            coins INT DEFAULT 0,
+            xp INT DEFAULT 0,
+            level INT DEFAULT 1,
+            streak INT DEFAULT 0,
+            logins INT DEFAULT 0,
+
+            password_used INT DEFAULT 0,
+            website_used INT DEFAULT 0,
+            quiz_used INT DEFAULT 0,
+            puzzle_wins INT DEFAULT 0,
+
+            last_play_date DATE
+        )
         """)
 
         # ================= UPDATES TABLE =================
         cursor.execute("""
-            CREATE TABLE IF NOT EXISTS updates (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(255),
-                content TEXT,
-                filename VARCHAR(255),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
+        CREATE TABLE IF NOT EXISTS updates (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255),
+            content TEXT,
+            filename VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
         """)
 
         # ================= POSTS TABLE =================
         cursor.execute("""
-            CREATE TABLE IF NOT EXISTS posts (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                user VARCHAR(100),
-                content TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
+        CREATE TABLE IF NOT EXISTS posts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user VARCHAR(100),
+            content TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+        """)
+
+        # ================= PUZZLE PROGRESS TABLE (NEW 🔥) =================
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS puzzle_progress (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user VARCHAR(100),
+            level INT DEFAULT 1,
+            games_played INT DEFAULT 0,
+            best_score INT DEFAULT 0,
+            last_play DATE
+        )
         """)
 
         db.commit()
         db.close()
 
-        print("✅ All tables ready (users + updates + posts)")
+        print("✅ ALL TABLES READY (users + updates + posts + puzzle_progress)")
 
     except mysql.connector.Error as err:
-        print("❌ Database Error:", err)
+        print("❌ DB ERROR:", err)
 
     except Exception as e:
-        print("❌ General Error:", e)
-
+        print("❌ GENERAL ERROR:", e)
 
 # 🔥 DEBUG (optional)
 print("HOST =", os.getenv("DB_HOST"))
@@ -459,6 +483,8 @@ print("DB =", os.getenv("DB_NAME"))
 
 
 init_db()
+
+
 # ---------------- CYBER TIPS ----------------
 tips_list = [
 "Use strong passwords 🔐","Never share OTP 🚫","Check HTTPS before login 🌐",
@@ -923,14 +949,18 @@ def quiz_page():
 @app.route('/quiz_submit', methods=['POST'])
 def quiz_submit():
 
+    # 🔥 safety check
+    quiz_set = session.get('quiz_set')
+    if not quiz_set:
+        return redirect('/quiz')
+
     score = 0
-    quiz_set = session.get('quiz_set', [])
     results = []
 
-    for i in range(len(quiz_set)):
+    for i, q in enumerate(quiz_set):
 
         user_ans = (request.form.get(f"q{i}") or "").strip().lower()
-        correct_ans = quiz_set[i]['a'].strip().lower()
+        correct_ans = q['a'].strip().lower()
 
         if user_ans == correct_ans:
             score += 1
@@ -939,20 +969,32 @@ def quiz_submit():
             status = "❌ Wrong"
 
         results.append({
-            "question": quiz_set[i]['q'],
+            "question": q['q'],
             "your": user_ans,
             "correct": correct_ans,
             "status": status
         })
 
+    # 🔥 update DB only if user logged in
     if 'user' in session:
         execute_query(
             "UPDATE users SET quiz_used = quiz_used + 1 WHERE name=%s",
             (session['user'],)
         )
 
-    return render_template("quiz_result.html", score=score, results=results)
-# ---------------- TIP ----------------
+    # 🔥 optional: coins/xp reward system
+    if 'user' in session:
+        execute_query(
+            "UPDATE users SET coins = coins + %s, xp = xp + %s WHERE name=%s",
+            (score * 2, score, session['user'])
+        )
+
+    return render_template(
+        "quiz_result.html",
+        score=score,
+        results=results
+    )
+#------------tips------------
 from flask import jsonify
 
 @app.route('/get_tip')
@@ -1175,46 +1217,50 @@ def puzzle_start():
     if 'user' not in session:
         return redirect('/')
 
-    # 🔥 increase play count
+    # 🔥 safe game counter
     session['game_count'] = session.get('game_count', 0) + 1
+    game_count = session['game_count']
 
-    # 🔥 level = number of times played
-    level = session['game_count']
-
-    # cap level max 4 (optional safety)
-    if level > 4:
+    # 🎯 level system (smooth progression)
+    if game_count <= 1:
+        level = 1
+    elif game_count <= 2:
+        level = 2
+    elif game_count <= 4:
+        level = 3
+    else:
         level = 4
 
     session['level'] = level
 
-    # 🔥 combine ALL questions
+    # 🔥 collect all questions safely
     all_questions = []
-
     for k in puzzle_levels:
         all_questions.extend(puzzle_levels[k])
 
-    # 🔥 remove duplicates (VERY IMPORTANT)
-    unique_questions = []
+    # 🔥 safe dedup (NO CRASH)
     seen = set()
+    unique_questions = []
 
     for q in all_questions:
-        key = q['q']
+        key = q.get('q', str(q))   # safe fallback
         if key not in seen:
-            unique_questions.append(q)
             seen.add(key)
+            unique_questions.append(q)
 
-    # 🔀 shuffle
     random.shuffle(unique_questions)
 
-    # 🔥 LEVEL BASED QUESTION COUNT
+    # 🎯 level based question count
     if level == 1:
         questions = unique_questions[:5]
     elif level == 2:
         questions = unique_questions[:7]
+    elif level == 3:
+        questions = unique_questions[:9]
     else:
-        questions = unique_questions[:10]
+        questions = unique_questions[:12]
 
-    # 🎯 reset session
+    # 💾 session reset
     session['puzzle_game'] = questions
     session['puzzle_index'] = 0
     session['puzzle_score'] = 0
@@ -1346,54 +1392,37 @@ def puzzle_check():
 #--------game result----------------
 @app.route('/game/puzzle/result')
 def puzzle_result():
-
     from datetime import date, timedelta
 
     if 'user' not in session:
         return redirect('/')
 
     user = session['user']
-
     score = session.get('puzzle_score', 0)
 
-    coins = score
+    coins_gain = score
     xp_gain = score
 
-    # 🔥 DB CONNECTION FIX
     db = get_db()
     cursor = db.cursor()
 
-    # fetch user stats
     cursor.execute(
-        "SELECT level, xp FROM users WHERE name=%s",
+        "SELECT level, xp, streak, last_play_date FROM users WHERE name=%s",
         (user,)
     )
     data = cursor.fetchone()
 
-    level = data[0] if data and data[0] else 1
-    xp = data[1] if data and data[1] else 0
-
-    xp += xp_gain
+    level = data[0] if data else 1
+    xp = data[1] if data else 0
+    streak = data[2] if data else 0
+    last_date = data[3] if data else None
 
     today = date.today()
-
-    # streak fetch
-    cursor.execute(
-        "SELECT streak, last_play_date FROM users WHERE name=%s",
-        (user,)
-    )
-    data2 = cursor.fetchone()
-
-    if data2:
-        streak = data2[0] or 0
-        last_date = data2[1]
-    else:
-        streak = 0
-        last_date = None
 
     if last_date and not isinstance(last_date, date):
         last_date = date.fromisoformat(str(last_date))
 
+    # 🔥 streak system
     if last_date is None:
         streak = 1
     elif last_date == today:
@@ -1403,12 +1432,15 @@ def puzzle_result():
     else:
         streak = 1
 
-    if streak > 0 and streak % 7 == 0:
-        coins += 20
-
+    # 🔥 xp system
+    xp += xp_gain
     if xp >= 10:
         level += 1
         xp = 0
+
+    # 💰 bonus coins
+    if streak % 7 == 0:
+        coins_gain += 20
 
     cursor.execute("""
         UPDATE users 
@@ -1418,26 +1450,26 @@ def puzzle_result():
             streak = %s,
             last_play_date = %s
         WHERE name=%s
-    """, (coins, level, xp, streak, today, user))
+    """, (coins_gain, level, xp, streak, today, user))
 
     db.commit()
     db.close()
 
+    # 🔥 fun messages
     if streak == 1:
-        msg = "🔥 Great start!"
+        msg = "🔥 Fresh start!"
     elif streak < 5:
-        msg = "💪 Keep going!"
+        msg = "💪 Keep pushing!"
     elif streak < 10:
-        msg = "🚀 You're on fire!"
+        msg = "🚀 Fire mode!"
     else:
-        msg = "👑 Legend streak!"
+        msg = "👑 Legend unlocked!"
 
     return render_template(
         "result.html",
         result="🎯 Puzzle Completed!",
-        extra=f"🪙 +{coins} Coins | ⭐ XP Updated | 🔥 Streak: {streak} | {msg} | 📊 Level: {level}"
+        extra=f"🪙 +{coins_gain} Coins | ⭐ XP Updated | 🔥 Streak: {streak} | {msg} | 📊 Level: {level}"
     )
-
 # ---------------- RUN ----------------
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
