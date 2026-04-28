@@ -779,6 +779,9 @@ def chat():
 # ---------------- PASSWORD GENERATOR ----------------
 @app.route('/password', methods=['POST'])
 def password():
+    import random
+    import string
+
     length = int(request.form.get('length', 8))
     chars = ""
 
@@ -797,13 +800,24 @@ def password():
                                extra="")
 
     pwd = ''.join(random.choice(chars) for _ in range(length))
-   
-    cursor.execute("UPDATE users SET password_used = password_used + 1 WHERE name=%s", (session['user'],))
-    db.commit()
-    return render_template("result.html",
-                           result=f"Password: {pwd}",
-                           extra="🔐 Strong password generated")
 
+    # 🔥 FIX ADDED HERE
+    db = get_db()
+    cursor = db.cursor()
+
+    if 'user' in session:
+        cursor.execute(
+            "UPDATE users SET password_used = password_used + 1 WHERE name=%s",
+            (session['user'],)
+        )
+        db.commit()
+        db.close()
+
+    return render_template(
+        "result.html",
+        result=f"Password: {pwd}",
+        extra="🔐 Strong password generated"
+    )
 # ---------------- WEBSITE CHECK ----------------
 
 @app.route('/check', methods=['POST'])
