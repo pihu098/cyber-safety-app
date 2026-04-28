@@ -12,12 +12,10 @@ import os
 os 
 app = Flask(__name__)
 app.secret_key = "secret123"
+
+app.permanent_session_lifetime = timedelta(days=365)  # 1 YEAR LOGIN
 print("🔥 App starting...")
 
-
-
-
-# 🔥 ADD THIS
 @app.route('/')
 def home_page():
     return render_template("index.html")
@@ -27,7 +25,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # 🔥 safe create
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-ADMIN_PASSWORD = "admin123"  # changable.........
+ADMIN_PASSWORD = "priyanrkp098"  # changable.........
 
 #-----------------------puzzle---------------
 word_puzzles = [
@@ -465,6 +463,8 @@ def init_db():
         )
         """)
 
+        
+
         db.commit()
         db.close()
 
@@ -650,12 +650,17 @@ Stay calm & act fast!"""
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    # 🔥 already logged in → skip login page
+    if 'user' in session:
+        return redirect('/home')
+
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
 
-        db = get_db()  # 🔥 fresh connection
-        cursor = db.cursor(buffered=True)
+        db = get_db()
+        cursor = db.cursor()
 
         cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
         user = cursor.fetchone()
@@ -664,17 +669,21 @@ def login():
             db.close()
             return render_template("result.html",
                                    result="❌ User not found",
-                                   extra="Try again")
+                                   extra="Please signup first")
 
         if check_password_hash(user[3], password):
 
+            # 🔥 update login count
             cursor.execute(
                 "UPDATE users SET logins = COALESCE(logins,0) + 1 WHERE email=%s",
                 (email,)
             )
             db.commit()
 
-            session['user'] = user[1]
+            # 🔥 SESSION (MAIN PART)
+            session.permanent = True
+            session['user'] = user[1]     # name
+            session['email'] = user[2]
 
             db.close()
             return redirect('/home')
@@ -686,10 +695,18 @@ def login():
                                    extra="Try again")
 
     return render_template("index.html")
+#---------------auto login check---------------
+@app.route('/')
+def index():
+    # 🔥 auto-login if session exists
+    if 'user' in session:
+        return redirect('/home')
+    return render_template("index.html")
 
 # ---------------- SIGNUP ----------------
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -699,9 +716,9 @@ def signup():
         cursor = db.cursor()
 
         cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
-        existing_user = cursor.fetchone()
+        existing = cursor.fetchone()
 
-        if existing_user:
+        if existing:
             db.close()
             return render_template("result.html",
                                    result="❌ Email already exists",
@@ -715,9 +732,12 @@ def signup():
         db.commit()
         db.close()
 
-        return render_template("result.html",
-                               result="✅ Signup Successful",
-                               extra="Now login")
+        # 🔥 AUTO LOGIN AFTER SIGNUP
+        session.permanent = True
+        session['user'] = name
+        session['email'] = email
+
+        return redirect('/home')
 
     return render_template("signup.html")
 # ---------------- HOME ----------------
@@ -772,7 +792,7 @@ def home():
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.clear()
     return redirect('/')
 
 
@@ -1300,6 +1320,60 @@ def puzzle_win():
 
     return {"status": "win", "coins": 10}
 
+#----------load character ------------
+@app.route('/characters')
+def characters():
+    if 'user' not in session:
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("SELECT * FROM characters")
+    chars = cursor.fetchall()
+
+    cursor.execute("SELECT coins, character_id FROM users WHERE name=%s", (session['user'],))
+    user = cursor.fetchone()
+
+    return render_template("characters.html", chars=chars, user=user)
+
+
+#--------------------buy character---------------
+@app.route('/select_character/<int:cid>')
+def select_character(cid):
+    if 'user' not in session:
+        return redirect('/')
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # get character price
+    cursor.execute("SELECT price FROM characters WHERE id=%s", (cid,))
+    char = cursor.fetchone()
+
+    if not char:
+        return redirect('/characters')
+
+    price = char[0]
+
+    # get user coins
+    cursor.execute("SELECT coins FROM users WHERE name=%s", (session['user'],))
+    user = cursor.fetchone()
+    coins = user[0]
+
+    if coins >= price:
+        cursor.execute("""
+            UPDATE users 
+            SET coins = coins - %s, character_id=%s
+            WHERE name=%s
+        """, (price, cid, session['user']))
+        db.commit()
+    else:
+        return "❌ Not enough coins"
+
+    db.close()
+    return redirect('/characters')
+    
 #-------------leaderboard system-----------
 @app.route('/leaderboard')
 def leaderboard():
