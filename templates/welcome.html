@@ -30,7 +30,12 @@ h1 {
 </head>
 
 <body>
+<!-- 🔊 SOUND -->
+<audio id="bgSound" loop>
+    <source src="/static/sounds/bg.mp3" type="audio/mpeg">
+</audio>
 
+    
 <h1>🛡️ Welcome {{name}}</h1>
 <p>Loading your Cyber Safety Dashboard...</p>
 
@@ -38,7 +43,7 @@ h1 {
 window.onload = function(){
 
     let sound = document.getElementById("bgSound");
-    sound.volume = 0.2;   // halki creepy sound
+    sound.volume = 0.1;   // halki creepy sound
 
     // 5 sec baad dashboard
     setTimeout(function(){
@@ -47,10 +52,28 @@ window.onload = function(){
 
 }
 </script>
+    
+<script>
+window.onload = function(){
 
-    <audio id="bgSound" autoplay loop>
-    <source src="/static/sounds/bg.mp3" type="audio/mpeg">
-</audio>
+    let audio = document.getElementById("bgSound");
+
+    // 🔥 autoplay trick
+    audio.muted = true;
+    audio.play();
+
+    setTimeout(()=>{
+        audio.muted = false;
+        audio.volume = 0.1;
+    }, 1000);
+
+    // ⏱️ 5 sec baad redirect
+    setTimeout(function(){
+        window.location.href = "/home";
+    }, 5000);
+
+}
+</script>
     
 </body>
 </html>
