@@ -59,7 +59,7 @@ window.onload = function(){
 function startSound(){
     let audio = document.getElementById("bgSound");
     audio.volume = 0.1;
-    audio.play();
+    audio.play().catch(e => console.log("Blocked:", e));
 }
 </script>    
 
