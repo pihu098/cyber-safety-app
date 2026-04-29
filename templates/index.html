@@ -88,22 +88,19 @@ a {
 <script>
 function handleLogin(){
 
-    // 🔊 AI voice
-    let msg = new SpeechSynthesisUtterance("Welcome to Cyber Safety Guard");
-    msg.volume = 0.3;
-    speechSynthesis.speak(msg);
-
-    // 🔊 background sound
     let audio = document.getElementById("clickSound");
     audio.volume = 0.2;
     audio.play();
 
-    // ⏳ delay for smooth feel
+    // 🔥 mark that sound started
+    sessionStorage.setItem("sound_on", "yes");
+
+    // ⏳ delay
     setTimeout(()=>{
         document.querySelector("form").submit();
     }, 800);
 
-    return false; // 🔥 stop instant submit
+    return false;
 }
 </script>
 
