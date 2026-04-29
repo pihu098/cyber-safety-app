@@ -82,6 +82,27 @@ button:hover {
     100% { transform: translateY(0px); }
 } 
 </style>
+
+<style>
+.character {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 45px;
+    z-index: 999;
+
+    animation: dance 1s infinite;
+}
+
+/* 🔥 dance animation */
+@keyframes dance {
+    0%   { transform: rotate(0deg); }
+    25%  { transform: rotate(10deg); }
+    50%  { transform: rotate(-10deg); }
+    75%  { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+</style>    
 </head>
 
 <body>
@@ -112,7 +133,9 @@ button:hover {
 <div id="tipsBox"></div>
 </div>
 
-
+<div class="character" id="character">
+    🤖
+</div>
 
 
 <!-- 📊 STATS -->
@@ -506,6 +529,28 @@ window.onload = function(){
     let bg = document.getElementById("bgMusic");
     bg.volume = 0.08;
     bg.play().catch(()=>{});
+
+}
+</script>
+
+<script>
+document.getElementById("character").onclick = function(){
+    this.style.transform = "scale(1.5)";
+    setTimeout(()=>{
+        this.style.transform = "scale(1)";
+    }, 200);
+}
+</script>
+
+    
+ <script>
+window.onload = function(){
+
+    let savedChar = localStorage.getItem("character");
+
+    if(savedChar){
+        document.getElementById("character").innerHTML = savedChar;
+    }
 
 }
 </script>
