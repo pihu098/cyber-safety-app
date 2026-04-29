@@ -35,24 +35,22 @@ h1 {
 <p>Loading your Cyber Safety Dashboard...</p>
 
 <script>
+window.onload = function(){
 
-// 🎤 VOICE (login ke baad hi chalega)
-let msg = new SpeechSynthesisUtterance(
-    "Welcome to Cyber Safety Guard. Stay safe and keep learning."
-);
+    let sound = document.getElementById("bgSound");
+    sound.volume = 0.2;   // halki creepy sound
 
-msg.rate = 1;
-msg.pitch = 1;
-msg.volume = 1;
+    // 5 sec baad dashboard
+    setTimeout(function(){
+        window.location.href = "/home";
+    }, 5000);
 
-speechSynthesis.speak(msg);
-
-// ⏳ 3 sec baad dashboard open
-setTimeout(() => {
-    window.location.href = "/home";
-}, 3000);
-
+}
 </script>
 
+    <audio id="bgSound" autoplay loop>
+    <source src="/static/sounds/bg.mp3" type="audio/mpeg">
+</audio>
+    
 </body>
 </html>
