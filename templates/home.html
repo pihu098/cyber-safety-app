@@ -493,5 +493,21 @@ window.onload = function(){
 }
 </script>
     
+<script>
+window.onload = function(){
+
+    // ❌ click sound band
+    let click = document.getElementById("clickSound");
+    click.pause();
+    click.currentTime = 0;
+
+    // ✅ dashboard sound ON
+    let bg = document.getElementById("bgMusic");
+    bg.volume = 0.08;
+    bg.play().catch(()=>{});
+
+}
+</script>
+    
 </body>
 </html>
