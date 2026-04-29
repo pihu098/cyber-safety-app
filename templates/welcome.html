@@ -30,32 +30,38 @@ h1 {
 </head>
 
 <body>
-
+<body onclick="startSound()">
 <!-- 🔊 background sound -->
-<audio id="bgSound" autoplay loop>
-    <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
+<audio id="bgSound" loop>
+    <source src="/static/uploads/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
 </audio>
 
-<h1>🛡️ Welcome {{name}}</h1>
-<p>Loading your Cyber Safety Dashboard...</p>
 <script>
 window.onload = function(){
 
     let audio = document.getElementById("bgSound");
 
-    // 🔥 check if sound started from login
-    if(sessionStorage.getItem("sound_on") === "yes"){
-        audio.volume = 0.1;
-        audio.play().catch(e => console.log("Blocked:", e));
-    }
+    audio.volume = 0.1;
 
-    // ⏱️ 7 sec baad dashboard
-    setTimeout(function(){
+    audio.play().then(()=>{
+        console.log("Sound started");
+    }).catch(e=>{
+        console.log("Blocked:", e);
+    });
+
+    setTimeout(()=>{
         window.location.href = "/home";
     }, 7000);
 }
 </script>
 
+<script>
+function startSound(){
+    let audio = document.getElementById("bgSound");
+    audio.volume = 0.1;
+    audio.play();
+}
+</script>    
 
 </body>
 </html>
