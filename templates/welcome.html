@@ -38,22 +38,24 @@ h1 {
 
 <h1>🛡️ Welcome {{name}}</h1>
 <p>Loading your Cyber Safety Dashboard...</p>
-
 <script>
 window.onload = function(){
 
     let audio = document.getElementById("bgSound");
 
-    // 🔥 halki sound
-    audio.volume = 0.1;
+    // 🔥 check if sound started from login
+    if(sessionStorage.getItem("sound_on") === "yes"){
+        audio.volume = 0.1;
+        audio.play().catch(e => console.log("Blocked:", e));
+    }
 
     // ⏱️ 7 sec baad dashboard
     setTimeout(function(){
         window.location.href = "/home";
     }, 7000);
-
 }
 </script>
+
 
 </body>
 </html>
