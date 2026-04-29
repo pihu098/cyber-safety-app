@@ -21,6 +21,11 @@ h1 {
     animation: glow 1.5s infinite alternate;
 }
 
+p {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
 @keyframes glow {
     from { text-shadow: 0 0 10px #00c6ff; }
     to { text-shadow: 0 0 25px #00c6ff; }
@@ -29,39 +34,29 @@ h1 {
 
 </head>
 
-<body>
 <body onclick="startSound()">
-<!-- 🔊 background sound -->
+
+<!-- 🔊 SOUND -->
 <audio id="bgSound" loop>
     <source src="/static/uploads/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
 </audio>
 
+<h1>🛡️ Welcome {{name}}</h1>
+<p>Tap anywhere to continue...</p>
+
 <script>
-window.onload = function(){
+function startSound(){
 
     let audio = document.getElementById("bgSound");
-
     audio.volume = 0.1;
+    audio.play().catch(()=>{});
 
-    audio.play().then(()=>{
-        console.log("Sound started");
-    }).catch(e=>{
-        console.log("Blocked:", e);
-    });
-
+    // ⏱️ redirect after 7 sec
     setTimeout(()=>{
         window.location.href = "/home";
     }, 7000);
 }
 </script>
-
-<script>
-function startSound(){
-    let audio = document.getElementById("bgSound");
-    audio.volume = 0.1;
-    audio.play().catch(e => console.log("Blocked:", e));
-}
-</script>    
 
 </body>
 </html>
