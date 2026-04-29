@@ -60,23 +60,53 @@ a {
 
 <body>
 
+<!-- 🔊 SOUND -->
+<audio id="clickSound">
+    <source src="/static/uploads/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
+</audio>
+
 <div class="container">
 <h2>📝 Create Account</h2>
 
-<form method="POST">
+<!-- 🔥 SINGLE FORM ONLY -->
+<form method="POST" action="/signup" onsubmit="return handleSignup()">
+
 <input name="name" placeholder="Name" required><br>
 <input type="email" name="email" placeholder="Email" required><br>
 <input type="password" name="password" placeholder="Password" required><br>
 
-<button>Create Account</button>
+<button type="submit">Create Account</button>
+
 </form>
 
 <p>Already have an account?</p>
 <a href="/">
-<button>Login</button>
+<button type="button">Login</button>
 </a>
 
 </div>
+
+<script>
+function handleSignup(){
+
+    // 🎤 voice
+    let msg = new SpeechSynthesisUtterance("Welcome to Cyber Safety Guard");
+    msg.volume = 0.3;
+    speechSynthesis.speak(msg);
+
+    // 🔊 sound
+    let audio = document.getElementById("clickSound");
+    audio.volume = 0.2;
+    audio.play();
+
+    // ⏳ delay
+    setTimeout(()=>{
+        document.querySelector("form").submit();
+    }, 800);
+
+    return false;
+}
+</script>
 
 </body>
 </html>
