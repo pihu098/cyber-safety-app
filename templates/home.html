@@ -490,32 +490,9 @@ window.addEventListener("click", function () {
 }, { once: true });
 </script>
 
-<script>
-window.onload = function(){
 
-    let audio = document.getElementById("bgMusic");
 
-    // 🔥 play only on dashboard
-    audio.volume = 0.08;
-    audio.play().catch(()=>{});
 
-    // 🔥 mark dashboard active
-    sessionStorage.setItem("on_dashboard", "yes");
-}
-</script>  
-
-<script>
-window.onload = function(){
-
-    let audio = document.getElementById("bgMusic");
-
-    if(sessionStorage.getItem("on_dashboard") === "yes"){
-        audio.volume = 0.05;
-        audio.play().catch(()=>{});
-    }
-
-}
-</script>
     
 <script>
 window.onload = function(){
@@ -555,6 +532,27 @@ document.getElementById("character").onclick = function(){
 }
 </script>
 
-        
+<script>
+function startMusic(){
+    let audio = document.getElementById("bgMusic");
+
+    audio.volume = 0.05;
+
+    audio.play().then(()=>{
+        console.log("Music started");
+    }).catch(e=>{
+        console.log("Autoplay blocked, waiting for click...");
+    });
+}
+
+// 🔥 try autoplay
+window.onload = startMusic;
+
+// 🔥 अगर autoplay block हो जाए → user click से start
+document.addEventListener("click", function(){
+    startMusic();
+}, { once: true });
+</script>
+    
 </body>
 </html>
