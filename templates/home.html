@@ -86,6 +86,11 @@ button:hover {
 
 <body>
 
+<audio id="bgSound" autoplay loop>
+    <source src="/static/sounds/bg.mp3" type="audio/mpeg">
+</audio>
+    
+
 <div class="logout">
 <a href="/logout"><button>Logout</button></a>
 </div>
@@ -462,6 +467,18 @@ document.body.addEventListener("click", function() {
     }
 
 }, { once: true });  // 🔥 only first click
+</script>
+
+<script>
+let sound = document.getElementById("bgSound");
+sound.volume = 0.05;   // aur halka dashboard me
+</script>    
+
+<script>
+window.addEventListener("click", function () {
+    let audio = document.getElementById("bgSound");
+    audio.play();
+}, { once: true });
 </script>
     
 </body>
