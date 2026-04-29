@@ -31,39 +31,27 @@ h1 {
 
 <body>
 
-<!-- 🔊 SOUND -->
-<audio id="bgSound" loop>
+<!-- 🔊 background sound -->
+<audio id="bgSound" autoplay loop>
     <source src="/static/sounds/bg.mp3" type="audio/mpeg">
 </audio>
 
 <h1>🛡️ Welcome {{name}}</h1>
-<p>Tap anywhere to continue...</p>
-
-<!-- 🔥 START BUTTON (SAFE METHOD) -->
-<button onclick="startApp()" style="
-    margin-top:20px;
-    padding:10px 20px;
-    background:#00c6ff;
-    border:none;
-    border-radius:10px;
-    color:white;
-    cursor:pointer;
-">
-Start 🚀
-</button>
+<p>Loading your Cyber Safety Dashboard...</p>
 
 <script>
-function startApp(){
+window.onload = function(){
 
     let audio = document.getElementById("bgSound");
 
+    // 🔥 halki sound
     audio.volume = 0.1;
-    audio.play().catch(e => console.log("Blocked:", e));
 
-    // 🔥 smooth delay then redirect
-    setTimeout(()=>{
+    // ⏱️ 7 sec baad dashboard
+    setTimeout(function(){
         window.location.href = "/home";
-    }, 10000);
+    }, 7000);
+
 }
 </script>
 
