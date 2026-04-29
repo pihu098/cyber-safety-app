@@ -85,9 +85,11 @@ button:hover {
 </head>
 
 <body>
-<audio id="bgSound">
-    <source src="/static/uploads/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
+<audio id="clickSound">
+    <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
 </audio>
+
+    
 <audio id="bgMusic" loop>
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
 </audio>
@@ -337,25 +339,6 @@ document.getElementById("reply").innerText = data;
 }
 </script>
 
-<script>
-function toggleTips(){
-
-    let status = localStorage.getItem("tips_on");
-
-    // 👉 agar already ON hai to kuch mat karo
-    if(status === "on"){
-        alert("✅ Tips already enabled");
-        showTips();
-        return;
-    }
-
-    // 👉 first time ON karo
-    localStorage.setItem("tips_on","on");
-    alert("✅ Tips Enabled");
-
-    showTips();   // start tips
-}
-</script>
 
 <script>
 window.onload = function() {
