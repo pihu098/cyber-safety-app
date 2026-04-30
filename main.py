@@ -793,6 +793,17 @@ def home():
 
     return redirect('/')
 
+#-----------profile page--------------
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        return redirect('/')
+
+    return render_template("profile.html",
+                           name=session['user'],
+                           level=5,   # अभी dummy
+                           stats="Coming Soon")
+
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
