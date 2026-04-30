@@ -210,44 +210,77 @@ body {
 <p>Puzzle</p>
 </a>
 
-<a href="/password" class="card">
-<div class="icon">🔐</div>
-<p>Password</p>
-</a>
+ <!-- PASSWORD -->
+    <div class="card">
+        <div class="icon">🔐</div>
+        <p>Password</p>
 
-<a href="/check" class="card">
-<div class="icon">🌐</div>
-<p>Website</p>
-</a>
+        <form method="POST" action="/password">
+            <input type="number" name="length" placeholder="Length"><br>
+            <button>Go</button>
+        </form>
+    </div>
+ <!-- WEBSITE -->
+    <div class="card">
+        <div class="icon">🌐</div>
+        <p>Website</p>
 
-<a href="/check_email" class="card">
-<div class="icon">📧</div>
-<p>Email</p>
-</a>
+        <form method="POST" action="/check">
+            <input type="text" name="url" placeholder="URL"><br>
+            <button>Check</button>
+        </form>
+    </div>
 
-<a href="/quiz" class="card">
-<div class="icon">🎯</div>
-<p>Quiz</p>
-</a>
+    <!-- EMAIL -->
+    <div class="card">
+        <div class="icon">📧</div>
+        <p>Email</p>
 
-<a href="/updates" class="card">
-<div class="icon">📢</div>
-<p>Updates</p>
-</a>
+        <form method="POST" action="/check_email">
+            <textarea name="email" placeholder="Paste email"></textarea><br>
+            <button>Check</button>
+        </form>
+    </div>
 
-<a href="#" class="card">
-    <div class="icon">🔥</div>
-    <p>Streak</p>
-    <small>{{streak}} days</small>
-</a>
+    <!-- FILE SCANNER ✅ FIXED -->
+    <div class="card">
+        <div class="icon">📁</div>
+        <p>Scanner</p>
 
-<a href="#" class="card">
-    <div class="icon">📊</div>
-    <p>Stats</p>
-    <small>Level {{level}}</small>
-</a>    
-<a href="/stats" class="card">
+        <form method="POST" action="/scan_file" enctype="multipart/form-data">
+            <input type="file" name="file"><br>
+            <button>Scan</button>
+        </form>
+    </div>
+
+    <!-- QUIZ -->
+    <a href="/quiz" class="card">
+        <div class="icon">🎯</div>
+        <p>Quiz</p>
+    </a>
+
+    <!-- UPDATES -->
+    <a href="/updates" class="card">
+        <div class="icon">📢</div>
+        <p>Updates</p>
+    </a>
+
+    <!-- STREAK -->
+    <div class="card">
+        <div class="icon">🔥</div>
+        <p>Streak</p>
+        <small>{{streak}} days</small>
+    </div>
+
+    <!-- STATS -->
+    <div class="card">
+        <div class="icon">📊</div>
+        <p>Stats</p>
+        <small>Level {{level}}</small>
+    </div>
+
 </div>
+
 
 <!-- 🤖 CHARACTER -->
 <div class="character" id="character">
