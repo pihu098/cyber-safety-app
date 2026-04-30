@@ -75,7 +75,11 @@ body {
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0); }
 }    
-
+    
+.card a {
+    color: white;
+    text-decoration: none;
+}
 </style>
 </head>
 
@@ -160,6 +164,18 @@ body {
 <p>Updates</p>
 </a>
 
+<a href="#" class="card">
+    <div class="icon">🔥</div>
+    <p>Streak</p>
+    <small>{{streak}} days</small>
+</a>
+
+<a href="#" class="card">
+    <div class="icon">📊</div>
+    <p>Stats</p>
+    <small>Level {{level}}</small>
+</a>    
+<a href="/stats" class="card">
 </div>
 
 <!-- 🤖 CHARACTER -->
