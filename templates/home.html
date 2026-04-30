@@ -11,9 +11,8 @@ body {
     text-align: center;
 }
 
-.header {
-    margin-top: 20px;
-}
+/* HEADER */
+.header { margin-top: 20px; }
 
 .logout {
     position: absolute;
@@ -21,538 +20,207 @@ body {
     right: 20px;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 20px;
 }
 
 .card {
     background: rgba(255,255,255,0.1);
     padding: 20px;
-    margin: 20px;
-    width: 300px;
     border-radius: 15px;
-    backdrop-filter: blur(10px);
+    text-decoration: none;
+    color: white;
     transition: 0.3s;
 }
 
 .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #00c6ff;
+    transform: scale(1.08);
+    box-shadow: 0 0 15px #00c6ff;
 }
 
-input {
-    padding: 10px;
-    margin: 10px;
-    border-radius: 8px;
-    border: none;
-    width: 80%;
-}
-
-button {
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
+.icon {
+    width: 60px;
+    height: 60px;
     background: #00c6ff;
-    color: white;
-    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: 28px;
 }
-
-button:hover {
-    background: #0072ff;
-}
-   #cyberThought {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: linear-gradient(45deg, #00c6ff, #0072ff);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 20px;
+.card p {
+    margin-top: 10px;
     font-size: 14px;
-    box-shadow: 0 0 10px #00c6ff;
-    z-index: 999;
-    animation: float 3s ease-in-out infinite;
 }
-
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0px); }
-} 
-</style>
-
-<style>
 .character {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    font-size: 45px;
     z-index: 999;
-
-    animation: dance 1s infinite;
 }
 
-/* 🔥 dance animation */
-@keyframes dance {
-    0%   { transform: rotate(0deg); }
-    25%  { transform: rotate(10deg); }
-    50%  { transform: rotate(-10deg); }
-    75%  { transform: rotate(10deg); }
-    100% { transform: rotate(0deg); }
+.character img {
+    width: 70px;
+    height: 70px;
+    animation: float 2s infinite ease-in-out;
 }
-</style>    
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}    
+
+</style>
 </head>
 
 <body>
 
-
-<audio id="clickSound">
-    <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
+<!-- 🔊 SOUND -->
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
 </audio>
 
-<audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3">
-</audio>    
-
-    
 <div class="logout">
 <a href="/logout"><button>Logout</button></a>
 </div>
 
 <div class="header">
 <h2>Welcome {{name}} 👋</h2>
-<p>{{message}}</p>
-<h3> Cyber Safety Dashboard</h3>
+<h3>Cyber Safety Dashboard</h3>
 </div>
 
-<div class="card">
-<h3>💡 Smart Tips Panel</h3>
-<button onclick="showTips()">Show Tips</button>
-<div id="tipsBox"></div>
+<!-- 🔥 GRID FEATURES -->
+<div class="grid">
+
+<a href="/community" class="card">
+<div class="icon">👥</div>
+<p>Community</p>
+</a>
+
+<a href="/leaderboard" class="card">
+<div class="icon">🏆</div>
+<p>Leaders</p>
+</a>
+
+<a href="/game/puzzle/start" class="card">
+<div class="icon">🧩</div>
+<p>Puzzle</p>
+</a>
+
+<a href="/password" class="card">
+<div class="icon">🔐</div>
+<p>Password</p>
+</a>
+
+<a href="/check" class="card">
+<div class="icon">🌐</div>
+<p>Website</p>
+</a>
+
+<a href="/check_email" class="card">
+<div class="icon">📧</div>
+<p>Email</p>
+</a>
+
+<a href="/quiz" class="card">
+<div class="icon">🎯</div>
+<p>Quiz</p>
+</a>
+
+<a href="/updates" class="card">
+<div class="icon">📢</div>
+<p>Updates</p>
+</a>
+
 </div>
 
+<!-- 🤖 CHARACTER -->
 <div class="character" id="character">
-    🤖
+    <img src="/static/characters/bot.gif" id="charImg">
 </div>
-
-
-<!-- 📊 STATS -->
-<div class="card">
-<h3>📊 Your Stats</h3>
-
-<p>Quiz Used: {{quiz_used}}</p>
-<p>Password Generator Used: {{password_used}}</p>
-<p>Website Checker Used: {{website_used}}</p>
-
-<p>🪙 Coins: {{coins}}</p>
-<p>📊 Level: {{level}}</p>
-<p>⭐ XP: {{xp}}</p>
-</div>
-
-  <div class="card">
-    <h3>🚨 Helplines</h3>
-
-    <p><a href="tel:1091" style="color:white; text-decoration:none;">👩 Women: 1091</a></p>
-    <p><a href="tel:1098" style="color:white; text-decoration:none;">🧒 Child: 1098</a></p>
-    <p><a href="tel:100" style="color:white; text-decoration:none;">🚓 Police: 100</a></p>
-    <p><a href="tel:102" style="color:white; text-decoration:none;">🚑 Ambulance: 102 / 108</a></p>
-    <p><a href="tel:101" style="color:white; text-decoration:none;">🔥 Fire: 101</a></p>
-    <p><a href="tel:1930" style="color:white; text-decoration:none;">💻 Cyber: 1930</a></p>
-</div>  
-
     
-<!-- 🔥 MAIN FEATURES -->
-<div class="container">
-    <div class="card">
-<h3>💬 Community</h3>
-<a href="/community"><button>Open</button></a>
-</div>
+<!-- 💡 TIPS -->
+<div id="tipsBox"></div>
 
-<div class="card">
-<h3>🏆 Leaderboard</h3>
-<a href="/leaderboard"><button>View</button></a>
-</div>
-
-<div class="card">
-<h3>📊 Your Activity Graph</h3>
-
-<canvas id="myChart" width="300" height="200"></canvas>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-let password_used = {{password_used}};
-let website_used = {{website_used}};
-let quiz_used = {{quiz_used}};
-const data = {
-    labels: ['Password', 'Website', 'Quiz'],
-    datasets: [{
-        label: 'Usage',
-        data: [password_used, website_used, quiz_used]
-    }]
-};
-
-
-
-
-
-const config = {
-    type: 'bar',
-    data: data
-};
-
-new Chart(document.getElementById('myChart'), config);
-</script>
-
-</div>
-
-<div class="card">
-<h3>🧩 Cyber Puzzle Game</h3>
-<a href="/game/puzzle/start"><button>Play</button></a>
-</div>
-
-<!-- PASSWORD -->
-<div class="card">
-<h3>🔐 Password Generator</h3>
-<form method="POST" action="/password">
-<input type="number" name="length" placeholder="Length" required><br>
-
-<label><input type="checkbox" name="upper"> A-Z</label><br>
-<label><input type="checkbox" name="lower"> a-z</label><br>
-<label><input type="checkbox" name="digits"> 0-9</label><br>
-<label><input type="checkbox" name="symbols"> @#$</label><br><br>
-
-<button>Generate</button>
-</form>
-</div>
-
-
-<div class="card">
-<h3>🔥 Streak</h3>
-<p>Current Streak: {{streak}} days</p>
-</div>
-
-<!-- WEBSITE CHECK -->
-<div class="card">
-<h3>🌐 Website Checker</h3>
-<form method="POST" action="/check">
-<input type="text" name="url" placeholder="Enter URL" required><br>
-<button>Check</button>
-</form>
-</div>
-
-<div class="card">
-<h3>📧 Email Checker</h3>
-<form method="POST" action="/check_email">
-<textarea name="email" placeholder="Paste email..."></textarea><br>
-<button>Check</button>
-</form>
-</div>
-
-<div class="card">
-<h3>📁 File Scanner</h3>
-<form method="POST" action="/scan_file" enctype="multipart/form-data">
-<input type="file" name="file"><br>
-<button>Scan</button>
-</form>
-</div>
-
-<!-- QUIZ -->
-<div class="card">
-   <h3>🎯 Cyber Quiz</h3>
-   <a href="/quiz"><button>Start Quiz</button></a>
-</div>
-
-<div class="card">
-<h3>📢 Updates</h3>
-<a href="/updates"><button>View Updates</button></a>
-</div>
-
-
-</div> <!-- ✅ container close -->
-
-<!-- 💡 CYBER TIP -->
- <script>
-function showTips(){
-
-    fetch('/get_tip')
-    .then(res => res.json())
-    .then(data => {
-
-        const box = document.getElementById("tipsBox");
-
-        if(!box){
-            console.log("tipsBox missing");
-            return;
-        }
-
-        let html = "<h4>💡 Cyber Tips</h4>";
-
-        data.tips.forEach(t => {
-            html += "👉 " + t + "<br>";
-        });
-
-        box.innerHTML = html;
-
-        box.style.padding = "10px";
-        box.style.background = "rgba(0,0,0,0.5)";
-        box.style.borderRadius = "10px";
-        box.style.marginTop = "10px";
-        box.style.color = "white";
-    })
-    .catch(err => console.log("Tip error:", err));
-}
-
-
-// 🔥 SAFE AUTO LOAD (IMPORTANT FIX)
-document.addEventListener("DOMContentLoaded", function () {
-    showTips();
-});
-
-</script>
-<!-- 🤖 AI CHATBOT -->
-<h3>🤖 AI Chatbot</h3>
-
-<input id="msg" name="message" placeholder="Ask something...">
+<!-- 🤖 CHAT -->
+<h3>AI Chatbot</h3>
+<input id="msg" placeholder="Ask...">
 <button onclick="sendMsg()">Send</button>
-
 <p id="reply"></p>
 
 <script>
 async function sendMsg(){
-let msg = document.getElementById("msg").value;
-
-let res = await fetch("/chat", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: "message=" + encodeURIComponent(msg)
-});
-
-let data = await res.text();
-document.getElementById("reply").innerText = data;
-}
-</script>
-
-
-<div class="card">
-<h3>📄 Updates (PDF)</h3>
-<a href="/admin"><button>Admin Panel</button></a>
-</div>
-
-<script>
-
-
-
-       
-        box.style.position = "fixed";
-        box.style.bottom = "20px";
-        box.style.left = "20px";
-        box.style.background = "#111";
-        box.style.padding = "15px";
-        box.style.borderRadius = "10px";
-        box.style.boxShadow = "0 0 10px #00c6ff";
-
-        document.body.appendChild(box);
-
-        setTimeout(() => box.remove(), 7000);
+    let msg = document.getElementById("msg").value;
+    let res = await fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type":"application/x-www-form-urlencoded"},
+        body: "message="+encodeURIComponent(msg)
     });
+    document.getElementById("reply").innerText = await res.text();
 }
 </script>
 
-
+<!-- 🔥 ALL LOGIC (CLEAN) -->
 <script>
-window.onload = function() {
-    if(localStorage.getItem("tips_on") === "on"){
-        showTips();
-    }
-}
 
-
-    
-<script>
-function showTips(){
-
-    fetch('/get_tip')
-    .then(res => res.json())
-    .then(data => {
-
-        let box = document.getElementById("tipsBox");
-
-        if(!box){
-            console.log("tipsBox not found");
-            return;
-        }
-
-        let html = "<h4>💡 Cyber Tips</h4>";
-
-        data.tips.forEach(t => {
-            html += "👉 " + t + "<br>";
-        });
-
-        box.innerHTML = html;
-
-        box.style.padding = "10px";
-        box.style.background = "rgba(0,0,0,0.5)";
-        box.style.borderRadius = "10px";
-        box.style.marginTop = "10px";
-        box.style.color = "white";
-    })
-    .catch(err => {
-        console.log("Tips error:", err);
-    });
-}
-
-// auto load on page open
-window.onload = function(){
-    showTips();
-};
-</script>
-    
-<script>
-// page load pe auto run
-showTips();
-</script>
-
-    
-<script>
-let thoughts = [
-"🛡️ Your Safety is Your Responsibility",
-"⚠️ Think Before You Click",
-"🔐 Strong Password = Strong Security",
-"🚨 Your Data = Your Identity",
-"💻 Hackers Need One Mistake",
-"🔍 Verify Before You Trust"
-];
-
-let i = 0;
-setInterval(() => {
-    document.getElementById("cyberThought").innerText = thoughts[i];
-    i = (i + 1) % thoughts.length;
-}, 88000);
-</script>
-
-<script>
-window.onload = function() {
-
-    // 🔥 check first visit (repeat na ho)
-    if(!localStorage.getItem("welcomed")){
-
-        let msg = new SpeechSynthesisUtterance(
-            "Welcome to Cyber Safety Guard. Hope it improves your knowledge and keeps you safe online."
-        );
-
-        msg.rate = 1;
-        msg.pitch = 1;
-        msg.volume = 0.3; //soft sound to more soft 0.1..
-
-        speechSynthesis.speak(msg);
-
-        // ✅ mark as done
-        localStorage.setItem("welcomed", "yes");
-    }
-
-}
-</script>
-
-    <script>
-let welcomed = localStorage.getItem("welcomed");
-
-document.body.addEventListener("click", function() {
-
-    if(!welcomed){
-        let msg = new SpeechSynthesisUtterance(
-            "Welcome to Cyber Safety Guard. Hope it improves your knowledge and keeps you safe online."
-        );
-
-        msg.volume = 0.3;
-        speechSynthesis.speak(msg);
-
-        localStorage.setItem("welcomed", "yes");
-        welcomed = "yes";
-    }
-
-}, { once: true });  // 🔥 only first click
-</script>
-
-<script>
-let sound = document.getElementById("bgSound");
-sound.volume = 0.05;   // aur halka dashboard me
-</script>    
-
-<script>
-window.addEventListener("click", function () {
-    let audio = document.getElementById("bgSound");
-    audio.play();
-}, { once: true });
-</script>
-
-
-
-
-    
-<script>
-window.onload = function(){
-
-    // ❌ click sound band
-    let click = document.getElementById("clickSound");
-    click.pause();
-    click.currentTime = 0;
-
-    // ✅ dashboard sound ON
-    let bg = document.getElementById("bgMusic");
-    bg.volume = 0.08;
-    bg.play().catch(()=>{});
-
-}
-</script>
-
-
- <script>
-window.onload = function(){
-
-    let savedChar = localStorage.getItem("character");
-
-    if(savedChar){
-        document.getElementById("character").innerHTML = savedChar;
-    }
-
-}
-</script>
-
-<script>
-document.getElementById("character").onclick = function(){
-    this.style.transform = "scale(1.5)";
-    setTimeout(()=>{
-        this.style.transform = "scale(1)";
-    }, 200);
-}
-</script>
-
-<script>
+// 🎧 SOUND
 function startMusic(){
     let audio = document.getElementById("bgMusic");
-
     audio.volume = 0.05;
+    audio.play().catch(()=>{});
+}
 
-    audio.play().then(()=>{
-        console.log("Music started");
-    }).catch(e=>{
-        console.log("Autoplay blocked, waiting for click...");
+window.onload = function(){
+    startMusic();
+    showTips();
+
+    // character load
+    let saved = localStorage.getItem("character");
+    if(saved){
+        document.getElementById("character").innerHTML = saved;
+    }
+
+    // welcome voice once
+    if(!localStorage.getItem("welcomed")){
+        let msg = new SpeechSynthesisUtterance(
+        "Welcome to Cyber Safety Guard");
+        msg.volume = 0.3;
+        speechSynthesis.speak(msg);
+        localStorage.setItem("welcomed","yes");
+    }
+};
+
+// fallback click
+document.addEventListener("click", startMusic, {once:true});
+
+// 🤖 character click
+document.getElementById("character").onclick = function(){
+    let img = document.getElementById("charImg");
+
+    img.style.transform = "scale(1.3)";
+    setTimeout(()=>{
+        img.style.transform = "scale(1)";
+    }, 200);
+}
+
+// 💡 tips
+function showTips(){
+    fetch('/get_tip')
+    .then(r=>r.json())
+    .then(data=>{
+        let html="";
+        data.tips.forEach(t=> html+="👉 "+t+"<br>");
+        document.getElementById("tipsBox").innerHTML=html;
     });
 }
 
-// 🔥 try autoplay
-window.onload = startMusic;
-
-// 🔥 अगर autoplay block हो जाए → user click से start
-document.addEventListener("click", function(){
-    startMusic();
-}, { once: true });
 </script>
-    
+
 </body>
 </html>
