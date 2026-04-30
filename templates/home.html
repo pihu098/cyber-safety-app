@@ -80,6 +80,20 @@ body {
     color: white;
     text-decoration: none;
 }
+
+.card-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #00c6ff;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.card-btn:hover {
+    background: #0072ff;
+}    
 </style>
 </head>
 
@@ -201,6 +215,11 @@ async function sendMsg(){
 }
 </script>
 
+<div class="card">
+    <h3>📄 Updates (PDF)</h3>
+    <a href="/admin" class="card-btn">Admin Panel</a>
+</div>    
+
 <!-- 🔥 ALL LOGIC (CLEAN) -->
 <script>
 
@@ -243,6 +262,7 @@ document.getElementById("character").onclick = function(){
         img.style.transform = "scale(1)";
     }, 200);
 }
+    
 
 // 💡 tips
 function showTips(){
