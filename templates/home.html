@@ -10,7 +10,42 @@ body {
     color: white;
     text-align: center;
 }
+/* 🔝 TOPBAR (NEW) */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
 
+.topbar .left {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.topbar .right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+}
+
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #00c6ff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-img:hover {
+    transform: scale(1.1);
+}
 /* HEADER */
 .header { margin-top: 20px; }
 
@@ -94,6 +129,13 @@ body {
 .card-btn:hover {
     background: #0072ff;
 }    
+.profile {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+
 </style>
 </head>
 
@@ -104,13 +146,27 @@ body {
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
 </audio>
 
-<div class="logout">
-<a href="/logout"><button>Logout</button></a>
-</div>
+<!-- 🔥 TOP BAR -->
+<div class="topbar">
 
-<div class="header">
-<h2>Welcome {{name}} 👋</h2>
-<h3>Cyber Safety Dashboard</h3>
+    <div class="left">
+        👋 Welcome {{name}}
+    </div>
+
+    <div class="right">
+
+        <!-- Profile Icon -->
+        <a href="/profile" class="profile-btn">
+            <img src="/static/characters/bot.gif" class="profile-img">
+        </a>
+
+        <!-- Logout -->
+        <a href="/logout">
+            <button class="logout-btn">Logout</button>
+        </a>
+
+    </div>
+
 </div>
 
 <div class="card">
