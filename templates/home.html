@@ -95,6 +95,28 @@ body {
 <h3>Cyber Safety Dashboard</h3>
 </div>
 
+<div class="card">
+<h3>💡 Smart Tips</h3>
+<button onclick="showTips()">Show Tips</button>
+<div id="tipsBox"></div>
+</div>
+    
+<!-- 💡 TIPS -->
+<div id="tipsBox"></div>
+
+    
+<div class="card">
+<h3>🚨 Emergency Help</h3>
+
+<p><a href="tel:1091">👩 Women: 1091</a></p>
+<p><a href="tel:1098">🧒 Child: 1098</a></p>
+<p><a href="tel:100">🚓 Police: 100</a></p>
+<p><a href="tel:102">🚑 Ambulance: 102</a></p>
+<p><a href="tel:1930">💻 Cyber Crime: 1930</a></p>
+
+</div>
+
+    
 <!-- 🔥 GRID FEATURES -->
 <div class="grid">
 
@@ -144,8 +166,6 @@ body {
 <div class="character" id="character">
     <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" id="charImg">
 </div>
-<!-- 💡 TIPS -->
-<div id="tipsBox"></div>
 
 <!-- 🤖 CHAT -->
 <h3>AI Chatbot</h3>
@@ -211,13 +231,16 @@ document.getElementById("character").onclick = function(){
 // 💡 tips
 function showTips(){
     fetch('/get_tip')
-    .then(r=>r.json())
-    .then(data=>{
-        let html="";
-        data.tips.forEach(t=> html+="👉 "+t+"<br>");
-        document.getElementById("tipsBox").innerHTML=html;
+    .then(res => res.json())
+    .then(data => {
+        let html = "";
+        data.tips.forEach(t => html += "👉 " + t + "<br>");
+        document.getElementById("tipsBox").innerHTML = html;
     });
 }
+
+// auto load
+document.addEventListener("DOMContentLoaded", showTips);
 
 </script>
 
