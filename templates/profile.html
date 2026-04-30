@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+
+<style>
+body {
+    background: #0f2027;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+.profile-box {
+    margin-top: 50px;
+}
+
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #00c6ff;
+}
+
+.card {
+    background: rgba(255,255,255,0.1);
+    margin: 20px;
+    padding: 20px;
+    border-radius: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="profile-box">
+
+    <img src="/static/characters/bot.gif" class="profile-img">
+
+    <h2>{{name}}</h2>
+
+</div>
+
+<div class="card">
+    <h3>🎯 Level</h3>
+    <p>{{level}}</p>
+</div>
+
+<div class="card">
+    <h3>📊 Stats</h3>
+    <p>{{stats}}</p>
+</div>
+
+<a href="/home"><button>Back</button></a>
+
+</body>
+</html>
