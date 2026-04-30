@@ -8,86 +8,83 @@ body {
     font-family: Arial;
     background: #0f2027;
     color: white;
-    text-align: center;
+    margin: 0;
 }
-/* 🔝 TOPBAR (NEW) */
+
+/* TOPBAR */
 .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-     background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.3);
     border-bottom: 1px solid #00c6ff;
 }
-.topbar .left {
-    font-size: 18px;
-    font-weight: bold;
-}
-/* LEFT PROFILE */
+
 .left {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-/* CENTER TEXT */
+
 .center {
     font-size: 20px;
     font-weight: bold;
 }
-/* RIGHT SIDE */
-.right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
 
 .profile-img {
     width: 45px;
     height: 45px;
     border-radius: 50%;
     border: 2px solid #00c6ff;
-    cursor: pointer;
-    transition: 0.3s;
 }
 
-.profile-img:hover {
-    transform: scale(1.1);
-}
 .level {
     font-size: 12px;
-    margin-top: 4px;
-}    
-    
-/* HEADER */
-<div class="logout">
-<a href="/logout"><button>Logout</button></a>
-</div>
+}
 
-<div class="header">
-<h2>Welcome {{name}} 👋</h2>
-<h3>Cyber Safety Dashboard</h3>
-</div>
+/* MAIN */
+.main {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+}
 
-    
+.sidebar {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.content {
+    flex: 1;
+}
+
+/* CARDS */
+.card {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 15px;
+}
+
 /* GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin: 20px;
 }
 
-.card {
-    background: rgba(255,255,255,0.1);
+.box {
+    text-align: center;
     padding: 20px;
     border-radius: 15px;
-    text-decoration: none;
-    color: white;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
     transition: 0.3s;
 }
 
-.card:hover {
+.box:hover {
     transform: scale(1.08);
     box-shadow: 0 0 15px #00c6ff;
 }
@@ -103,54 +100,29 @@ body {
     margin: auto;
     font-size: 28px;
 }
-.card p {
-    margin-top: 10px;
-    font-size: 14px;
-}
+
+/* CHARACTER */
 .character {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 999;
 }
 
 .character img {
     width: 70px;
-    height: 70px;
-    animation: float 2s infinite ease-in-out;
+    animation: float 2s infinite;
 }
 
 @keyframes float {
     0% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0); }
-}    
-    
-.card a {
-    color: white;
-    text-decoration: none;
 }
 
-.card-btn {
-    display: inline-block;
-    padding: 10px 15px;
-    background: #00c6ff;
-    color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: 0.3s;
+/* CHAT */
+.chat {
+    margin: 20px;
 }
-
-.card-btn:hover {
-    background: #0072ff;
-}    
-.profile {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
-
 </style>
 </head>
 
@@ -158,232 +130,146 @@ body {
 
 <!-- 🔊 SOUND -->
 <audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">
 </audio>
 
+<!-- TOPBAR -->
 <div class="topbar">
 
-    <!-- LEFT: PROFILE -->
-    <div class="left">
-        <a href="/profile">
-            <img src="/static/characters/bot.gif" class="profile-img">
-        </a>
-        <p class="level">Level {{level}}</p>
-    </div>
+<div class="left">
+<a href="/profile">
+<img src="/static/characters/bot.gif" class="profile-img">
+</a>
+<span class="level">Level {{level}}</span>
+</div>
 
-    <!-- CENTER: WELCOME -->
-    <div class="center">
-        👋 Welcome {{name}}
-    </div>
+<div class="center">
+👋 Welcome {{name}}
+</div>
 
-    <!-- RIGHT: LOGOUT -->
-    <div class="right">
-        <a href="/logout">
-            <button>Logout</button>
-        </a>
-    </div>
+<div class="right">
+<a href="/logout"><button>Logout</button></a>
+</div>
 
 </div>
-<h3>Cyber Safety Dashboard</h3>
-    
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- LEFT -->
+<div class="sidebar">
+
 <div class="card">
-<h3>💡 Smart Tips</h3>
-<button onclick="showTips()">Show Tips</button>
+<h3>💡 Tips</h3>
+<button onclick="showTips()">Show</button>
 <div id="tipsBox"></div>
 </div>
-    
-<!-- 💡 TIPS -->
-<div id="tipsBox"></div>
 
-    
 <div class="card">
-<h3>🚨 Emergency Help</h3>
-
-<p><a href="tel:1091">👩 Women: 1091</a></p>
-<p><a href="tel:1098">🧒 Child: 1098</a></p>
-<p><a href="tel:100">🚓 Police: 100</a></p>
-<p><a href="tel:102">🚑 Ambulance: 102</a></p>
-<p><a href="tel:1930">💻 Cyber Crime: 1930</a></p>
+<h3>🚨 Help</h3>
+<p><a href="tel:1091">1091</a></p>
+<p><a href="tel:1098">1098</a></p>
+<p><a href="tel:100">100</a></p>
+<p><a href="tel:1930">1930</a></p>
+</div>
 
 </div>
 
-    
-<!-- 🔥 GRID FEATURES -->
+<!-- RIGHT -->
+<div class="content">
+
 <div class="grid">
 
-<a href="/community" class="card">
-<div class="icon">👥</div>
-<p>Community</p>
-</a>
+<a href="/community" class="box"><div class="icon">👥</div><p>Community</p></a>
+<a href="/leaderboard" class="box"><div class="icon">🏆</div><p>Leaders</p></a>
+<a href="/game/puzzle/start" class="box"><div class="icon">🧩</div><p>Puzzle</p></a>
 
-<a href="/leaderboard" class="card">
-<div class="icon">🏆</div>
-<p>Leaders</p>
-</a>
+<a href="/password" class="box"><div class="icon">🔐</div><p>Password</p></a>
+<a href="/check" class="box"><div class="icon">🌐</div><p>Website</p></a>
+<a href="/check_email" class="box"><div class="icon">📧</div><p>Email</p></a>
 
-<a href="/game/puzzle/start" class="card">
-<div class="icon">🧩</div>
-<p>Puzzle</p>
-</a>
+<a href="/scan_file" class="box"><div class="icon">📁</div><p>Scanner</p></a>
+<a href="/quiz" class="box"><div class="icon">🎯</div><p>Quiz</p></a>
+<a href="/updates" class="box"><div class="icon">📢</div><p>Updates</p></a>
 
- <!-- PASSWORD -->
-    <div class="card">
-        <div class="icon">🔐</div>
-        <p>Password</p>
-
-        <form method="POST" action="/password">
-            <input type="number" name="length" placeholder="Length"><br>
-            <button>Go</button>
-        </form>
-    </div>
- <!-- WEBSITE -->
-    <div class="card">
-        <div class="icon">🌐</div>
-        <p>Website</p>
-
-        <form method="POST" action="/check">
-            <input type="text" name="url" placeholder="URL"><br>
-            <button>Check</button>
-        </form>
-    </div>
-
-    <!-- EMAIL -->
-    <div class="card">
-        <div class="icon">📧</div>
-        <p>Email</p>
-
-        <form method="POST" action="/check_email">
-            <textarea name="email" placeholder="Paste email"></textarea><br>
-            <button>Check</button>
-        </form>
-    </div>
-
-    <!-- FILE SCANNER ✅ FIXED -->
-    <div class="card">
-        <div class="icon">📁</div>
-        <p>Scanner</p>
-
-        <form method="POST" action="/scan_file" enctype="multipart/form-data">
-            <input type="file" name="file"><br>
-            <button>Scan</button>
-        </form>
-    </div>
-
-    <!-- QUIZ -->
-    <a href="/quiz" class="card">
-        <div class="icon">🎯</div>
-        <p>Quiz</p>
-    </a>
-
-    <!-- UPDATES -->
-    <a href="/updates" class="card">
-        <div class="icon">📢</div>
-        <p>Updates</p>
-    </a>
-
-    <!-- STREAK -->
-    <div class="card">
-        <div class="icon">🔥</div>
-        <p>Streak</p>
-        <small>{{streak}} days</small>
-    </div>
-
-    <!-- STATS -->
-    <div class="card">
-        <div class="icon">📊</div>
-        <p>Stats</p>
-        <small>Level {{level}}</small>
-    </div>
+<div class="box"><div class="icon">🔥</div><p>{{streak}} days</p></div>
+<div class="box"><div class="icon">📊</div><p>Level {{level}}</p></div>
 
 </div>
 
+</div>
+</div>
 
 <!-- 🤖 CHARACTER -->
 <div class="character" id="character">
-    <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" id="charImg">
+<img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" id="charImg">
 </div>
 
 <!-- 🤖 CHAT -->
+<div class="chat">
 <h3>AI Chatbot</h3>
-<input id="msg" placeholder="Ask...">
+<input id="msg">
 <button onclick="sendMsg()">Send</button>
 <p id="reply"></p>
+</div>
+
+<!-- ADMIN -->
+<div class="card" style="margin:20px;">
+<h3>📄 Admin Panel</h3>
+<a href="/admin">Open</a>
+</div>
 
 <script>
-async function sendMsg(){
-    let msg = document.getElementById("msg").value;
-    let res = await fetch("/chat", {
-        method: "POST",
-        headers: {"Content-Type":"application/x-www-form-urlencoded"},
-        body: "message="+encodeURIComponent(msg)
-    });
-    document.getElementById("reply").innerText = await res.text();
-}
-</script>
-
-<div class="card">
-    <h3>📄 Updates (PDF)</h3>
-    <a href="/admin" class="card-btn">Admin Panel</a>
-</div>    
-
-<!-- 🔥 ALL LOGIC (CLEAN) -->
-<script>
-
 // 🎧 SOUND
 function startMusic(){
-    let audio = document.getElementById("bgMusic");
-    audio.volume = 0.05;
-    audio.play().catch(()=>{});
+let audio = document.getElementById("bgMusic");
+audio.volume = 0.05;
+audio.play().catch(()=>{});
 }
 
 window.onload = function(){
-    startMusic();
-    showTips();
+startMusic();
+showTips();
 
-    // character load
-    let saved = localStorage.getItem("character");
-    if(saved){
-        document.getElementById("character").innerHTML = saved;
-    }
-
-    // welcome voice once
-    if(!localStorage.getItem("welcomed")){
-        let msg = new SpeechSynthesisUtterance(
-        "Welcome to Cyber Safety Guard");
-        msg.volume = 0.3;
-        speechSynthesis.speak(msg);
-        localStorage.setItem("welcomed","yes");
-    }
+// welcome voice
+if(!localStorage.getItem("welcomed")){
+let msg = new SpeechSynthesisUtterance("Welcome to Cyber Safety Guard");
+msg.volume = 0.3;
+speechSynthesis.speak(msg);
+localStorage.setItem("welcomed","yes");
+}
 };
 
-// fallback click
 document.addEventListener("click", startMusic, {once:true});
 
-// 🤖 character click
+// 🤖 CHARACTER CLICK
 document.getElementById("character").onclick = function(){
-    let img = document.getElementById("charImg");
+let img = document.getElementById("charImg");
+img.style.transform = "scale(1.3)";
+setTimeout(()=>{img.style.transform="scale(1)"},200);
+};
 
-    img.style.transform = "scale(1.3)";
-    setTimeout(()=>{
-        img.style.transform = "scale(1)";
-    }, 200);
-}
-    
-
-// 💡 tips
+// 💡 TIPS
 function showTips(){
-    fetch('/get_tip')
-    .then(res => res.json())
-    .then(data => {
-        let html = "";
-        data.tips.forEach(t => html += "👉 " + t + "<br>");
-        document.getElementById("tipsBox").innerHTML = html;
-    });
+fetch('/get_tip')
+.then(res=>res.json())
+.then(data=>{
+let html="";
+data.tips.forEach(t=> html+="👉 "+t+"<br>");
+document.getElementById("tipsBox").innerHTML=html;
+});
 }
 
-// auto load
-document.addEventListener("DOMContentLoaded", showTips);
-
+// 🤖 CHAT
+async function sendMsg(){
+let msg=document.getElementById("msg").value;
+let res=await fetch("/chat",{
+method:"POST",
+headers:{"Content-Type":"application/x-www-form-urlencoded"},
+body:"message="+encodeURIComponent(msg)
+});
+document.getElementById("reply").innerText=await res.text();
+}
 </script>
 
 </body>
