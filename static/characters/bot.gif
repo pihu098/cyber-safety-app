@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Characters</title>
 
+<style>
+body {
+    background: #0f2027;
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.char {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.char:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px #00c6ff;
+}
+
+.locked {
+    opacity: 0.4;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>👤 Choose Your Character</h2>
+<p>Coins: <span id="coins">100</span></p>
+
+<div class="grid">
+
+<!-- DEFAULT -->
+<div class="char" onclick="selectChar('🤖')">
+<h1>🤖</h1>
+<p>Free</p>
+</div>
+
+<!-- LOCKED CHARACTERS -->
+<div class="char locked" onclick="unlock('👨‍💻',50)">
+<h1>👨‍💻</h1>
+<p>50 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('🕵️‍♂️',70)">
+<h1>🕵️‍♂️</h1>
+<p>70 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('👾',100)">
+<h1>👾</h1>
+<p>100 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('😈',120)">
+<h1>😈</h1>
+<p>120 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('💀',150)">
+<h1>💀</h1>
+<p>150 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('🧠',80)">
+<h1>🧠</h1>
+<p>80 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('🤖💻',200)">
+<h1>🤖💻</h1>
+<p>200 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('🛡️',60)">
+<h1>🛡️</h1>
+<p>60 coins</p>
+</div>
+
+<div class="char locked" onclick="unlock('⚡',40)">
+<h1>⚡</h1>
+<p>40 coins</p>
+</div>
+
+</div>
+
+<script>
+
+let coins = localStorage.getItem("coins") || 100;
+document.getElementById("coins").innerText = coins;
+
+// SELECT CHARACTER
+function selectChar(emoji){
+    localStorage.setItem("character", emoji);
+    alert("Character Selected ✅");
+}
+
+// UNLOCK SYSTEM
+function unlock(emoji, cost){
+
+    if(coins >= cost){
+        coins -= cost;
+        localStorage.setItem("coins", coins);
+        localStorage.setItem("character", emoji);
+
+        alert("Unlocked 🔓 " + emoji);
+        location.reload();
+    } else {
+        alert("Not enough coins ❌");
+    }
+}
+
+</script>
+
+</body>
+</html>
