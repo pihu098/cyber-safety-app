@@ -9,19 +9,8 @@ body {
     background: #0f2027;
     color: white;
     margin: 0;
- background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #000000);
-    background-size: 400% 400%;
-    animation: bgMove 12s ease infinite;
-}   
-/* animation */
-@keyframes bgMove {
-    0% {background-position: 0%}
-    50% {background-position: 100%}
-    100% {background-position: 0%}
 }
-<video autoplay muted loop id="bgVideo">
-    <source src="/static/videos/cyber.mp4" type="video/mp4">
-</video>    
+
 /* TOPBAR */
 .topbar {
     display: flex;
@@ -100,10 +89,7 @@ body {
     transform: scale(1.08);
     box-shadow: 0 0 15px #00c6ff;
 }
-.card, .box {
-    backdrop-filter: blur(10px);
-    background: rgba(255,255,255,0.08);
-}
+
 .icon {
     width: 60px;
     height: 60px;
@@ -133,15 +119,7 @@ body {
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0); }
 }
-#bgVideo {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;
-    object-fit: cover;
-}
+
 /* CHAT */
 .chat {
     margin: 20px;
@@ -303,20 +281,6 @@ data.tips.forEach(t=> html+="👉 "+t+"<br>");
 document.getElementById("tipsBox").innerHTML=html;
 });
 }
-document.querySelectorAll(".box").forEach(box=>{
-    box.addEventListener("mouseenter", ()=>{
-        let sound = new Audio("https://www.soundjay.com/buttons/sounds/button-09.mp3");
-        sound.volume = 0.2;
-        sound.play();
-    });
-});
- document.getElementById("character").onclick = function(){
-
-    let msg = new SpeechSynthesisUtterance("Hey! Stay safe online!");
-    msg.volume = 0.5;
-    speechSynthesis.speak(msg);
-
-}   
 
 // 🤖 CHAT
 async function sendMsg(){
