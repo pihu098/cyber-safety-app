@@ -315,5 +315,10 @@ document.getElementById("reply").innerText=await res.text();
 }
 </script>
 
+ <script>
+let char = localStorage.getItem("character") || "🤖";
+document.getElementById("profileChar").innerText = char;
+</script>
+    
 </body>
 </html>
