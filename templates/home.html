@@ -232,7 +232,24 @@ body {
     justify-content: center;
     line-height: 1;
 }    
+.floating-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #00c6ff;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 30px;
+    background: rgba(0,0,0,0.4);
+
+    box-shadow: 0 0 15px #00c6ff;
+
+    animation: float 2s infinite;
+}
+    
 @keyframes float {
     0% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -352,10 +369,11 @@ body {
 </div>
 
 <!-- 🤖 CHARACTER -->
-<div class="character" id="character">
-   <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" class="profile-img">
+<div class="character">
+    <div class="floating-avatar">
+        {{ session.get('selected_char', '🤖') }}
+    </div>
 </div>
-
 
 
 <!-- ADMIN -->
