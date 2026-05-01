@@ -983,21 +983,23 @@ def password():
     import random
     import string
 
-    length = int(request.form.get('length', 8))
+    length = int(request.form.get('length') or 8)
+
     chars = ""
 
-    if 'upper' in request.form:
+    if request.form.get('upper'):
         chars += string.ascii_uppercase
-    if 'lower' in request.form:
+    if request.form.get('lower'):
         chars += string.ascii_lowercase
-    if 'digits' in request.form:
+    if request.form.get('digits'):
         chars += string.digits
-    if 'symbols' in request.form:
+    if request.form.get('symbols'):
         chars += "@#$%&*!?"
-    if not chars:
-        return render_template("result.html", result="❌ Select at least one option!")
 
-    
+    # 🔥 FIX (important)
+    if chars == "":
+        return render_template("result.html", result="❌ Please select at least one option")
+
     pwd = ''.join(random.choice(chars) for _ in range(length))
 
     if 'user' in session:
