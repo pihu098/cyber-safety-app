@@ -1247,11 +1247,14 @@ def check_email():
 @app.route('/scan_file', methods=['GET', 'POST'])
 def scan_file():
 
+    if request.method == 'GET':
+        return render_template("scan_file.html")
+
     try:
         if 'file' not in request.files:
             return "❌ No file uploaded"
 
-        file = request.files['file']
+        file = request.files.get('file')
 
         if file.filename == '':
             return "❌ No selected file"
@@ -1295,48 +1298,6 @@ def scan_file():
     except Exception as e:
         print("File Scan Error:", e)
         return "❌ File scan failed"
-        
-@app.route('/admin', methods=['GET', 'POST'])        
-def admin():
-    if request.method == 'POST':
-        try:
-            password = request.form.get('password')
-            if password != ADMIN_PASSWORD:
-                return "❌ Wrong Password"
-
-            title = request.form.get('title')
-            content = request.form.get('content')
-
-            file = request.files.get('file')
-            filename = None
-
-            # 📁 FILE UPLOAD
-            if file and file.filename != "":
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                file.save(filepath)
-
-            # 🔥 DB CONNECT (IMPORTANT)
-            db = get_db()
-            cursor = db.cursor(buffered=True)
-
-            cursor.execute(
-                "INSERT INTO updates (title, content, filename) VALUES (%s, %s, %s)",
-                (title, content, filename)
-            )
-
-            db.commit()
-
-            cursor.close()
-            db.close()
-
-            return "✅ Update Posted Successfully"
-
-        except Exception as e:
-            return f"❌ ERROR: {str(e)}"
-
-    return render_template("admin.html")
-
 @app.route('/delete_update/<int:id>')
 def delete_update(id):
     if 'user' not in session:
