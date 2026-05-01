@@ -15,11 +15,8 @@ body {
     margin-top: 50px;
 }
 
-.profile-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid #00c6ff;
+.avatar {
+    font-size: 70px;
 }
 
 .card {
@@ -28,64 +25,86 @@ body {
     padding: 20px;
     border-radius: 15px;
 }
+
+.char-shop {
+    display: none;
+}
+
+button {
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #00c6ff;
+    color: black;
+    cursor: pointer;
+    margin-top: 10px;
+}
 </style>
 </head>
 
 <body>
+
+<!-- 👤 PROFILE -->
 <div class="profile-box">
 
-    <!-- 👤 PROFILE -->
-    <div class="profile-main">
-        <div class="avatar">
-            {{ owned[0] }} <!-- selected character -->
-        </div>
-
-        <h2>{{name}}</h2>
-        <p class="level">Level {{level}}</p>
-        <p class="coins">💰 {{coins}} Coins</p>
+    <div class="avatar">
+        {{ selected }}
     </div>
 
-    <!-- 🎭 CHARACTER BUTTON -->
-    <button class="char-btn" onclick="toggleShop()">
-        🎭 Characters
-    </button>
+    <h2>{{name}}</h2>
+    <p>🎯 Level {{level}}</p>
+    <p>💰 {{coins}} Coins</p>
 
-
-
-
-
-{% endfor %}
+    <button onclick="toggleShop()">🎭 Characters</button>
 
 </div>
 
-
-</script>
+<!-- 📊 STATS -->
 <div class="card">
     <h3>📊 Stats</h3>
     <p>{{stats}}</p>
 </div>
+
+<!-- 🎭 CHARACTER SHOP -->
 <div id="charShop" class="char-shop">
 
     {% for c in characters %}
-    <div class="char-card">
+    <div class="card">
 
-        <div class="emoji">{{c.emoji}}</div>
+        <h1>{{c.emoji}}</h1>
 
         {% if c.emoji in owned %}
-            <button class="use-btn">Use</button>
+            <p>✅ Owned</p>
+
+            {% if c.emoji == selected %}
+                <p>🟢 Selected</p>
+            {% else %}
+                <a href="/select_char/{{c.emoji}}">
+                    <button>Use</button>
+                </a>
+            {% endif %}
+
         {% else %}
-            <button onclick="buyChar('{{c.emoji}}', {{c.cost}})">
-                Buy ({{c.cost}})
-            </button>
+            <p>{{c.cost}} coins</p>
+            <a href="/buy_char/{{c.emoji}}">
+                <button>Buy</button>
+            </a>
         {% endif %}
 
     </div>
     {% endfor %}
 
-</div>    
+</div>
 
+<!-- 🔙 BACK -->
+<a href="/home"><button>Back</button></a>
 
+<script>
+function toggleShop(){
+    let shop = document.getElementById("charShop");
+    shop.style.display = (shop.style.display=="block") ? "none" : "block";
+}
+</script>
 
-    
 </body>
 </html>
