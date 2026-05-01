@@ -827,7 +827,7 @@ def profile():
     db = get_db()
     cursor = db.cursor(buffered=True)
 
-    # 🔹 user ka latest data DB se lao
+    # ✅ DB se real data
     cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (session['user'],))
     data = cursor.fetchone()
 
@@ -836,11 +836,30 @@ def profile():
     else:
         coins, level, xp = 200, 1, 0
 
-    # 🔹 session sync
+    db.close()
+
+    # ✅ session sync
     session["coins"] = coins
     session["level"] = level
     session["xp"] = xp
 
+    # ✅ FIX: ye missing tha
+    owned = session.get("owned_chars", ["🤖"])
+    selected = session.get("selected_char", "🤖")
+
+    # ✅ characters list (sirf ek hi jagah define)
+    characters = [
+        {"emoji":"🤖","cost":0},
+        {"emoji":"👨‍💻","cost":50},
+        {"emoji":"🕵️‍♂️","cost":70},
+        {"emoji":"👾","cost":100},
+        {"emoji":"😈","cost":120},
+        {"emoji":"💀","cost":150},
+        {"emoji":"🧠","cost":80},
+        {"emoji":"🛡️","cost":60},
+        {"emoji":"⚡","cost":40},
+        {"emoji":"🔥","cost":90}
+    ]
 
     return render_template(
         "profile.html",
@@ -852,7 +871,8 @@ def profile():
         selected=selected,
         characters=characters
     )
-   # 🔥 COMMON FUNCTION
+    return redirect('/profile')
+
 def handle_buy(emoji, cost=None):
     coins = session.get("coins", 200)
     owned = session.get("owned_chars", ["🤖"])
@@ -883,6 +903,7 @@ def buy_char():
 
     handle_buy(emoji, cost)
     return "ok"
+
 
 @app.route('/buy_char/<emoji>')
 def buy_char_link(emoji):
