@@ -880,9 +880,9 @@ def handle_buy(emoji, cost=None):
     owned = session.get("owned_chars", ["🤖"])
 
     char_cost = {
-        "👨‍💻":50, "🕵️‍♂️":70, "👾":100,
-        "😈":120, "💀":150, "🧠":80,
-        "🛡️":60, "⚡":40, "🔥":90
+        "👨‍💻":100, "🕵️‍♂️":1000, "👾":170,
+        "😈":800, "💀":500, "🧠":80,
+        "🛡️":570, "⚡":450, "🔥":900
     }
 
     if cost is None:
@@ -903,10 +903,44 @@ def buy_char():
     emoji = request.form.get("emoji")
     cost = int(request.form.get("cost"))
 
-    handle_buy(emoji, cost)
-    return "ok"
+    db = get_db()
+    cursor = db.cursor()
 
+    # get user coins
+    cursor.execute("SELECT coins FROM users WHERE name=%s", (session['user'],))
+    user = cursor.fetchone()
 
+    coins = user[0]
+
+    # ❌ not enough coins
+    if coins < cost:
+        return "😢 Better luck next time! Not enough coins"
+
+    # ✅ deduct coins
+    cursor.execute(
+        "UPDATE users SET coins = coins - %s, selected_char=%s WHERE name=%s",
+        (cost, emoji, session['user'])
+    )
+
+    db.commit()
+    db.close()
+
+    return "✅ Purchased Successfully"
+@app.route('/use_char/<emoji>')
+def use_char(emoji):
+
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute(
+        "UPDATE users SET selected_char=%s WHERE name=%s",
+        (emoji, session['user'])
+    )
+
+    db.commit()
+    db.close()
+
+    return redirect('/profile')
 @app.route('/buy_char/<emoji>')
 def buy_char_link(emoji):
     handle_buy(emoji)
