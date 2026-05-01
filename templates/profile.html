@@ -102,5 +102,28 @@ function toggleShop(){
 }
 </script>
 
+<script>
+function buyChar(emoji, cost){
+
+    fetch("/buy_char", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `emoji=${emoji}&cost=${cost}`
+    })
+    .then(res => res.text())
+    .then(msg => {
+
+        alert(msg);
+
+        if(msg.includes("Not enough coins")){
+            // ❌ fail sound / message
+            console.log("No coins");
+        }
+
+        location.reload();
+    });
+}
+</script>
+    
 </body>
 </html>
