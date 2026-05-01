@@ -1181,7 +1181,9 @@ def get_tip():
 
 @app.route('/check', methods=['GET', 'POST'])
 def check_email():
-    email_text = request.form['email']
+    email_text = request.form.get('email', '')
+    import re
+    import requests
 
     score = 100
     warnings = []
