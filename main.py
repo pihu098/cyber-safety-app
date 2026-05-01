@@ -827,7 +827,6 @@ def profile():
     db = get_db()
     cursor = db.cursor(buffered=True)
 
-    # ✅ DB se real data
     cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (session['user'],))
     data = cursor.fetchone()
 
@@ -836,18 +835,15 @@ def profile():
     else:
         coins, level, xp = 200, 1, 0
 
-    db.close()
-
     # ✅ session sync
     session["coins"] = coins
     session["level"] = level
     session["xp"] = xp
 
-    # ✅ FIX: ye missing tha
+    # ✅ IMPORTANT FIX (missing tha)
     owned = session.get("owned_chars", ["🤖"])
     selected = session.get("selected_char", "🤖")
 
-    # ✅ characters list (sirf ek hi jagah define)
     characters = [
         {"emoji":"🤖","cost":0},
         {"emoji":"👨‍💻","cost":50},
