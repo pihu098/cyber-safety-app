@@ -1179,16 +1179,19 @@ def get_tip():
     })
 
 
-@app.route('/check', methods=['GET', 'POST'])
+@app.route('/check_email', methods=['GET', 'POST'])
 def check_email():
-    email_text = request.form.get('email', '')
     import re
     import requests
+
+    if request.method == 'GET':
+        return render_template("email.html")
+
+    email_text = request.form.get('email', '')
 
     score = 100
     warnings = []
 
-    # 🔍 1. Suspicious words
     bad_words = ["urgent", "win", "free", "verify", "bank", "password", "click", "offer"]
 
     for word in bad_words:
@@ -1196,7 +1199,6 @@ def check_email():
             score -= 10
             warnings.append(f"⚠️ Suspicious word: {word}")
 
-    # 🔗 2. Extract links from email
     links = re.findall(r'(https?://\S+)', email_text)
 
     for link in links:
@@ -1217,22 +1219,18 @@ def check_email():
             score -= 25
             warnings.append("❌ Link unreachable")
 
-    # 🔥 3. ALL CAPS detection
     if email_text.isupper():
         score -= 10
         warnings.append("⚠️ All caps message (scam trick)")
 
-    # ❗ 4. Too many exclamation marks
     if email_text.count("!") > 3:
         score -= 10
         warnings.append("⚠️ Too many exclamation marks")
 
-    # 📧 5. Basic email format check
     if "@" not in email_text:
         score -= 5
         warnings.append("⚠️ Invalid email format")
 
-    # 🎯 FINAL RESULT
     if score >= 80:
         result = "✅ Safe Email"
     elif score >= 50:
