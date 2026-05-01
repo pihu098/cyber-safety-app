@@ -1701,6 +1701,28 @@ def puzzle_result():
         extra=f"🪙 +{coins_gain} Coins | ⭐ XP Updated | 🔥 Streak: {streak} | {msg} | 📊 Level: {level}",
         restart=False
     )
+
+@app.route('/add_coins', methods=['POST'])
+def add_coins():
+    coins = session.get("coins", 0)
+
+    coins += 20   # 🎯 reward (change kar sakta hai)
+
+    session["coins"] = coins
+
+    # 🔥 DB update (important)
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute(
+        "UPDATE users SET coins=%s WHERE name=%s",
+        (coins, session['user'])
+    )
+
+    db.commit()
+    db.close()
+
+    return "ok"
 # ---------------- RUN ----------------
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
