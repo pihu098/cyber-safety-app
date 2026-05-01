@@ -933,9 +933,10 @@ def use_char(emoji):
     cursor = db.cursor()
 
     cursor.execute(
-        "UPDATE users SET selected_char=%s WHERE name=%s",
-        (emoji, session['user'])
-    )
+     "UPDATE users SET coins = coins - %s, selected_char=%s WHERE name=%s",
+    (cost, emoji, session['user'])
+)
+   
 
     db.commit()
     db.close()
