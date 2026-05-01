@@ -646,16 +646,16 @@ Stay calm & act fast!"""
     else:
         return "🤖 I can help with cyber safety, scams, passwords, suspicious links and helplines!"
 
-
 def init_user():
+    if 'coins' not in session:
+        session['coins'] = 200
+    if 'owned_chars' not in session:
+        session['owned_chars'] = ["🤖"]
     if 'xp' not in session:
         session['xp'] = 0
     if 'level' not in session:
         session['level'] = 1
-    if 'coins' not in session:
-        session['coins'] = 100
-    if 'streak' not in session:
-        session['streak'] = 0
+
 
 @app.route('/dashboard')
 def dashboard():
@@ -822,27 +822,18 @@ def home():
 def profile():
     if 'user' not in session:
         return redirect('/')
-    init_user()   # 👈 yaha bhi
 
-    return render_template("profile.html",
-                           name=session['user'],
-                           level=session.get('level', 1),  # 👈 yaha fix
-                           stats="Coming Soon")
-# ---------------- LOGOUT ----------------
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect('/')
+    init_user()  # ✅ user data init
 
-@app.route('/profile')
-def profile():
-    if 'user' not in session:
-        return redirect('/')
-
-    # demo data (baad me DB se aayega)
+    # ✅ session data
+    level = session.get('level', 1)
     coins = session.get("coins", 200)
-    owned = session.get("owned_chars", ["🤖"])  # default free
+    xp = session.get("xp", 0)
 
+    # ✅ owned characters
+    owned = session.get("owned_chars", ["🤖"])
+
+    # ✅ all characters
     characters = [
         {"emoji":"🤖","cost":0},
         {"emoji":"👨‍💻","cost":50},
@@ -856,11 +847,22 @@ def profile():
         {"emoji":"🔥","cost":90}
     ]
 
-    return render_template("profile.html",
-                           name=session['user'],
-                           coins=coins,
-                           owned=owned,
-                           characters=characters)
+    return render_template(
+        "profile.html",
+        name=session['user'],
+        level=level,
+        coins=coins,
+        xp=xp,
+        owned=owned,
+        characters=characters
+    )
+# ---------------- LOGOUT ----------------
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
+
 # ----------------- COMMUNITY SYSTEM -----------------
 @app.route('/community', methods=['GET', 'POST'])
 def community():
