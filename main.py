@@ -484,9 +484,7 @@ print("DB =", os.getenv("DB_NAME"))
 
 init_db()
 
-def add_xp(points):
-    session['xp'] = session.get('xp', 0) + points
-    session['level'] = session['xp'] // 100
+
     
 # ---------------- CYBER TIPS ----------------
 tips_list = [
@@ -649,7 +647,29 @@ Stay calm & act fast!"""
         return "🤖 I can help with cyber safety, scams, passwords, suspicious links and helplines!"
 
 
+def init_user():
+    if 'xp' not in session:
+        session['xp'] = 0
+    if 'level' not in session:
+        session['level'] = 1
+    if 'coins' not in session:
+        session['coins'] = 100
+    if 'streak' not in session:
+        session['streak'] = 0
 
+@app.route('/dashboard')
+def dashboard():
+    if 'user' not in session:
+        return redirect('/')
+
+    init_user()   # 👈 yaha lagana hai
+
+    return render_template("dashboard.html",
+        name=session['user'],
+        level=session['level'],
+        coins=session['coins'],
+        streak=session['streak']
+    )
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -802,6 +822,7 @@ def home():
 def profile():
     if 'user' not in session:
         return redirect('/')
+    init_user()   # 👈 yaha bhi
 
     return render_template("profile.html",
                            name=session['user'],
