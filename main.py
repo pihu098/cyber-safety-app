@@ -1328,7 +1328,6 @@ def delete_update(id):
     except Exception as e:
         return f"❌ ERROR: {str(e)}"
 
-
 @app.route('/updates', methods=['GET'])
 def updates():
     db = get_db()
@@ -1336,6 +1335,7 @@ def updates():
 
     cursor.execute("SELECT * FROM updates ORDER BY id DESC")
     data = cursor.fetchall()
+
     cursor.close()
     db.close()
 
