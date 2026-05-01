@@ -906,26 +906,38 @@ def buy_char():
     db = get_db()
     cursor = db.cursor()
 
-    # get user coins
-    cursor.execute("SELECT coins FROM users WHERE name=%s", (session['user'],))
-    user = cursor.fetchone()
+    # 💰 get user coins
+    user = session.get("user")
 
-    coins = user[0]
+    cursor.execute("SELECT coins FROM users WHERE name=%s", (user,))
+    data = cursor.fetchone()
 
-    # ❌ not enough coins
+    if not data:
+        return "❌ User not found"
+
+    coins = data[0]
+
+    # ❌ NOT ENOUGH COINS
     if coins < cost:
         return "😢 Better luck next time! Not enough coins"
 
-    # ✅ deduct coins
+    # 💰 deduct coins
     cursor.execute(
-        "UPDATE users SET coins = coins - %s, selected_char=%s WHERE name=%s",
-        (cost, emoji, session['user'])
+        "UPDATE users SET coins = coins - %s WHERE name=%s",
+        (cost, user)
+    )
+
+    # 🎭 add ownership (if table exists)
+    cursor.execute(
+        "INSERT INTO user_chars (user, emoji) VALUES (%s, %s)",
+        (user, emoji)
     )
 
     db.commit()
     db.close()
 
-    return "✅ Purchased Successfully"
+    return "✅ Purchased successfully!"
+    
 @app.route('/use_char/<emoji>')
 def use_char(emoji):
 
