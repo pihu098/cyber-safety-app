@@ -1721,18 +1721,34 @@ def add_coins():
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
+    if request.method == 'POST':
+        password = request.form.get('password')
 
-    if request.method == 'GET':
-        if session.get("user") != "admin":
-            return "❌ Access Denied"
-        return render_template("admin.html")
+        if password != ADMIN_PASSWORD:
+            return "❌ Wrong Password"
 
-    password = request.form.get('password')
+        title = request.form.get('title')
+        content = request.form.get('content')
 
-    if password != ADMIN_PASSWORD:
-        return "❌ Wrong Password"
+        file = request.files.get('file')
 
-    session["user"] = "admin"
+        filename = None
+        if file and file.filename != "":
+            filename = file.filename
+
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute(
+            "INSERT INTO updates (title, content, filename) VALUES (%s, %s, %s)",
+            (title, content, filename)
+        )
+
+        db.commit()
+        db.close()
+
+        return "✅ Posted Successfully"
+
     return render_template("admin.html")
 
 @app.route('/delete_update/<int:id>')
