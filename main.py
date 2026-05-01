@@ -857,19 +857,47 @@ def profile():
         characters=characters
     )
 
+# 🔥 COMMON FUNCTION (REAL LOGIC)
+def handle_buy(emoji, cost=None):
+    coins = session.get("coins", 200)
+    owned = session.get("owned_chars", ["🤖"])
+
+    char_cost = {
+        "👨‍💻":50, "🕵️‍♂️":70, "👾":100,
+        "😈":120, "💀":150, "🧠":80,
+        "🛡️":60, "⚡":40, "🔥":90
+    }
+
+    # agar cost JS se aaya hai use karo, warna dict se lo
+    if cost is None:
+        cost = char_cost.get(emoji, 0)
+
+    if emoji not in owned and coins >= cost:
+        coins -= cost
+        owned.append(emoji)
+
+        session["coins"] = coins
+        session["owned_chars"] = owned
+        session["selected_char"] = emoji  # auto select
+
+    return True
+
+
+# ✅ POST METHOD (JS FETCH)
 @app.route('/buy_char', methods=['POST'])
 def buy_char():
     emoji = request.form.get("emoji")
     cost = int(request.form.get("cost"))
 
-    if session.get("coins",0) >= cost:
-        session["coins"] -= cost
-
-        owned = session.get("owned_chars", [])
-        owned.append(emoji)
-        session["owned_chars"] = owned
-
+    handle_buy(emoji, cost)
     return "ok"
+
+
+# ✅ LINK METHOD (/buy_char/emoji)
+@app.route('/buy_char/<emoji>')
+def buy_char_link(emoji):
+    handle_buy(emoji)
+    return redirect('/profile')
     
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
@@ -1097,32 +1125,7 @@ def quiz_submit():
         results=results
     )
 #------profile----------------
-@app.route('/buy_char/<emoji>')
-def buy_char(emoji):
 
-    coins = session.get("coins", 200)
-    owned = session.get("owned_chars", ["🤖"])
-
-    char_cost = {
-        "👨‍💻":50, "🕵️‍♂️":70, "👾":100,
-        "😈":120, "💀":150, "🧠":80,
-        "🛡️":60, "⚡":40, "🔥":90
-    }
-
-    if emoji in owned:
-        return redirect('/profile')
-
-    cost = char_cost.get(emoji, 0)
-
-    if coins >= cost:
-        coins -= cost
-        owned.append(emoji)
-
-        session["coins"] = coins
-        session["owned_chars"] = owned
-        session["character"] = emoji   # auto select
-
-    return redirect('/profile')
 #------------tips------------
 from flask import jsonify
 
