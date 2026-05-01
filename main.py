@@ -1722,6 +1722,39 @@ def add_coins():
     db.close()
 
     return "ok"
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+
+    if request.method == 'GET':
+        if session.get("user") != "admin":
+            return "❌ Access Denied"
+        return render_template("admin.html")
+
+    password = request.form.get('password')
+
+    if password != ADMIN_PASSWORD:
+        return "❌ Wrong Password"
+
+    session["user"] = "admin"
+    return render_template("admin.html")
+
+@app.route('/delete_update/<int:id>')
+def delete_update(id):
+
+    # 🔐 only admin allowed
+    if session.get("user") != "admin":
+        return "❌ Not Allowed"
+
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("DELETE FROM updates WHERE id=%s", (id,))
+
+    db.commit()
+    db.close()
+
+    return redirect('/updates')
 # ---------------- RUN ----------------
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
