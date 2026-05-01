@@ -957,37 +957,38 @@ def password():
     result = None
 
     if request.method == 'POST':
-         import random
-         import string
-    
-   
 
-    length = int(request.form.get('length') or 8)
+        import random
+        import string
 
-    chars = ""
+        length = int(request.form.get('length') or 8)
 
-    if request.form.get('upper'):
-        chars += string.ascii_uppercase
-    if request.form.get('lower'):
-        chars += string.ascii_lowercase
-    if request.form.get('digits'):
-        chars += string.digits
-    if request.form.get('symbols'):
-        chars += "@#$%&*!?"
+        chars = ""
 
-    # 🔥 FIX (important)
-    if chars == "":
-        return render_template("result.html", result="❌ Please select at least one option")
+        if request.form.get('upper'):
+            chars += string.ascii_uppercase
+        if request.form.get('lower'):
+            chars += string.ascii_lowercase
+        if request.form.get('digits'):
+            chars += string.digits
+        if request.form.get('symbols'):
+            chars += "@#$%&*!?"
 
-    pwd = ''.join(random.choice(chars) for _ in range(length))
+        if chars == "":
+            return render_template("result.html", result="❌ Please select at least one option")
 
-    if 'user' in session:
-        execute_query(
-            "UPDATE users SET password_used = password_used + 1 WHERE name=%s",
-            (session['user'],)
-        )
+        pwd = ''.join(random.choice(chars) for _ in range(length))
 
-    return render_template("result.html", result=pwd)
+        if 'user' in session:
+            execute_query(
+                "UPDATE users SET password_used = password_used + 1 WHERE name=%s",
+                (session['user'],)
+            )
+
+        return render_template("result.html", result=pwd)
+
+    # 🔥 GET request pe page show karo
+    return render_template("password.html")
 # ---------------- WEBSITE CHECK ----------------
 
 @app.route('/check', methods=['POST'])
