@@ -476,11 +476,11 @@ def init_db():
 
         cursor.execute("""
     UPDATE users 
-    SET level = coins / 100
+    SET puzzle_wins = puzzle_wins + 1,
+        coins = coins + 10
     WHERE name = %s
 """, (username,))
-        
-    level = coins // 100 
+   
         @app.route('/leaderboard')
 def leaderboard():
     db = get_db()
