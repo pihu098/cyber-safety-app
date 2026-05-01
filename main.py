@@ -674,32 +674,7 @@ def dashboard():
         streak=session['streak']
     )
 #--------leaderboard---------------
-@app.route('/leaderboard')
-def leaderboard_view():
-    db = get_db()
-    cursor = db.cursor(buffered=True)
 
- 
-    cursor.execute("""
-        SELECT 
-            name,
-            SUM(coins) AS coins,
-            SUM(puzzle_wins) AS puzzle_wins
-        FROM users
-        GROUP BY name
-        ORDER BY coins DESC
-    """)
-
-    data = cursor.fetchall()
-    current_user = session.get("user")
-
-    db.close()
-
-    return render_template(
-        "leaderboard.html",
-        users=data,
-        current_user=current_user
-    ) 
 
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
