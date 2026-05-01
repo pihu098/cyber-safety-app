@@ -464,34 +464,7 @@ def init_db():
         """)
 
    
-@app.route('/leaderboard')
-def leaderboard():
-    db = get_db()
-    cursor = db.cursor(buffered=True)
 
- 
-    cursor.execute("""
-        SELECT 
-            name,
-            SUM(coins) AS coins,
-            SUM(puzzle_wins) AS puzzle_wins
-        FROM users
-        GROUP BY name
-        ORDER BY coins DESC
-    """)
-
-    data = cursor.fetchall()
-    current_user = session.get("user")
-
-    db.close()
-
-    return render_template(
-        "leaderboard.html",
-        users=data,
-        current_user=current_user
-    ) 
-
-    
         
 
         db.commit()
@@ -686,6 +659,7 @@ def init_user():
         session['level'] = 1
 
 
+
 @app.route('/dashboard')
 def dashboard():
     if 'user' not in session:
@@ -699,6 +673,34 @@ def dashboard():
         coins=session['coins'],
         streak=session['streak']
     )
+#--------leaderboard---------------
+@app.route('/leaderboard')
+def leaderboard():
+    db = get_db()
+    cursor = db.cursor(buffered=True)
+
+ 
+    cursor.execute("""
+        SELECT 
+            name,
+            SUM(coins) AS coins,
+            SUM(puzzle_wins) AS puzzle_wins
+        FROM users
+        GROUP BY name
+        ORDER BY coins DESC
+    """)
+
+    data = cursor.fetchall()
+    current_user = session.get("user")
+
+    db.close()
+
+    return render_template(
+        "leaderboard.html",
+        users=data,
+        current_user=current_user
+    ) 
+
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
