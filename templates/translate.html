@@ -14,38 +14,54 @@ body{
 textarea{
     width:80%;
     height:100px;
-    margin:10px;
+    border-radius:10px;
+    padding:10px;
 }
 
-select,button{
+select, button{
     padding:10px;
-    margin:10px;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.result{
+    margin-top:20px;
+    background:rgba(255,255,255,0.1);
+    padding:15px;
+    border-radius:10px;
 }
 </style>
+
 </head>
 
 <body>
 
-<h2>🌐 Text Translator</h2>
+<h2>🌐 Translate Text</h2>
 
 <form method="POST">
 
-<textarea name="text" placeholder="Paste text here..."></textarea><br>
+    <textarea name="text" placeholder="Enter text..."></textarea><br>
 
-<select name="lang">
-    <option value="en">English</option>
-    <option value="hi">Hindi</option>
-    <option value="fr">French</option>
-    <option value="es">Spanish</option>
-</select><br>
+    <select name="lang">
+        <option value="en">English</option>
+        <option value="hi">Hindi</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+    </select><br>
 
-<button type="submit">Translate</button>
+    <button type="submit">Translate</button>
 
 </form>
 
-<h3>{{ result }}</h3>
+{% if result %}
+<div class="result">
+    <h3>Result:</h3>
+    <p>{{ result }}</p>
+</div>
+{% endif %}
 
-<a href="/home"><button>⬅ Back</button></a>
+<br>
+<a href="/home"><button>Back</button></a>
 
 </body>
 </html>
