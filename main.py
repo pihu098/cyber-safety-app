@@ -1202,7 +1202,7 @@ def get_tip():
     })
 
 
-@app.route('/check_email', methods=['POST'])
+@app.route('/check', methods=['GET', 'POST'])
 def check_email():
     email_text = request.form['email']
 
@@ -1267,7 +1267,7 @@ def check_email():
         extra=" | ".join(warnings)
     )
 #--------file scan ----------------------
-@app.route('/scan_file', methods=['POST'])
+@app.route('/scan_file', methods=['GET', 'POST'])
 def scan_file():
 
     try:
@@ -1391,7 +1391,7 @@ def delete_update(id):
         return f"❌ ERROR: {str(e)}"
 
 
-@app.route('/updates')
+@app.route('/updates', methods=['GET'])
 def updates():
     db = get_db()
     cursor = db.cursor(buffered=True)
