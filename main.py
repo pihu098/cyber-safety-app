@@ -991,11 +991,13 @@ def password():
     # GET request (page open hone par)
     return render_template("password.html")
 # ---------------- WEBSITE CHECK ----------------
-
-@app.route('/check', methods=['POST'])
+@app.route('/check', methods=['GET', 'POST'])
 def check():
     import requests
     import re
+
+    if request.method == 'GET':
+        return render_template("check.html")
 
     url = request.form.get('url', '').strip()
 
@@ -1025,7 +1027,6 @@ def check():
         score -= 50
         warnings.append("Website not reachable")
 
-    # 🔍 extract domain only (IMPORTANT FIX)
     domain = re.sub(r'https?://', '', url).split('/')[0].lower()
 
     bad_words = ["login", "verify", "bank", "free", "win"]
@@ -1035,7 +1036,6 @@ def check():
             score -= 10
             warnings.append(f"Suspicious word: {word}")
 
-    # ⚠️ URL checks
     if len(url) > 50:
         score -= 10
         warnings.append("Too long URL")
@@ -1057,7 +1057,6 @@ def check():
         score -= 25
         warnings.append("IP address used")
 
-    # 🎯 FINAL RESULT
     if score >= 80:
         result = "✅ Safe Website"
     elif score >= 50:
@@ -1065,7 +1064,6 @@ def check():
     else:
         result = "❌ Dangerous Website"
 
-    # 📊 SAFE DB UPDATE
     try:
         if 'user' in session:
             db = get_db()
@@ -1087,6 +1085,7 @@ def check():
         result=f"{result} (Score: {score}/100)",
         extra=" | ".join(warnings)
     )
+
       
 # ---------------- QUIZ ----------------
 @app.route('/quiz')
