@@ -1541,11 +1541,12 @@ def leaderboard():
     cursor.execute("""
         SELECT 
             name,
-            MAX(coins) AS coins,
-            MAX(puzzle_wins) AS puzzle_wins
+            SUM(coins) AS coins,
+            SUM(puzzle_wins) AS puzzle_wins,
+            MAX(level) AS level
         FROM users
         GROUP BY name
-        ORDER BY coins DESC
+        ORDER BY coins DESC, puzzle_wins DESC
     """)
 
     data = cursor.fetchall()
