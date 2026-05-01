@@ -867,6 +867,7 @@ def profile():
         owned=owned,
         selected=selected,
         characters=characters
+    )   
     
 @app.route('/buy_char', methods=['POST'])
 def buy_char():
