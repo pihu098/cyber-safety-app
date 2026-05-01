@@ -833,10 +833,7 @@ def profile():
     db = get_db()
     cursor = db.cursor(buffered=True)
 
-    user = session['user']
-
-    # 💰 user data
-    cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (user,))
+    cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (session['user'],))
     data = cursor.fetchone()
 
     if data:
@@ -844,42 +841,33 @@ def profile():
     else:
         coins, level, xp = 200, 1, 0
 
-    # 🎭 owned characters (DB)
-    cursor.execute("SELECT emoji FROM user_chars WHERE user=%s", (user,))
-    owned = [x[0] for x in cursor.fetchall()]
+    owned = session.get("owned_chars", ["🤖"])
+    selected = session.get("selected_char", "🤖")
 
-    # 🟢 selected character
-    cursor.execute("SELECT selected_char FROM users WHERE name=%s", (user,))
-    sel = cursor.fetchone()
-    selected = sel[0] if sel and sel[0] else "🤖"
-
-    # 🎭 available characters
     characters = [
         {"emoji":"🤖","cost":0},
-        {"emoji":"👨‍💻","cost":50},
-        {"emoji":"🕵️‍♂️","cost":70},
-        {"emoji":"👾","cost":100},
-        {"emoji":"😈","cost":120},
-        {"emoji":"💀","cost":150},
-        {"emoji":"🧠","cost":80},
-        {"emoji":"🛡️","cost":60},
-        {"emoji":"⚡","cost":40},
-        {"emoji":"🔥","cost":90}
-    ]
-
-    db.close()
+        {"emoji":"👨‍💻","cost":150},
+        {"emoji":"🧠","cost":400},
+        {"emoji":"👾","cost":500},
+        {"emoji":"🛡️","cost":600}, 
+        {"emoji":"🕵️‍♂️","cost":700},
+        {"emoji":"⚡","cost":950},
+        {"emoji":"😈","cost":1000},
+        {"emoji":"💀","cost":1500},
+        {"emoji":"🔥","cost":2000}
+       
+       ]
 
     return render_template(
         "profile.html",
-        name=user,
+        name=session['user'],
         level=level,
         coins=coins,
         xp=xp,
         owned=owned,
         selected=selected,
         characters=characters
-    )
-
+    
 @app.route('/buy_char', methods=['POST'])
 def buy_char():
     try:
