@@ -958,8 +958,7 @@ def password():
 
     if request.method == 'POST':
     
-    import random
-    import string
+   
 
     length = int(request.form.get('length') or 8)
 
