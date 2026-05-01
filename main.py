@@ -484,7 +484,10 @@ print("DB =", os.getenv("DB_NAME"))
 
 init_db()
 
-
+def add_xp(points):
+    session['xp'] = session.get('xp', 0) + points
+    session['level'] = session['xp'] // 100
+    
 # ---------------- CYBER TIPS ----------------
 tips_list = [
 "Use strong passwords 🔐","Never share OTP 🚫","Check HTTPS before login 🌐",
@@ -701,6 +704,8 @@ def welcome():
     if 'user' not in session:
         return redirect('/')
     return render_template("welcome.html", name=session['user'])
+session['level'] = session.get('level', 1)
+session['xp'] = session.get('xp', 0)    
 #---------------auto login check---------------
 @app.route('/')
 def index():
@@ -801,9 +806,8 @@ def profile():
 
     return render_template("profile.html",
                            name=session['user'],
-                           level=5,   # अभी dummy
+                           level=session.get('level', 1),  # 👈 yaha fix
                            stats="Coming Soon")
-
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
