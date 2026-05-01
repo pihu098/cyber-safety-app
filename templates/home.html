@@ -61,15 +61,20 @@ body {
     font-size: 20px;
     font-weight: bold;
 }
-
 .profile-img {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     border: 2px solid #00c6ff;
-    object-fit: cover;
-    box-shadow: 0 0 10px #00c6ff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;   /* emoji size */
+    overflow: hidden;  /* extra part cut */
 }
+
 
 .level {
     font-size: 12px;
@@ -221,6 +226,12 @@ body {
     width: 70px;
     animation: float 2s infinite;
 }
+.profile-img span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}    
 
 @keyframes float {
     0% { transform: translateY(0); }
@@ -255,7 +266,7 @@ body {
 <a href="/profile">
 
 <div class="profile-img">
-    {{ session.get('selected_char', '🤖') }}
+    <span>{{ session.get('selected_char', '🤖') }}</span>
 </div>
 
 </a>
