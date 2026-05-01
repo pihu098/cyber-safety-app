@@ -704,8 +704,7 @@ def welcome():
     if 'user' not in session:
         return redirect('/')
     return render_template("welcome.html", name=session['user'])
-session['level'] = session.get('level', 1)
-session['xp'] = session.get('xp', 0)    
+
 #---------------auto login check---------------
 @app.route('/')
 def index():
