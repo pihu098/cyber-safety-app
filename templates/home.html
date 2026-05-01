@@ -429,6 +429,23 @@ function buyChar(emoji, cost){
     }).then(()=> location.reload());
 }
 </script>    
-    
+
+    <script>
+function winGame(){
+    document.getElementById("winSound").play();
+
+    fetch("/add_coins", {
+        method:"POST"
+    }).then(()=>{
+        alert("🎉 You Won! Coins Added!");
+        location.reload();
+    });
+}
+
+function loseGame(){
+    document.getElementById("failSound").play();
+    alert("😢 Ooooh! Try Again");
+}
+</script>
 </body>
 </html>
