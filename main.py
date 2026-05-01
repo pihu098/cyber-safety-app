@@ -463,30 +463,22 @@ def init_db():
         )
         """)
 
-         cursor.execute("""
-        SELECT 
-            name,
-            MAX(coins) AS coins,
-            MAX(puzzle_wins) AS puzzle_wins
-        FROM users
-        GROUP BY name
-        ORDER BY coins DESC
-    """)
-
-
-        cursor.execute("""
-    UPDATE users 
-    SET puzzle_wins = puzzle_wins + 1,
-        coins = coins + 10
-    WHERE name = %s
-""", (username,))
    
         @app.route('/leaderboard')
 def leaderboard():
     db = get_db()
     cursor = db.cursor(buffered=True)
 
-   
+ 
+    cursor.execute("""
+        SELECT 
+            name,
+            SUM(coins) AS coins,
+            SUM(puzzle_wins) AS puzzle_wins
+        FROM users
+        GROUP BY name
+        ORDER BY coins DESC
+    """)
 
     data = cursor.fetchall()
     current_user = session.get("user")
@@ -497,8 +489,9 @@ def leaderboard():
         "leaderboard.html",
         users=data,
         current_user=current_user
-    )
-   
+    ) 
+
+    
         
 
         db.commit()
@@ -1121,7 +1114,6 @@ def quiz_page():
 @app.route('/quiz_submit', methods=['POST'])
 def quiz_submit():
 
-    # 🔥 safety check
     quiz_set = session.get('quiz_set')
     if not quiz_set:
         return redirect('/quiz')
@@ -1147,6 +1139,28 @@ def quiz_submit():
             "status": status
         })
 
+    # 🔥 HERE IS THE FIX (OUTSIDE LOOP)
+    username = session.get("user")
+
+    if score >= 1:   # or your WIN condition
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute("""
+            UPDATE users 
+            SET puzzle_wins = puzzle_wins + 1,
+                coins = coins + 10
+            WHERE name = %s
+        """, (username,))
+
+        db.commit()
+        db.close()
+
+    return render_template(
+        "quiz_result.html",
+        score=score,
+        results=results
+    )
     # 🔥 update DB only if user logged in
     if 'user' in session:
         execute_query(
