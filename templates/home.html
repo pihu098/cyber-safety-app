@@ -462,6 +462,10 @@ function buyChar(emoji, cost){
         location.reload();
     });
 }
-</script>    
+</script>  
+
+<button onclick="buyChar('{{c.emoji}}', {{c.cost}})">
+    Buy
+</button>    
 </body>
 </html>
