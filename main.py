@@ -675,7 +675,7 @@ def dashboard():
     )
 #--------leaderboard---------------
 @app.route('/leaderboard')
-def leaderboard():
+def leaderboard_view():
     db = get_db()
     cursor = db.cursor(buffered=True)
 
