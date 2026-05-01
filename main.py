@@ -974,6 +974,7 @@ def password():
         if request.form.get('symbols'):
             chars += "@#$%&*!?"
 
+        # 🔥 FIX
         if chars == "":
             return render_template("result.html", result="❌ Please select at least one option")
 
@@ -987,7 +988,7 @@ def password():
 
         return render_template("result.html", result=pwd)
 
-    # 🔥 GET request pe page show karo
+    # GET request (page open hone par)
     return render_template("password.html")
 # ---------------- WEBSITE CHECK ----------------
 
