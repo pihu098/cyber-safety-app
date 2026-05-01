@@ -1298,10 +1298,6 @@ def scan_file():
     except Exception as e:
         print("File Scan Error:", e)
         return "❌ File scan failed"
-@app.route('/delete_update/<int:id>')
-def delete_update(id):
-    if 'user' not in session:
-        return redirect('/')
 
     try:
         db = get_db()
@@ -1740,7 +1736,7 @@ def admin():
     return render_template("admin.html")
 
 @app.route('/delete_update/<int:id>')
-def delete_update(id):
+def delete_update_admin(id):
 
     # 🔐 only admin allowed
     if session.get("user") != "admin":
