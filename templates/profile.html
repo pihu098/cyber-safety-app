@@ -99,6 +99,25 @@ function selectChar(emoji){
     <h3>📊 Stats</h3>
     <p>{{stats}}</p>
 </div>
+<div id="charShop" class="char-shop">
+
+    {% for c in characters %}
+    <div class="char-card">
+
+        <div class="emoji">{{c.emoji}}</div>
+
+        {% if c.emoji in owned %}
+            <button class="use-btn">Use</button>
+        {% else %}
+            <button onclick="buyChar('{{c.emoji}}', {{c.cost}})">
+                Buy ({{c.cost}})
+            </button>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+</div>    
 
 
 
