@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Translator</title>
+
+<style>
+body{
+    background:#0f2027;
+    color:white;
+    text-align:center;
+    font-family:Arial;
+}
+
+textarea{
+    width:80%;
+    height:100px;
+    margin:10px;
+}
+
+select,button{
+    padding:10px;
+    margin:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🌐 Text Translator</h2>
+
+<form method="POST">
+
+<textarea name="text" placeholder="Paste text here..."></textarea><br>
+
+<select name="lang">
+    <option value="en">English</option>
+    <option value="hi">Hindi</option>
+    <option value="fr">French</option>
+    <option value="es">Spanish</option>
+</select><br>
+
+<button type="submit">Translate</button>
+
+</form>
+
+<h3>{{ result }}</h3>
+
+<a href="/home"><button>⬅ Back</button></a>
+
+</body>
+</html>
