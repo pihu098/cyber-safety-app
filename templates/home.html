@@ -244,7 +244,11 @@ body {
 
 <div class="left">
 <a href="/profile">
-<img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" class="profile-img">
+
+<div class="profile-img">
+    {{ session.get('selected_char', '🤖') }}
+</div>
+
 </a>
 <span class="level">Level {{level}}</span>
 </div>
