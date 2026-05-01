@@ -89,11 +89,7 @@ body {
 
 </div>
 
-<script>
-function selectChar(emoji){
-    localStorage.setItem("character", emoji);
-    alert("Selected ✅");
-}
+
 </script>
 <div class="card">
     <h3>📊 Stats</h3>
@@ -120,8 +116,7 @@ function selectChar(emoji){
 </div>    
 
 
-
-<a href="/home"><button>Back</button></a>
+<a href="/select_char/{{c.emoji}}">Use</a>
 
 </body>
 </html>
