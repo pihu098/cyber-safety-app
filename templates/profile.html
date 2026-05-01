@@ -85,21 +85,7 @@ body {
 </div>    
 
 
-{% for c in characters %}
-<div class="card">
 
-<h1>{{ c.emoji }}</h1>
-
-{% if c.emoji in owned %}
-    <p>✅ Owned</p>
-    <a href="/select_char/{{ c.emoji }}">Use</a>
-{% else %}
-    <p>{{ c.cost }} coins</p>
-    <a href="/buy_char/{{ c.emoji }}">Buy</a>
-{% endif %}
-
-</div>
-{% endfor %}
     
 </body>
 </html>
