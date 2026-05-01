@@ -1808,22 +1808,26 @@ def delete_update(id):
 
 #----------translate -----------------------
 from deep_translator import GoogleTranslator
+
 @app.route('/translate', methods=['GET', 'POST'])
 def translate():
-    translated = ""
+
+    result = ""
 
     if request.method == 'POST':
-        from googletrans import Translator
-
         text = request.form.get('text')
         lang = request.form.get('lang')
 
-        translator = Translator()
-        result = translator.translate(text, dest=lang)
+        if text:
+            try:
+                result = GoogleTranslator(source='auto', target=lang).translate(text)
+            except:
+                result = "❌ Translation failed"
 
-        translated = result.text
+    return render_template("translate.html", result=result)
+   
 
-    return render_template("translate.html", result=translated)
+  
 # ---------------- RUN ----------------
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
