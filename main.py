@@ -1750,23 +1750,28 @@ def admin():
         return "✅ Posted Successfully"
 
     return render_template("admin.html")
+@app.route('/delete_update/<int:id>', methods=['GET', 'POST'])
+def delete_update(id):
 
-@app.route('/delete_update/<int:id>')
-def delete_update_admin(id):
+    # 🔐 Admin check
+    if request.method == 'POST':
+        password = request.form.get('password')
 
-    # 🔐 only admin allowed
-    if session.get("user") != "admin":
-        return "❌ Not Allowed"
+        if password != ADMIN_PASSWORD:
+            return "❌ Not Allowed (Wrong Admin Password)"
 
-    db = get_db()
-    cursor = db.cursor()
+        db = get_db()
+        cursor = db.cursor()
 
-    cursor.execute("DELETE FROM updates WHERE id=%s", (id,))
+        cursor.execute("DELETE FROM updates WHERE id=%s", (id,))
 
-    db.commit()
-    db.close()
+        db.commit()
+        db.close()
 
-    return redirect('/updates')
+        return "✅ Deleted Successfully"
+
+    return render_template("delete_confirm.html", id=id)
+
 # ---------------- RUN ----------------
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8080)
