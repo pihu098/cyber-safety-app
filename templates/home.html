@@ -448,5 +448,20 @@ function loseGame(){
     alert("😢 Ooooh! Try Again");
 }
 </script>
+
+<script>
+function buyChar(emoji, cost){
+    fetch("/buy_char", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `emoji=${emoji}&cost=${cost}`
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+        location.reload();
+    });
+}
+</script>    
 </body>
 </html>
