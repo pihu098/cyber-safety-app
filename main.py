@@ -841,24 +841,6 @@ def profile():
     session["level"] = level
     session["xp"] = xp
 
-    # 🔹 owned characters
-    owned = session.get("owned_chars", ["🤖"])
-    selected = session.get("selected_char", "🤖")
-
-    characters = [
-        {"emoji":"🤖","cost":0},
-        {"emoji":"👨‍💻","cost":50},
-        {"emoji":"🕵️‍♂️","cost":70},
-        {"emoji":"👾","cost":100},
-        {"emoji":"😈","cost":120},
-        {"emoji":"💀","cost":150},
-        {"emoji":"🧠","cost":80},
-        {"emoji":"🛡️","cost":60},
-        {"emoji":"⚡","cost":40},
-        {"emoji":"🔥","cost":90}
-    ]
-
-    db.close()
 
     return render_template(
         "profile.html",
