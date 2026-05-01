@@ -994,7 +994,10 @@ def password():
         chars += string.digits
     if 'symbols' in request.form:
         chars += "@#$%&*!?"
+    if not chars:
+        return render_template("result.html", result="❌ Select at least one option!")
 
+    
     pwd = ''.join(random.choice(chars) for _ in range(length))
 
     if 'user' in session:
