@@ -1807,6 +1807,7 @@ def delete_update(id):
     return render_template("delete_confirm.html", id=id)
 
 #----------translate -----------------------
+from deep_translator import GoogleTranslator
 @app.route('/translate', methods=['GET', 'POST'])
 def translate():
     translated = ""
