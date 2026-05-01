@@ -900,43 +900,47 @@ def handle_buy(emoji, cost=None):
 
 @app.route('/buy_char', methods=['POST'])
 def buy_char():
-    emoji = request.form.get("emoji")
-    cost = int(request.form.get("cost"))
+    try:
+        emoji = request.form.get("emoji")
+        cost = int(request.form.get("cost"))
 
-    db = get_db()
-    cursor = db.cursor()
+        user = session.get("user")
+        if not user:
+            return "❌ Login required"
 
-    # 💰 get user coins
-    user = session.get("user")
+        db = get_db()
+        cursor = db.cursor()
 
-    cursor.execute("SELECT coins FROM users WHERE name=%s", (user,))
-    data = cursor.fetchone()
+        cursor.execute("SELECT coins FROM users WHERE name=%s", (user,))
+        data = cursor.fetchone()
 
-    if not data:
-        return "❌ User not found"
+        if not data:
+            return "❌ User not found"
 
-    coins = data[0]
+        coins = data[0]
 
-    # ❌ NOT ENOUGH COINS
-    if coins < cost:
-        return "😢 Better luck next time! Not enough coins"
+        if coins < cost:
+            return "😢 Not enough coins"
 
-    # 💰 deduct coins
-    cursor.execute(
-        "UPDATE users SET coins = coins - %s WHERE name=%s",
-        (cost, user)
-    )
+        # deduct coins
+        cursor.execute(
+            "UPDATE users SET coins = coins - %s WHERE name=%s",
+            (cost, user)
+        )
 
-    # 🎭 add ownership (if table exists)
-    cursor.execute(
-        "INSERT INTO user_chars (user, emoji) VALUES (%s, %s)",
-        (user, emoji)
-    )
+        # save character (safe insert)
+        cursor.execute(
+            "INSERT INTO user_chars (user, emoji) VALUES (%s, %s)",
+            (user, emoji)
+        )
 
-    db.commit()
-    db.close()
+        db.commit()
+        db.close()
 
-    return "✅ Purchased successfully!"
+        return "✅ Bought!"
+
+    except Exception as e:
+        return f"❌ ERROR: {str(e)}"
     
 @app.route('/use_char/<emoji>')
 def use_char(emoji):
