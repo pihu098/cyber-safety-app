@@ -50,40 +50,9 @@ body {
         🎭 Characters
     </button>
 
-</div>
-<div class="profile-box">
 
-    <img src="/static/characters/bot.gif" class="profile-img">
 
-    <h2>{{name}}</h2>
 
-</div>
-
-<div class="card">
-    <h3>🎯 Level</h3>
-    <p>{{level}}</p>
-</div>
-<h2>👤 {{name}}'s Profile</h2>
-<p>💰 Coins: {{coins}}</p>
-
-<div class="grid">
-
-{% for c in characters %}
-
-<div class="card">
-
-<h1>{{c.emoji}}</h1>
-
-{% if c.emoji in owned %}
-    <p>✅ Owned</p>
-    <a href="#" onclick="selectChar('{{c.emoji}}')">Use</a>
-
-{% else %}
-    <p>{{c.cost}} coins</p>
-    <a href="/buy_char/{{c.emoji}}">Buy</a>
-{% endif %}
-
-</div>
 
 {% endfor %}
 
