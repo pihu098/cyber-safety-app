@@ -464,7 +464,7 @@ def init_db():
         """)
 
    
-        @app.route('/leaderboard')
+@app.route('/leaderboard')
 def leaderboard():
     db = get_db()
     cursor = db.cursor(buffered=True)
