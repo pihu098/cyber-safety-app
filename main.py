@@ -818,22 +818,33 @@ def home():
     return redirect('/')
 
 #-----------profile page--------------
+#-----------profile page--------------
 @app.route('/profile')
 def profile():
     if 'user' not in session:
         return redirect('/')
 
-    init_user()  # ✅ user data init
+    db = get_db()
+    cursor = db.cursor(buffered=True)
 
-    # ✅ session data
-    level = session.get('level', 1)
-    coins = session.get("coins", 200)
-    xp = session.get("xp", 0)
+    # 🔹 user ka latest data DB se lao
+    cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (session['user'],))
+    data = cursor.fetchone()
 
-    # ✅ owned characters
+    if data:
+        coins, level, xp = data
+    else:
+        coins, level, xp = 200, 1, 0
+
+    # 🔹 session sync
+    session["coins"] = coins
+    session["level"] = level
+    session["xp"] = xp
+
+    # 🔹 owned characters
     owned = session.get("owned_chars", ["🤖"])
+    selected = session.get("selected_char", "🤖")
 
-    # ✅ all characters
     characters = [
         {"emoji":"🤖","cost":0},
         {"emoji":"👨‍💻","cost":50},
@@ -847,6 +858,8 @@ def profile():
         {"emoji":"🔥","cost":90}
     ]
 
+    db.close()
+
     return render_template(
         "profile.html",
         name=session['user'],
@@ -854,10 +867,10 @@ def profile():
         coins=coins,
         xp=xp,
         owned=owned,
+        selected=selected,
         characters=characters
     )
-
-# 🔥 COMMON FUNCTION (REAL LOGIC)
+   # 🔥 COMMON FUNCTION
 def handle_buy(emoji, cost=None):
     coins = session.get("coins", 200)
     owned = session.get("owned_chars", ["🤖"])
@@ -868,7 +881,6 @@ def handle_buy(emoji, cost=None):
         "🛡️":60, "⚡":40, "🔥":90
     }
 
-    # agar cost JS se aaya hai use karo, warna dict se lo
     if cost is None:
         cost = char_cost.get(emoji, 0)
 
@@ -878,12 +890,10 @@ def handle_buy(emoji, cost=None):
 
         session["coins"] = coins
         session["owned_chars"] = owned
-        session["selected_char"] = emoji  # auto select
+        session["selected_char"] = emoji
 
     return True
 
-
-# ✅ POST METHOD (JS FETCH)
 @app.route('/buy_char', methods=['POST'])
 def buy_char():
     emoji = request.form.get("emoji")
@@ -892,13 +902,10 @@ def buy_char():
     handle_buy(emoji, cost)
     return "ok"
 
-
-# ✅ LINK METHOD (/buy_char/emoji)
 @app.route('/buy_char/<emoji>')
 def buy_char_link(emoji):
     handle_buy(emoji)
     return redirect('/profile')
-    
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
