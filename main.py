@@ -1495,7 +1495,11 @@ def select_character(cid):
 
     db.close()
     return redirect('/characters')
-    
+
+@app.route('/select_char/<emoji>')
+def select_char(emoji):
+    session["selected_char"] = emoji
+    return redirect('/profile')
 #-------------leaderboard system-----------
 @app.route('/leaderboard')
 def leaderboard():
