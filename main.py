@@ -957,6 +957,8 @@ def password():
     result = None
 
     if request.method == 'POST':
+         import random
+         import string
     
    
 
