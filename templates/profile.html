@@ -11,14 +11,31 @@ body {
     font-family: Arial;
 }
 
+/* 👤 PROFILE BOX */
 .profile-box {
     margin-top: 50px;
 }
 
+/* 🎭 AVATAR FIXED */
 .avatar {
-    font-size: 70px;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 80px;
+
+    border-radius: 50%;
+    border: 3px solid #00c6ff;
+
+    line-height: 1;
+    box-shadow: 0 0 15px #00c6ff;
 }
 
+/* CARD */
 .card {
     background: rgba(255,255,255,0.1);
     margin: 20px;
@@ -26,10 +43,13 @@ body {
     border-radius: 15px;
 }
 
+/* SHOP */
 .char-shop {
     display: none;
+    margin-top: 20px;
 }
 
+/* BUTTON */
 button {
     padding: 8px 15px;
     border-radius: 10px;
@@ -59,15 +79,13 @@ button {
 
 </div>
 
-
-
 <!-- 🎭 CHARACTER SHOP -->
 <div id="charShop" class="char-shop">
 
     {% for c in characters %}
     <div class="card">
 
-        <h1>{{c.emoji}}</h1>
+        <h1 style="font-size:60px;">{{c.emoji}}</h1>
 
         {% if c.emoji in owned %}
             <p>✅ Owned</p>
@@ -82,9 +100,12 @@ button {
 
         {% else %}
             <p>{{c.cost}} coins</p>
-            <a href="/buy_char/{{c.emoji}}">
-                <button>Buy</button>
-            </a>
+
+            <!-- 🔥 FIXED BUY BUTTON -->
+            <button onclick="buyChar('{{c.emoji}}', {{c.cost}})">
+                Buy
+            </button>
+
         {% endif %}
 
     </div>
@@ -93,37 +114,36 @@ button {
 </div>
 
 <!-- 🔙 BACK -->
+<br>
 <a href="/home"><button>Back</button></a>
 
 <script>
 function toggleShop(){
     let shop = document.getElementById("charShop");
-    shop.style.display = (shop.style.display=="block") ? "none" : "block";
+    shop.style.display = (shop.style.display === "block") ? "none" : "block";
 }
-</script>
 
-<script>
+/* 🔥 BUY SYSTEM FIXED */
 function buyChar(emoji, cost){
 
     fetch("/buy_char", {
         method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: `emoji=${emoji}&cost=${cost}`
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `emoji=${encodeURIComponent(emoji)}&cost=${cost}`
     })
     .then(res => res.text())
     .then(msg => {
-
         alert(msg);
-
-        if(msg.includes("Not enough coins")){
-            // ❌ fail sound / message
-            console.log("No coins");
-        }
-
         location.reload();
+    })
+    .catch(err => {
+        alert("❌ Error buying character");
+        console.log(err);
     });
 }
 </script>
-    
+
 </body>
 </html>
