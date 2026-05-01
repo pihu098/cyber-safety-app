@@ -1123,6 +1123,7 @@ def quiz_submit():
     score = 0
     results = []
 
+    # ---------------- CHECK ANSWERS ----------------
     for i, q in enumerate(quiz_set):
 
         user_ans = (request.form.get(f"q{i}") or "").strip().lower()
@@ -1141,42 +1142,41 @@ def quiz_submit():
             "status": status
         })
 
-    # 🔥 HERE IS THE FIX (OUTSIDE LOOP)
     username = session.get("user")
 
-    if score >= 1:   # or your WIN condition
+    # ---------------- UPDATE DATABASE ----------------
+    if username:
         db = get_db()
         cursor = db.cursor()
 
+        # 🔥 WIN + COINS + XP
+        if score > 0:
+            cursor.execute("""
+                UPDATE users 
+                SET puzzle_wins = puzzle_wins + 1,
+                    coins = coins + (10 * %s),
+                    xp = xp + (5 * %s)
+                WHERE name = %s
+            """, (score, score, username))
+
+        # 🔥 QUIZ USAGE TRACK
         cursor.execute("""
             UPDATE users 
-            SET puzzle_wins = puzzle_wins + 1,
-                coins = coins + 10
+            SET quiz_used = quiz_used + 1
+            WHERE name = %s
+        """, (username,))
+
+        # 🔥 LEVEL UPDATE
+        cursor.execute("""
+            UPDATE users 
+            SET level = FLOOR(xp / 20) + 1
             WHERE name = %s
         """, (username,))
 
         db.commit()
         db.close()
 
-    return render_template(
-        "quiz_result.html",
-        score=score,
-        results=results
-    )
-    # 🔥 update DB only if user logged in
-    if 'user' in session:
-        execute_query(
-            "UPDATE users SET quiz_used = quiz_used + 1 WHERE name=%s",
-            (session['user'],)
-        )
-
-    # 🔥 optional: coins/xp reward system
-    if 'user' in session:
-        execute_query(
-            "UPDATE users SET coins = coins + %s, xp = xp + %s WHERE name=%s",
-            (score * 2, score, session['user'])
-        )
-
+    # ---------------- RETURN RESULT ----------------
     return render_template(
         "quiz_result.html",
         score=score,
