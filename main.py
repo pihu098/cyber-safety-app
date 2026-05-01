@@ -463,6 +463,42 @@ def init_db():
         )
         """)
 
+         cursor.execute("""
+        SELECT 
+            name,
+            MAX(coins) AS coins,
+            MAX(puzzle_wins) AS puzzle_wins
+        FROM users
+        GROUP BY name
+        ORDER BY coins DESC
+    """)
+
+
+        cursor.execute("""
+    UPDATE users 
+    SET level = coins / 100
+    WHERE name = %s
+""", (username,))
+        
+    level = coins // 100 
+        @app.route('/leaderboard')
+def leaderboard():
+    db = get_db()
+    cursor = db.cursor(buffered=True)
+
+   
+
+    data = cursor.fetchall()
+    current_user = session.get("user")
+
+    db.close()
+
+    return render_template(
+        "leaderboard.html",
+        users=data,
+        current_user=current_user
+    )
+   
         
 
         db.commit()
