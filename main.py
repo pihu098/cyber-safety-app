@@ -833,7 +833,10 @@ def profile():
     db = get_db()
     cursor = db.cursor(buffered=True)
 
-    cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (session['user'],))
+    user = session['user']
+
+    # 💰 user data
+    cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (user,))
     data = cursor.fetchone()
 
     if data:
@@ -841,15 +844,16 @@ def profile():
     else:
         coins, level, xp = 200, 1, 0
 
-    # ✅ session sync
-    session["coins"] = coins
-    session["level"] = level
-    session["xp"] = xp
+    # 🎭 owned characters (DB)
+    cursor.execute("SELECT emoji FROM user_chars WHERE user=%s", (user,))
+    owned = [x[0] for x in cursor.fetchall()]
 
-    # ✅ IMPORTANT FIX (missing tha)
-    owned = session.get("owned_chars", ["🤖"])
-    selected = session.get("selected_char", "🤖")
+    # 🟢 selected character
+    cursor.execute("SELECT selected_char FROM users WHERE name=%s", (user,))
+    sel = cursor.fetchone()
+    selected = sel[0] if sel and sel[0] else "🤖"
 
+    # 🎭 available characters
     characters = [
         {"emoji":"🤖","cost":0},
         {"emoji":"👨‍💻","cost":50},
@@ -863,9 +867,11 @@ def profile():
         {"emoji":"🔥","cost":90}
     ]
 
+    db.close()
+
     return render_template(
         "profile.html",
-        name=session['user'],
+        name=user,
         level=level,
         coins=coins,
         xp=xp,
@@ -873,75 +879,63 @@ def profile():
         selected=selected,
         characters=characters
     )
-    return redirect('/profile')
-
-def handle_buy(emoji, cost=None):
-    coins = session.get("coins", 200)
-    owned = session.get("owned_chars", ["🤖"])
-
-    char_cost = {
-        "👨‍💻":100, "🕵️‍♂️":1000, "👾":170,
-        "😈":800, "💀":500, "🧠":80,
-        "🛡️":570, "⚡":450, "🔥":900
-    }
-
-    if cost is None:
-        cost = char_cost.get(emoji, 0)
-
-    if emoji not in owned and coins >= cost:
-        coins -= cost
-        owned.append(emoji)
-
-        session["coins"] = coins
-        session["owned_chars"] = owned
-        session["selected_char"] = emoji
-
-    return True
 
 @app.route('/buy_char', methods=['POST'])
 def buy_char():
     try:
-        emoji = request.form.get("emoji")
-        cost = int(request.form.get("cost"))
-
         user = session.get("user")
-        if not user:
-            return "❌ Login required"
+        emoji = request.form.get("emoji")
+
+        char_cost = {
+            "👨‍💻":100, "🕵️‍♂️":1000, "👾":170,
+            "😈":800, "💀":500, "🧠":80,
+            "🛡️":570, "⚡":450, "🔥":900
+        }
+
+        cost = char_cost.get(emoji, 0)
 
         db = get_db()
-        cursor = db.cursor()
+        cursor = db.cursor(buffered=True)
 
+        # 💰 coins
         cursor.execute("SELECT coins FROM users WHERE name=%s", (user,))
-        data = cursor.fetchone()
+        coins = cursor.fetchone()[0]
 
-        if not data:
-            return "❌ User not found"
+        # 🎭 check already owned
+        cursor.execute("SELECT emoji FROM user_chars WHERE user=%s", (user,))
+        owned = [x[0] for x in cursor.fetchall()]
 
-        coins = data[0]
+        if emoji in owned:
+            return "⚠️ Already owned"
 
         if coins < cost:
-            return "😢 Not enough coins"
+            return "😢 Better luck next time"
 
-        # deduct coins
+        # 💰 deduct coins
         cursor.execute(
             "UPDATE users SET coins = coins - %s WHERE name=%s",
             (cost, user)
         )
 
-        # save character (safe insert)
+        # 🎭 add character
         cursor.execute(
             "INSERT INTO user_chars (user, emoji) VALUES (%s, %s)",
             (user, emoji)
         )
 
+        # 🟢 auto select
+        cursor.execute(
+            "UPDATE users SET selected_char=%s WHERE name=%s",
+            (emoji, user)
+        )
+
         db.commit()
         db.close()
 
-        return "✅ Bought!"
+        return "✅ Purchased Successfully!"
 
     except Exception as e:
         return f"❌ ERROR: {str(e)}"
-    
 @app.route('/use_char/<emoji>')
 def use_char(emoji):
 
