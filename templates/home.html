@@ -402,6 +402,21 @@ document.getElementById("reply").innerText=await res.text();
 let char = localStorage.getItem("character") || "🤖";
 document.getElementById("profileChar").innerText = char;
 </script>
+
+<script>
+function toggleShop(){
+    let shop = document.getElementById("charShop");
+    shop.style.display = (shop.style.display=="grid") ? "none" : "grid";
+}
+
+function buyChar(emoji, cost){
+    fetch("/buy_char", {
+        method:"POST",
+        headers:{"Content-Type":"application/x-www-form-urlencoded"},
+        body:`emoji=${emoji}&cost=${cost}`
+    }).then(()=> location.reload());
+}
+</script>    
     
 </body>
 </html>
