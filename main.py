@@ -856,6 +856,21 @@ def profile():
         owned=owned,
         characters=characters
     )
+
+@app.route('/buy_char', methods=['POST'])
+def buy_char():
+    emoji = request.form.get("emoji")
+    cost = int(request.form.get("cost"))
+
+    if session.get("coins",0) >= cost:
+        session["coins"] -= cost
+
+        owned = session.get("owned_chars", [])
+        owned.append(emoji)
+        session["owned_chars"] = owned
+
+    return "ok"
+    
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
