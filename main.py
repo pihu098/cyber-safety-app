@@ -810,7 +810,33 @@ def logout():
     session.clear()
     return redirect('/')
 
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        return redirect('/')
 
+    # demo data (baad me DB se aayega)
+    coins = session.get("coins", 200)
+    owned = session.get("owned_chars", ["🤖"])  # default free
+
+    characters = [
+        {"emoji":"🤖","cost":0},
+        {"emoji":"👨‍💻","cost":50},
+        {"emoji":"🕵️‍♂️","cost":70},
+        {"emoji":"👾","cost":100},
+        {"emoji":"😈","cost":120},
+        {"emoji":"💀","cost":150},
+        {"emoji":"🧠","cost":80},
+        {"emoji":"🛡️","cost":60},
+        {"emoji":"⚡","cost":40},
+        {"emoji":"🔥","cost":90}
+    ]
+
+    return render_template("profile.html",
+                           name=session['user'],
+                           coins=coins,
+                           owned=owned,
+                           characters=characters)
 # ----------------- COMMUNITY SYSTEM -----------------
 @app.route('/community', methods=['GET', 'POST'])
 def community():
@@ -1029,6 +1055,33 @@ def quiz_submit():
         score=score,
         results=results
     )
+#------profile----------------
+@app.route('/buy_char/<emoji>')
+def buy_char(emoji):
+
+    coins = session.get("coins", 200)
+    owned = session.get("owned_chars", ["🤖"])
+
+    char_cost = {
+        "👨‍💻":50, "🕵️‍♂️":70, "👾":100,
+        "😈":120, "💀":150, "🧠":80,
+        "🛡️":60, "⚡":40, "🔥":90
+    }
+
+    if emoji in owned:
+        return redirect('/profile')
+
+    cost = char_cost.get(emoji, 0)
+
+    if coins >= cost:
+        coins -= cost
+        owned.append(emoji)
+
+        session["coins"] = coins
+        session["owned_chars"] = owned
+        session["character"] = emoji   # auto select
+
+    return redirect('/profile')
 #------------tips------------
 from flask import jsonify
 
