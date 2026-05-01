@@ -977,9 +977,12 @@ def chat():
     return ai_response(user_msg)
 
 # ---------------- PASSWORD GENERATOR ----------------
-@app.route('/password', methods=['POST'])
+@app.route('/password', methods=['GET', 'POST'])
 def password():
+    result = None
 
+    if request.method == 'POST':
+    
     import random
     import string
 
