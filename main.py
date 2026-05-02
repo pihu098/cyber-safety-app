@@ -573,6 +573,13 @@ Stay calm & act fast!"""
 
     elif "phishing" in msg:
         return "🎣 Phishing is fake message to steal data"
+    elif "my account hacked" in msg or "account hack" in msg:
+        return """🚨 Account hacked?
+         1️⃣ Change password immediately
+         2️⃣ Enable 2FA
+         3️⃣ Check login activity
+         4️⃣ Report platform support
+         ⚡ Act fast to recover!"""    
 
     elif "how are you" in msg:
         return "😊 I'm good! Ready to help you stay safe online."
