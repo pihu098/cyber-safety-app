@@ -584,6 +584,77 @@ Stay calm & act fast!"""
     elif "how are you" in msg:
         return "😊 I'm good! Ready to help you stay safe online."
 
+    elif "money deducted" in msg or "upi fraud" in msg or "lost money" in msg:
+       return """💸 Money lost in scam?
+👉 Call 1930 immediately
+👉 Report: cybercrime.gov.in
+⏰ Report within 24 hrs for better recovery chance!"""
+
+    elif "whatsapp hack" in msg or "whatsapp scam" in msg:
+       return """📱 WhatsApp Safety:
+🚫 Never share OTP
+🚫 Don't click unknown links
+✅ Enable 2-step verification"""
+
+    elif "email fake" in msg or "fake email" in msg:
+       return """📧 Fake Email Signs:
+⚠️ Unknown sender
+⚠️ Urgent message ("act now")
+⚠️ Suspicious links
+👉 Always verify sender!"""
+
+    elif "free fire hack" in msg or "game hack" in msg or "free skins" in msg:
+       return """🎮 Gaming Scam Alert:
+🚫 No real hacks or free skins
+🚫 Don't download mod apps
+💡 These steal your account!"""
+
+    elif "shopping scam" in msg or "fake website" in msg:
+        return """🛒 Shopping Safety:
+✅ Check reviews
+✅ Use trusted sites
+🚫 Avoid too-good-to-be-true deals"""
+
+    elif "how to create password" in msg:
+       return """🔐 Strong Password Tips:
+✔️ Use 12+ characters
+✔️ Mix letters, numbers, symbols
+✔️ Avoid name/DOB"""
+
+    
+    elif "kyc" in msg:
+        return """📄 KYC Scam Alert:
+🚫 Bank never asks KYC via link
+🚫 Don't share OTP or details
+⚠️ Always visit official website"""
+
+    elif "instagram hack" in msg or "social media hacked" in msg:
+        return """📷 Social Media Safety:
+🔒 Enable 2FA
+🔑 Change password
+👀 Remove unknown devices"""
+
+    elif "is this safe" in msg or "safe or not" in msg:
+        return """🤔 Not sure?
+👉 Don't click unknown links
+👉 Don't share personal info
+💡 When in doubt = avoid!"""
+
+    elif "job scam" in msg or "fake job" in msg:
+        return """💼 Job Scam Alert:
+🚫 No legit job asks money
+🚫 Avoid random WhatsApp jobs
+✅ Verify company first"""
+
+    elif "card details" in msg or "credit card scam" in msg:
+        return """💳 Card Safety:
+🚫 Never share CVV/OTP
+🔐 Use secure payment gateway
+⚠️ Block card if suspicious"""
+
+    elif "confused" in msg or "don't know" in msg:
+        return "😅 No worries! Tell me your problem, I'll guide you step by step."
+ 
     elif "virus" in msg:
         return "🛡️ Use antivirus and avoid unknown downloads"
 
