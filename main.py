@@ -605,7 +605,6 @@ puzzle_levels = {
 {"q": "What is safe browsing?",
 "options": ["Click all links", "Use secure sites", "Download all", "Ignore warnings"],
 "a": "Use secure sites"},
-puzzle_levels.update({
 
     5: [
         {"q": "What is data breach?", 
@@ -695,7 +694,7 @@ puzzle_levels.update({
          "a": "Protected connection"},
 
 ]
-}
+})
 # ---------------- QUIZ ----------------
 quiz = [
 {"q":"What is phishing?", "a":"fake"},
