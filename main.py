@@ -25,12 +25,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # 🔥 safe create
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-ADMIN_PASSWORD = "priyanrkp098"  # changable.........
+ADMIN_PASSWORD = "priyanrkp098"  # changable.......
 
-@app.route('/get_level/<int:level>')
-def get_level(level):
-    questions = puzzle_levels.get(level, [])
-    return jsonify(questions)
+
 #-----------------------puzzle---------------
 word_puzzles = [
     {"jumbled": "phsiihng", "answer": "phishing"},
@@ -1283,7 +1280,23 @@ def quiz_submit():
         score=score,
         results=results
     )
-#------profile----------------
+
+#=------random puzzle ----------------
+def get_random_puzzle():
+    types = ["mcq", "word", "sentence"]
+    mode = random.choice(types)
+
+    if mode == "mcq":
+        level = random.choice(list(puzzle_levels.keys()))
+        q = random.choice(puzzle_levels[level])
+
+    elif mode == "word":
+        q = random.choice(word_puzzles)
+
+    elif mode == "sentence":
+        q = random.choice(sentence_puzzles)
+
+    return mode, q
 
 #------------tips------------
 from flask import jsonify
