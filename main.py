@@ -694,7 +694,7 @@ puzzle_levels = {
          "a": "Protected connection"},
 
 ]
-})
+}
 # ---------------- QUIZ ----------------
 quiz = [
 {"q":"What is phishing?", "a":"fake"},
