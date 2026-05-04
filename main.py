@@ -2120,6 +2120,9 @@ def puzzle_play():
     elif "words" in q:
         mode = "word"
 
+    elif "jumbled" in q:
+       mode = "word"    
+
         words = q["words"][:]
         random.shuffle(words)
         q["words"] = words
