@@ -54,7 +54,6 @@ word_puzzles = [
     {"jumbled": "RESU", "answer": "USER"},
     {"jumbled": "TENRETNI", "answer": "INTERNET"},
     {"jumbled": "KROWTEN", "answer": "NETWORK"},
-    word_puzzles = [
     {"jumbled": "phsiihng", "answer": "phishing"},
     {"jumbled": "pwaorssd", "answer": "password"},
     {"jumbled": "HSIPINGH", "answer": "PHISHING"},
