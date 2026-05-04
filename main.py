@@ -605,6 +605,7 @@ puzzle_levels = {
 {"q": "What is safe browsing?",
 "options": ["Click all links", "Use secure sites", "Download all", "Ignore warnings"],
 "a": "Use secure sites"},
+],
 
     5: [
         {"q": "What is data breach?", 
