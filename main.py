@@ -2119,9 +2119,9 @@ def puzzle_play():
     elif "jumbled" in q:
        mode = "word"    
 
-        words = q["words"][:]
-        random.shuffle(words)
-        q["words"] = words
+       words = q["words"][:]
+       random.shuffle(words)
+       q["words"] = words
 
     else:
         mode = "sentence"
