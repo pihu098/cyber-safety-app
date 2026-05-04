@@ -1925,23 +1925,23 @@ def puzzle_start():
     if 'user' not in session:
         return redirect('/')
 
+    import random
+
     # 🔁 RESET if coming from restart (game over)
     if session.get('puzzle_failed'):
         session['puzzle_failed'] = False
-        questions = session.get('puzzle_game', [])
 
         # 💾 restart same game
         session['puzzle_index'] = 0
         session['puzzle_score'] = 0
         session['lives'] = 5
-
         return redirect('/game/puzzle/play')
 
     # 🔥 safe game counter
     session['game_count'] = session.get('game_count', 0) + 1
     game_count = session['game_count']
 
-    # 🎯 level system (smooth progression)
+    # 🎯 level system
     if game_count <= 1:
         level = 1
     elif game_count <= 2:
@@ -1953,12 +1953,14 @@ def puzzle_start():
 
     session['level'] = level
 
-    # 🔥 collect all questions safely
+    # =========================
+    # 🔥 MCQ QUESTIONS (existing)
+    # =========================
     all_questions = []
     for k in puzzle_levels:
         all_questions.extend(puzzle_levels[k])
 
-    # 🔥 safe dedup
+    # 🔥 dedup
     seen = set()
     unique_questions = []
 
@@ -1970,15 +1972,32 @@ def puzzle_start():
 
     random.shuffle(unique_questions)
 
-    # 🎯 level based question count
+    # =========================
+    # 🔥 WORD + SENTENCE ADD (NEW)
+    # =========================
+    word = word_puzzles[:]
+    sentence = sentence_puzzles[:]
+
+    random.shuffle(word)
+    random.shuffle(sentence)
+
+    # =========================
+    # 🎯 LEVEL BASED MIX
+    # =========================
     if level == 1:
-        questions = unique_questions[:5]
+        questions = unique_questions[:3] + word[:1] + sentence[:1]
+
     elif level == 2:
-        questions = unique_questions[:7]
+        questions = unique_questions[:4] + word[:2] + sentence[:1]
+
     elif level == 3:
-        questions = unique_questions[:9]
+        questions = unique_questions[:5] + word[:2] + sentence[:2]
+
     else:
-        questions = unique_questions[:12]
+        questions = unique_questions[:6] + word[:3] + sentence[:3]
+
+    # 🔥 FINAL SHUFFLE (IMPORTANT)
+    random.shuffle(questions)
 
     # 💾 session reset
     session['puzzle_game'] = questions
