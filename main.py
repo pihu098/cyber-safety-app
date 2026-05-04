@@ -213,7 +213,6 @@ sentence_puzzles = [
         "words": ["phishing", "is", "fake", "message"],
         "answer": "phishing is fake message"
 },
-sentence_puzzles += [
 
 {
 "question": "Why use antivirus?",
@@ -741,8 +740,6 @@ quiz = [
 {"q":"Check login alerts?", "a":"yes"},
 {"q":"Use password manager?", "a":"yes"},
 {"q":"Click unknown USB devices?", "a":"no"},
-quiz += [
-
 {"q":"Should you lock your phone?", "a":"yes"},
 {"q":"Is sharing passwords safe?", "a":"no"},
 {"q":"Use official app stores?", "a":"yes"},
