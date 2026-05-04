@@ -27,6 +27,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ADMIN_PASSWORD = "priyanrkp098"  # changable.........
 
+@app.route('/get_level/<int:level>')
+def get_level(level):
+    questions = puzzle_levels.get(level, [])
+    return jsonify(questions)
 #-----------------------puzzle---------------
 word_puzzles = [
     {"jumbled": "phsiihng", "answer": "phishing"},
