@@ -53,6 +53,31 @@ word_puzzles = [
     {"jumbled": "ETANIDUOTR", "answer": "ROUTINATED"},
     {"jumbled": "RESU", "answer": "USER"},
     {"jumbled": "TENRETNI", "answer": "INTERNET"},
+    {"jumbled": "KROWTEN", "answer": "NETWORK"},
+    word_puzzles = [
+    {"jumbled": "phsiihng", "answer": "phishing"},
+    {"jumbled": "pwaorssd", "answer": "password"},
+    {"jumbled": "HSIPINGH", "answer": "PHISHING"},
+    {"jumbled": "RVIUS", "answer": "VIRUS"},
+    {"jumbled": "HSIPINGH", "answer": "PHISHING"},
+    {"jumbled": "LMAREWA", "answer": "MALWARE"},
+    {"jumbled": "SPYAREWA", "answer": "SPYWARE"},
+    {"jumbled": "RANSMOWARE", "answer": "RANSOMWARE"},
+    {"jumbled": "VIRSU", "answer": "VIRUS"},
+    {"jumbled": "OTPW", "answer": "OTP"},
+    {"jumbled": "KCAHRE", "answer": "HACKER"},
+    {"jumbled": "ERWALLIF", "answer": "FIREWALL"},
+    {"jumbled": "SUSREVI", "answer": "VIRUSES"},
+    {"jumbled": "DORWSSAP", "answer": "PASSWORD"},
+    {"jumbled": "ETCNEPIONRCY", "answer": "ENCRYPTION"},
+    {"jumbled": "ATAD", "answer": "DATA"},
+    {"jumbled": "YTIRUCES", "answer": "SECURITY"},
+    {"jumbled": "SSECCA", "answer": "ACCESS"},
+    {"jumbled": "GNIGOL", "answer": "LOGGING"},
+    {"jumbled": "PUKCAB", "answer": "BACKUP"},
+    {"jumbled": "ETANIDUOTR", "answer": "ROUTINATED"},
+    {"jumbled": "RESU", "answer": "USER"},
+    {"jumbled": "TENRETNI", "answer": "INTERNET"},
     {"jumbled": "KROWTEN", "answer": "NETWORK"}
 ]
 
@@ -189,6 +214,262 @@ sentence_puzzles = [
         "words": ["phishing", "is", "fake", "message"],
         "answer": "phishing is fake message"
 },
+sentence_puzzles += [
+
+{
+"question": "Why use antivirus?",
+"words": ["antivirus", "protects", "device"],
+"answer": "antivirus protects device"
+},
+{
+"question": "Why avoid fake apps?",
+"words": ["fake", "apps", "can", "steal", "data"],
+"answer": "fake apps can steal data"
+},
+{
+"question": "What is data privacy?",
+"words": ["data", "privacy", "protects", "personal", "information"],
+"answer": "data privacy protects personal information"
+},
+{
+"question": "Why use VPN?",
+"words": ["vpn", "hides", "your", "identity"],
+"answer": "vpn hides your identity"
+},
+{
+"question": "What is secure password?",
+"words": ["secure", "password", "is", "hard", "to", "guess"],
+"answer": "secure password is hard to guess"
+},
+{
+"question": "Why check URL?",
+"words": ["check", "url", "before", "login"],
+"answer": "check url before login"
+},
+{
+"question": "What is cyber crime?",
+"words": ["cyber", "crime", "uses", "internet"],
+"answer": "cyber crime uses internet"
+},
+{
+"question": "Why use lock screen?",
+"words": ["lock", "screen", "protects", "device"],
+"answer": "lock screen protects device"
+},
+{
+"question": "What is spyware?",
+"words": ["spyware", "tracks", "user", "activity"],
+"answer": "spyware tracks user activity"
+},
+{
+"question": "Why avoid unknown emails?",
+"words": ["unknown", "emails", "may", "be", "dangerous"],
+"answer": "unknown emails may be dangerous"
+},
+
+{
+"question": "What is ransomware?",
+"words": ["ransomware", "locks", "files"],
+"answer": "ransomware locks files"
+},
+{
+"question": "Why update system?",
+"words": ["system", "updates", "improve", "security"],
+"answer": "system updates improve security"
+},
+{
+"question": "What is OTP security?",
+"words": ["otp", "protects", "login"],
+"answer": "otp protects login"
+},
+{
+"question": "Why avoid public computers?",
+"words": ["public", "computers", "are", "not", "safe"],
+"answer": "public computers are not safe"
+},
+{
+"question": "What is data backup?",
+"words": ["backup", "stores", "copy", "of", "data"],
+"answer": "backup stores copy of data"
+},
+{
+"question": "Why use strong PIN?",
+"words": ["strong", "pin", "protects", "device"],
+"answer": "strong pin protects device"
+},
+{
+"question": "What is spam email?",
+"words": ["spam", "email", "is", "unwanted"],
+"answer": "spam email is unwanted"
+},
+{
+"question": "Why check permissions?",
+"words": ["check", "app", "permissions", "carefully"],
+"answer": "check app permissions carefully"
+},
+{
+"question": "What is firewall protection?",
+"words": ["firewall", "blocks", "threats"],
+"answer": "firewall blocks threats"
+},
+{
+"question": "Why not click ads?",
+"words": ["ads", "may", "contain", "malware"],
+"answer": "ads may contain malware"
+},
+
+{
+"question": "Arrange sentence:",
+"words": ["use", "vpn", "secure", "connection"],
+"answer": "use vpn secure connection"
+},
+{
+"question": "Arrange sentence:",
+"words": ["protect", "your", "personal", "data"],
+"answer": "protect your personal data"
+},
+{
+"question": "Arrange sentence:",
+"words": ["never", "click", "unknown", "links"],
+"answer": "never click unknown links"
+},
+{
+"question": "Arrange sentence:",
+"words": ["always", "update", "your", "apps"],
+"answer": "always update your apps"
+},
+{
+"question": "Arrange sentence:",
+"words": ["use", "different", "passwords"],
+"answer": "use different passwords"
+},
+{
+"question": "Arrange sentence:",
+"words": ["enable", "two", "factor", "authentication"],
+"answer": "enable two factor authentication"
+},
+{
+"question": "Arrange sentence:",
+"words": ["check", "email", "sender", "carefully"],
+"answer": "check email sender carefully"
+},
+{
+"question": "Arrange sentence:",
+"words": ["do", "not", "share", "otp"],
+"answer": "do not share otp"
+},
+{
+"question": "Arrange sentence:",
+"words": ["keep", "software", "updated"],
+"answer": "keep software updated"
+},
+{
+"question": "Arrange sentence:",
+"words": ["use", "secure", "wifi", "only"],
+"answer": "use secure wifi only"
+},
+
+{
+"question": "What is safe browsing?",
+"words": ["safe", "browsing", "protects", "information"],
+"answer": "safe browsing protects information"
+},
+{
+"question": "Why logout accounts?",
+"words": ["logout", "keeps", "account", "safe"],
+"answer": "logout keeps account safe"
+},
+{
+"question": "What is identity theft?",
+"words": ["identity", "theft", "steals", "personal", "data"],
+"answer": "identity theft steals personal data"
+},
+{
+"question": "Why avoid pirated software?",
+"words": ["pirated", "software", "contains", "viruses"],
+"answer": "pirated software contains viruses"
+},
+{
+"question": "What is secure login?",
+"words": ["secure", "login", "protects", "accounts"],
+"answer": "secure login protects accounts"
+},
+{
+"question": "Why use encryption?",
+"words": ["encryption", "keeps", "data", "safe"],
+"answer": "encryption keeps data safe"
+},
+{
+"question": "What is cyber safety?",
+"words": ["cyber", "safety", "protects", "users"],
+"answer": "cyber safety protects users"
+},
+{
+"question": "Why avoid unknown downloads?",
+"words": ["unknown", "downloads", "can", "harm", "device"],
+"answer": "unknown downloads can harm device"
+},
+{
+"question": "What is data security?",
+"words": ["data", "security", "protects", "information"],
+"answer": "data security protects information"
+},
+{
+"question": "Why use password manager?",
+"words": ["password", "manager", "stores", "passwords"],
+"answer": "password manager stores passwords"
+},
+
+{
+"question": "Arrange sentence:",
+"words": ["avoid", "using", "public", "wifi"],
+"answer": "avoid using public wifi"
+},
+{
+"question": "Arrange sentence:",
+"words": ["always", "verify", "before", "click"],
+"answer": "always verify before click"
+},
+{
+"question": "Arrange sentence:",
+"words": ["protect", "device", "with", "password"],
+"answer": "protect device with password"
+},
+{
+"question": "Arrange sentence:",
+"words": ["backup", "your", "important", "files"],
+"answer": "backup your important files"
+},
+{
+"question": "Arrange sentence:",
+"words": ["do", "not", "trust", "unknown", "sources"],
+"answer": "do not trust unknown sources"
+},
+{
+"question": "Arrange sentence:",
+"words": ["keep", "your", "data", "safe"],
+"answer": "keep your data safe"
+},
+{
+"question": "Arrange sentence:",
+"words": ["enable", "security", "settings"],
+"answer": "enable security settings"
+},
+{
+"question": "Arrange sentence:",
+"words": ["never", "reuse", "passwords"],
+"answer": "never reuse passwords"
+},
+{
+"question": "Arrange sentence:",
+"words": ["check", "website", "security"],
+"answer": "check website security"
+},
+{
+"question": "Arrange sentence:",
+"words": ["use", "antivirus", "software"],
+"answer": "use antivirus software"
+}    
 ]
 #-------puzzle game-----------------
 puzzle_levels = {
@@ -325,7 +606,95 @@ puzzle_levels = {
 
 {"q": "What is safe browsing?",
 "options": ["Click all links", "Use secure sites", "Download all", "Ignore warnings"],
-"a": "Use secure sites"}
+"a": "Use secure sites"},
+puzzle_levels.update({
+
+    5: [
+        {"q": "What is data breach?", 
+         "options": ["Safe storage", "Unauthorized data access", "Backup", "Encryption"], 
+         "a": "Unauthorized data access"},
+
+        {"q": "What should you check before login?", 
+         "options": ["Color", "URL", "Font", "Image"], 
+         "a": "URL"},
+
+        {"q": "Is saving password in browser safe?", 
+         "options": ["Always safe", "Risky", "Best method", "Required"], 
+         "a": "Risky"},
+
+        {"q": "What is VPN used for?", 
+         "options": ["Gaming", "Hide identity", "Faster speed", "Download"], 
+         "a": "Hide identity"},
+
+        {"q": "What is social engineering?", 
+         "options": ["Coding", "Tricking people", "Networking", "Design"], 
+         "a": "Tricking people"},
+    ],
+
+    6: [
+        {"q": "What is brute force attack?", 
+         "options": ["Guessing passwords", "Sending email", "Downloading file", "Using VPN"], 
+         "a": "Guessing passwords"},
+
+        {"q": "Why use different passwords?", 
+         "options": ["Easy to remember", "Reduce risk", "Faster login", "No reason"], 
+         "a": "Reduce risk"},
+
+        {"q": "What is spyware?", 
+         "options": ["Game", "Tracking software", "Browser", "Tool"], 
+         "a": "Tracking software"},
+
+        {"q": "What is secure website sign?", 
+         "options": ["http", "https", "ftp", "file"], 
+         "a": "https"},
+
+        {"q": "What is identity theft?", 
+         "options": ["Create account", "Steal personal info", "Delete data", "Backup"], 
+         "a": "Steal personal info"},
+    ],
+
+    7: [
+        {"q": "What is ransomware attack?", 
+         "options": ["Delete files", "Lock files for money", "Speed up system", "Backup"], 
+         "a": "Lock files for money"},
+
+        {"q": "What should you do after data breach?", 
+         "options": ["Ignore", "Change passwords", "Share info", "Delete apps"], 
+         "a": "Change passwords"},
+
+        {"q": "What is secure authentication?", 
+         "options": ["Simple login", "Multi-layer login", "No password", "Fast login"], 
+         "a": "Multi-layer login"},
+
+        {"q": "Why disable Bluetooth?", 
+         "options": ["Save battery", "Reduce hacking risk", "Increase speed", "Play music"], 
+         "a": "Reduce hacking risk"},
+
+        {"q": "What is phishing website sign?", 
+         "options": ["Correct URL", "Wrong spelling URL", "Secure lock", "Fast loading"], 
+         "a": "Wrong spelling URL"},
+    ],
+
+    8: [
+        {"q": "What is zero-day vulnerability?", 
+         "options": ["Old bug", "Unknown security flaw", "Patch update", "Firewall"], 
+         "a": "Unknown security flaw"},
+
+        {"q": "What is encryption used for?", 
+         "options": ["Delete data", "Hide data", "Copy data", "Share data"], 
+         "a": "Hide data"},
+
+        {"q": "What is password manager?", 
+         "options": ["Game", "Store passwords securely", "Delete passwords", "Hack tool"], 
+         "a": "Store passwords securely"},
+
+        {"q": "What is multi-factor authentication?", 
+         "options": ["Single password", "Multiple verification steps", "No login", "Fast login"], 
+         "a": "Multiple verification steps"},
+
+        {"q": "What is secure network?", 
+         "options": ["Open WiFi", "Protected connection", "Slow internet", "Public hotspot"], 
+         "a": "Protected connection"},
 
 ]
 }
@@ -372,7 +741,85 @@ quiz = [
 {"q":"Trust urgent messages?", "a":"no"},
 {"q":"Check login alerts?", "a":"yes"},
 {"q":"Use password manager?", "a":"yes"},
-{"q":"Click unknown USB devices?", "a":"no"}
+{"q":"Click unknown USB devices?", "a":"no"},
+quiz += [
+
+{"q":"Should you lock your phone?", "a":"yes"},
+{"q":"Is sharing passwords safe?", "a":"no"},
+{"q":"Use official app stores?", "a":"yes"},
+{"q":"Is email spoofing dangerous?", "a":"yes"},
+{"q":"Trust unknown phone calls?", "a":"no"},
+{"q":"Use screen lock pattern?", "a":"yes"},
+{"q":"Install random APK files?", "a":"no"},
+{"q":"Check website certificate?", "a":"yes"},
+{"q":"Use different passwords?", "a":"yes"},
+{"q":"Leave devices unattended?", "a":"no"},
+
+{"q":"Enable auto updates?", "a":"yes"},
+{"q":"Is identity theft real?", "a":"yes"},
+{"q":"Share location publicly?", "a":"no"},
+{"q":"Use secure websites only?", "a":"yes"},
+{"q":"Ignore suspicious emails?", "a":"no"},
+{"q":"Verify app developer?", "a":"yes"},
+{"q":"Use simple passwords?", "a":"no"},
+{"q":"Log out from shared devices?", "a":"yes"},
+{"q":"Trust unknown QR codes?", "a":"no"},
+{"q":"Use device encryption?", "a":"yes"},
+
+{"q":"Backup important data?", "a":"yes"},
+{"q":"Click shortened links blindly?", "a":"no"},
+{"q":"Use antivirus on phone?", "a":"yes"},
+{"q":"Is malware harmful?", "a":"yes"},
+{"q":"Open spam emails?", "a":"no"},
+{"q":"Use secure lock screen?", "a":"yes"},
+{"q":"Accept all app permissions?", "a":"no"},
+{"q":"Use OTP for login?", "a":"yes"},
+{"q":"Ignore privacy settings?", "a":"no"},
+{"q":"Use trusted networks?", "a":"yes"},
+
+{"q":"Download cracked games?", "a":"no"},
+{"q":"Is ransomware dangerous?", "a":"yes"},
+{"q":"Use password hints?", "a":"no"},
+{"q":"Check login history?", "a":"yes"},
+{"q":"Use two-step verification?", "a":"yes"},
+{"q":"Trust fake giveaways?", "a":"no"},
+{"q":"Use secure cloud storage?", "a":"yes"},
+{"q":"Share bank details online?", "a":"no"},
+{"q":"Install updates immediately?", "a":"yes"},
+{"q":"Use biometric authentication?", "a":"yes"},
+
+{"q":"Open unknown links in SMS?", "a":"no"},
+{"q":"Use firewall protection?", "a":"yes"},
+{"q":"Save passwords in notes?", "a":"no"},
+{"q":"Verify website domain?", "a":"yes"},
+{"q":"Use public WiFi without VPN?", "a":"no"},
+{"q":"Trust unknown downloads?", "a":"no"},
+{"q":"Enable device tracking?", "a":"yes"},
+{"q":"Share OTP with friends?", "a":"no"},
+{"q":"Use strong security questions?", "a":"yes"},
+{"q":"Disable security alerts?", "a":"no"},
+
+{"q":"Use HTTPS websites?", "a":"yes"},
+{"q":"Click suspicious popups?", "a":"no"},
+{"q":"Install security patches?", "a":"yes"},
+{"q":"Use password autofill blindly?", "a":"no"},
+{"q":"Trust unknown software?", "a":"no"},
+{"q":"Check app ratings before install?", "a":"yes"},
+{"q":"Use private browsing mode?", "a":"yes"},
+{"q":"Share personal photos publicly?", "a":"no"},
+{"q":"Use secure email providers?", "a":"yes"},
+{"q":"Ignore data breaches?", "a":"no"},
+
+{"q":"Use anti-phishing tools?", "a":"yes"},
+{"q":"Open unknown attachments?", "a":"no"},
+{"q":"Use login notifications?", "a":"yes"},
+{"q":"Save cards on all websites?", "a":"no"},
+{"q":"Use multi-device sync securely?", "a":"yes"},
+{"q":"Trust fake job offers?", "a":"no"},
+{"q":"Use encrypted backups?", "a":"yes"},
+{"q":"Disable antivirus?", "a":"no"},
+{"q":"Verify payment requests?", "a":"yes"},
+{"q":"Click ads blindly?", "a":"no"}    
 ]
 
 # ---------------- DATABASE ---------------
@@ -1541,25 +1988,7 @@ def puzzle_start():
 
     return redirect('/game/puzzle/play')
  #-------------puzzle win----------------   
-@app.route('/game/puzzle_win', methods=['POST'])
-def puzzle_win():
-    if 'user' not in session:
-        return {"status": "error"}
 
-    db = get_db()  # 🔥 add this
-    cursor = db.cursor(buffered=True)
-
-    cursor.execute("""
-        UPDATE users 
-        SET coins = coins + 10,
-            puzzle_wins = puzzle_wins + 1
-        WHERE name=%s
-    """, (session['user'],))
-
-    db.commit()
-    db.close()  # 🔥 important
-
-    return {"status": "win", "coins": 10}
 
 #----------load character ------------
 @app.route('/characters')
