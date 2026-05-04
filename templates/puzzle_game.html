@@ -63,7 +63,6 @@ input {
 
 <body>
 
-
 <div class="card">
 
     <h2>🧠 Cyber Puzzle Game</h2>
@@ -80,9 +79,14 @@ input {
     <!-- ❤️ Lives -->
     <p class="lives">❤️ Lives: {{lives}}</p>
 
-    
+    <h2 id="question">Loading...</h2>
 
-   
+    <div id="options"></div>
+
+    <button onclick="nextQuestion()">Next</button>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </div>
 
 {% if mode == "mcq" %}
@@ -164,10 +168,38 @@ function submitAnswer(){
     document.getElementById("finalAnswer").value = answer.trim();
     answer = "";
 }
-</script>
 
+/* 🔥🔥🔥 MAIN FIX START 🔥🔥🔥 */
+
+let isLoading = false;
+
+function nextQuestion() {
+
+    if (isLoading) return; // double click block
+    isLoading = true;
+
+    let btn = document.querySelector("button[onclick='nextQuestion()']");
+    
+    if (btn) {
+        btn.innerText = "Loading...";
+        btn.disabled = true;
+    }
+
+    // sound (optional)
+    let win = document.getElementById("winSound");
+    if (win) win.play().catch(()=>{});
+
+    // ⚡ fast redirect
+    setTimeout(() => {
+        window.location.href = "/game/puzzle";
+    }, 80);
+}
+
+/* 🔥🔥🔥 MAIN FIX END 🔥🔥🔥 */
+</script>
 
 <audio id="winSound" src="/static/sounds/win.mp3"></audio>
 <audio id="loseSound" src="/static/sounds/lose.mp3"></audio>    
+
 </body>
 </html>
