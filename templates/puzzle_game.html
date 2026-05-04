@@ -69,9 +69,7 @@ input {
 
     <!-- 🔥 Progress -->
     <div class="progress">
-        <div class="progress-bar" 
-             style="width: {{ (index/total)*100 }}%">
-        </div>
+        <div class="progress-bar" style="width: {{ (index/total)*100 }}%"></div>
     </div>
 
     <p>Question {{index}} / {{total}}</p>
@@ -79,123 +77,160 @@ input {
     <!-- ❤️ Lives -->
     <p class="lives">❤️ Lives: {{lives}}</p>
 
-    <h2 id="question">Loading...</h2>
+    <!-- ========================= -->
+    <!-- 🔥 QUESTION RENDER AREA -->
+    <!-- ========================= -->
 
-    <div id="options"></div>
+    {% if mode == "mcq" %}
 
-    <button onclick="nextQuestion()">Next</button>
+        <h3>{{ q.q }}</h3>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <form method="POST" action="/game/puzzle/check">
+            {% for opt in q.options %}
+                <button type="submit" name="answer" value="{{opt}}">
+                    {{opt}}
+                </button>
+            {% endfor %}
+        </form>
+
+    {% elif mode == "word" %}
+
+        <h3>Arrange the word:</h3>
+        <h2>{{ q.jumbled }}</h2>
+
+        <form method="POST" action="/game/puzzle/check">
+            <input type="text" name="answer" placeholder="Enter correct word">
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+
+    {% elif mode == "sentence" %}
+
+        <h3>{{ q.question }}</h3>
+
+        <p>
+            {% for word in q.words %}
+                <span style="background:#222; padding:6px 10px; margin:5px; border-radius:6px;">
+                    {{ word }}
+                </span>
+            {% endfor %}
+        </p>
+
+        <form method="POST" action="/game/puzzle/check">
+            <input type="text" name="answer" placeholder="Type your answer">
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+
+    {% elif mode == "sentence_click" %}
+
+        <h3>{{ q.question }}</h3>
+
+        <div id="wordBox">
+            {% for word in q.words %}
+                <button type="button" onclick="addWord('{{word}}')">
+                    {{word}}
+                </button>
+            {% endfor %}
+        </div>
+
+        <input type="text" id="answerInput" readonly>
+
+        <form method="POST" action="/game/puzzle/check">
+            <input type="hidden" name="answer" id="finalAnswer">
+            <br>
+            <button type="submit" onclick="submitAnswer()">Submit</button>
+        </form>
+
+    {% else %}
+
+        <h3 style="color:red;">⚠️ No Question Loaded</h3>
+
+    {% endif %}
 
 </div>
 
-{% if mode == "mcq" %}
-
-    <h3>{{ q.q }}</h3>
-
-    <form method="POST" action="/game/puzzle/check">
-        {% for opt in q.options %}
-            <button type="submit" name="answer" value="{{opt}}">
-                {{opt}}
-            </button>
-        {% endfor %}
-    </form>
-
-{% elif mode == "word" %}
-
-    <h3>Arrange the word:</h3>
-    <h2>{{ q.jumbled }}</h2>
-
-    <form method="POST" action="/game/puzzle/check">
-        <input type="text" name="answer" placeholder="Enter correct word">
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-
-{% elif mode == "sentence" %}
-
-    <h3>{{ q.question }}</h3>
-
-    <p>
-        {% for word in q.words %}
-            <span style="background:#222; padding:6px 10px; margin:5px; border-radius:6px;">
-                {{ word }}
-            </span>
-        {% endfor %}
-    </p>
-
-    <form method="POST" action="/game/puzzle/check">
-        <input type="text" name="answer" placeholder="Type your answer">
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-
-{% elif mode == "sentence_click" %}
-
-    <h3>{{ q.question }}</h3>
-
-    <div id="wordBox">
-        {% for word in q.words %}
-            <button type="button" onclick="addWord('{{word}}')">
-                {{word}}
-            </button>
-        {% endfor %}
-    </div>
-
-    <input type="text" id="answerInput" readonly>
-
-    <form method="POST" action="/game/puzzle/check">
-        <input type="hidden" name="answer" id="finalAnswer">
-        <br>
-        <button type="submit" onclick="submitAnswer()">Submit</button>
-    </form>
-
-{% else %}
-
-    <h3 style="color:red;">⚠️ No Question Loaded</h3>
-
-{% endif %}
+<!-- ========================= -->
+<!-- 🔥 JS SECTION -->
+<!-- ========================= -->
 
 <script>
 let answer = "";
 
 function addWord(word){
     answer += word + " ";
-    document.getElementById("answerInput").value = answer;
+    let input = document.getElementById("answerInput");
+    if(input){
+        input.value = answer;
+    }
 }
-
 function submitAnswer(){
-    document.getElementById("finalAnswer").value = answer.trim();
+
+    let final = answer.trim();
+
+    if(final === ""){
+        alert("⚠️ Please select words first");
+        return false;
+    }
+
+    document.getElementById("finalAnswer").value = final;
     answer = "";
 }
 
 /* 🔥🔥🔥 MAIN FIX START 🔥🔥🔥 */
 
+
+
 let isLoading = false;
+
+
 
 function nextQuestion() {
 
+
+
     if (isLoading) return; // double click block
+
     isLoading = true;
 
+
+
     let btn = document.querySelector("button[onclick='nextQuestion()']");
+
     
+
     if (btn) {
+
         btn.innerText = "Loading...";
+
         btn.disabled = true;
+
     }
 
+
+
     // sound (optional)
+
     let win = document.getElementById("winSound");
+
     if (win) win.play().catch(()=>{});
 
+
+
     // ⚡ fast redirect
+
     setTimeout(() => {
+
         window.location.href = "/game/puzzle";
+
     }, 80);
+
 }
 
+
+
 /* 🔥🔥🔥 MAIN FIX END 🔥🔥🔥 */
+
 </script>
 
 <audio id="winSound" src="/static/sounds/win.mp3"></audio>
