@@ -2116,18 +2116,18 @@ def puzzle_play():
     if "options" in q:
         mode = "mcq"
 
-    elif "words" in q:
+    elif "jumbled" in q:   # ✅ WORD PUZZLE
         mode = "word"
 
-    elif "jumbled" in q:
-       mode = "word"    
+    elif "words" in q:     # ✅ SENTENCE PUZZLE
+        mode = "sentence"
 
-       words = q["words"][:]
-       random.shuffle(words)
-       q["words"] = words
+        words = q["words"][:]
+        random.shuffle(words)
+        q["words"] = words
 
     else:
-        mode = "sentence"
+        mode = "sentence"  # fallback
 
     return render_template(
         "puzzle_game.html",
