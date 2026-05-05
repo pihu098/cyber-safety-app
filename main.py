@@ -27,6 +27,66 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ADMIN_PASSWORD = "priyanrkp098"  # changable.......
 
+PUZZLES = [
+    {"words": ["python"], "letters": "PYTHON"},
+    {"words": ["flask", "app"], "letters": "FLASKAPP"},
+    {"words": ["code", "debug"], "letters": "CODEDEBUG"}
+]
+
+@app.route('/jumble')
+def jumble():
+    if 'level' not in session:
+        session['level'] = 0
+        session['lives'] = 5
+        session['coins'] = 0
+
+    level = session['level']
+    if level >= len(PUZZLES):
+        session['level'] = 0
+
+    game = PUZZLES[session['level']]
+
+    return render_template(
+        "jumble_game.html",
+        letters=list(game['letters']),
+        words=game['words'],
+        lives=session['lives'],
+        coins=session['coins']
+    )
+@app.route('/jumble/submit', methods=['POST'])
+def submit():
+    user_answer = request.json.get("answer", "").lower()
+    level = session['level']
+    game = PUZZLES[level]
+
+    if user_answer in game['words']:
+        game['words'].remove(user_answer)
+
+        if len(game['words']) == 0:
+            session['coins'] += 10
+            session['level'] += 1
+            return {"result": "correct", "next": True}
+
+        return {"result": "partial", "left": len(game['words'])}
+
+    else:
+        session['lives'] -= 1
+        if session['lives'] <= 0:
+            return {"result": "gameover"}
+
+        return {"result": "wrong", "lives": session['lives']}
+
+
+@app.route('/jumble/quit')
+def quit_game():
+    level = session['level']
+    game = PUZZLES[level]
+
+    return {
+        "answers": game['words'],
+        "next_level": True
+    }
+
 
 #-----------------------puzzle---------------
 word_puzzles = [
