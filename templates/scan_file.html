@@ -15,11 +15,13 @@
 
 <form action="/scan_file" method="POST" enctype="multipart/form-data">
 
-    <input type="file" name="file" id="fileInput" hidden>
-
-    <button type="button" onclick="document.getElementById('fileInput').click()">
+    <label for="fileInput" style="display:inline-block;padding:10px;background:#ddd;border-radius:8px;">
         📁 Select File
-    </button>
+    </label>
+
+    <input type="file" name="file" id="fileInput" style="display:none;">
+
+    <br><br>
 
     <button type="submit">Scan File</button>
 
