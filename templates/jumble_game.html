@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jumble Game</title>
+    <script src="/static/js/jumble_game.js"></script>
+</head>
+
+<body>
+
+<h2>🧩 Jumble Game</h2>
+
+<p>❤️ Lives: {{ lives }} | 💰 Coins: {{ coins }}</p>
+
+<h3 id="letters"></h3>
+
+<input id="answerBox" placeholder="Type word here">
+
+<br><br>
+
+<button onclick="submitWord()">Submit</button>
+<button onclick="quitGame()">Quit</button>
+
+<p id="status"></p>
+
+<script>
+    let letters = {{ letters|tojson }};
+    let wordsLeft = {{ words|length }};
+</script>
+
+</body>
+</html>
