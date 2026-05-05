@@ -87,7 +87,21 @@ def quit_game():
         "next_level": True
     }
 
+@app.route('/set_mode/<mode>')
+def set_mode(mode):
+    session['game_mode'] = mode
+    return redirect('/game/play')
 
+@app.route('/game/play')
+def game_play():
+
+    mode = session.get('game_mode', 'puzzle')
+
+    if mode == "jumble":
+        return render_template("jumble_game.html")
+
+    elif mode == "puzzle":
+        return render_template("puzzle_game.html")
 #-----------------------puzzle---------------
 word_puzzles = [
     {"jumbled": "phsiihng", "answer": "phishing"},
