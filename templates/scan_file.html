@@ -1,18 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>File Scanner</title>
-</head>
-<body style="font-family:Arial; background:#0f2027; color:white; text-align:center;">
-
-<h2>📁 File Safety Scanner</h2>
 <form action="/scan_file" method="POST" enctype="multipart/form-data">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <label style="
+        display:inline-block;
+        padding:12px 18px;
+        background:#1e90ff;
+        color:white;
+        border-radius:8px;
+        cursor:pointer;
+        margin-bottom:10px;
+    " for="fileInput">
+        📁 Select File
+    </label>
 
-    <input type="file" name="file">
+    <input type="file" name="file" id="fileInput" style="display:none;">
 
-    <button type="submit">📁 Upload & Scan</button>
+    <br><br>
+
+    <button type="submit" style="
+        padding:10px 20px;
+        border:none;
+        border-radius:8px;
+        background:green;
+        color:white;
+    ">
+        📤 Upload & Scan
+    </button>
 
 </form>
-
-</body>
-</html>
