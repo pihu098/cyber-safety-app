@@ -6,14 +6,17 @@
 <body style="font-family:Arial; background:#0f2027; color:white; text-align:center;">
 
 <h2>📁 File Safety Scanner</h2>
-
 <form action="/scan_file" method="POST" enctype="multipart/form-data">
 
-    <input type="file" name="file" id="fileInput">
+    <p>Select file:</p>
+
+    <input type="file" name="file" accept="*/*">
+
+    <br><br>
 
     <button type="submit">Scan File</button>
 
 </form>
-    
+
 </body>
 </html>
