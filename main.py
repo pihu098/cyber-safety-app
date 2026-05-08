@@ -98,7 +98,27 @@ def game_play():
     mode = session.get('game_mode', 'puzzle')
 
     if mode == "jumble":
-        return render_template("jumble_game.html")
+
+        if 'level' not in session:
+            session['level'] = 0
+            session['lives'] = 5
+            session['coins'] = 0
+
+        level = session['level']
+
+        if level >= len(PUZZLES):
+            session['level'] = 0
+            level = 0
+
+        game = PUZZLES[level]
+
+        return render_template(
+            "jumble_game.html",
+            letters=list(game['letters']),
+            words=game['words'],
+            lives=session['lives'],
+            coins=session['coins']
+        )
 
     elif mode == "puzzle":
         return render_template("puzzle_game.html")
