@@ -91,7 +91,7 @@ def quit_game():
 def set_mode(mode):
     session['game_mode'] = mode
     return redirect('/game/play')
-
+    
 @app.route('/game/play')
 def game_play():
 
