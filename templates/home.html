@@ -337,6 +337,11 @@ body {
 
         <div class="grid">
 
+            <a href="/set_mode/jumble" class="box">
+               <div class="icon">🧩</div>
+               <p>Jumble Game</p>
+            </a>
+          
             <a href="/community" class="box"><div class="icon">👥</div><p>Community</p></a>
             <a href="/leaderboard" class="box"><div class="icon">🏆</div><p>Leaders</p></a>
             <a href="/game/puzzle/start" class="box"><div class="icon">🧠</div><p>Brain Hack Game</p></a>
@@ -431,41 +436,7 @@ document.getElementById("tipsBox").innerHTML=html;
 });
 }
 
-<h2>🎮 Games</h2>
 
-<div style="
-    background:#1e1e1e;
-    padding:20px;
-    margin:20px auto;
-    border-radius:12px;
-    width:80%;
-    max-width:320px;
-    text-align:center;
-    box-shadow:0 0 10px rgba(0,0,0,0.5);
-">
-
-    <h2 style="margin-bottom:10px;">🧩 Jumble Game</h2>
-
-    <p style="color:#ccc;">
-        Arrange letters & earn coins 💰
-    </p>
-
-    <a href="/set_mode/jumble" style="text-decoration:none;">
-        <button style="
-            padding:12px 18px;
-            border:none;
-            border-radius:8px;
-            background:linear-gradient(45deg, #00c853, #64dd17);
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-        ">
-            ▶ Play Now
-        </button>
-    </a>
-
-</div>
-    
 // 🤖 CHAT
 async function sendMsg(){
 let msg=document.getElementById("msg").value;
