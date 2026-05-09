@@ -128,125 +128,22 @@ transform:scale(1.2);
 
 <h2 id="result"></h2>
 
-<script>
-
-let currentWord = "";
-
-function pick(letter){
-
-currentWord += letter;
-
-document.getElementById("answer").innerHTML = currentWord;
-
-document.getElementById("wordInput").value = currentWord;
-}
-
-function clearWord(){
-
-currentWord = "";
-
-document.getElementById("answer").innerHTML = "";
-document.getElementById("wordInput").value = "";
-}
-
-function submitWord(){
-
-let word = document.getElementById("wordInput").value;
-
-fetch("/jumble/check",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-answer:word
-})
-})
-
-.then(r=>r.json())
-
-.then(data=>{
-
-if(data.result=="correct"){
-
-document.getElementById("foundWords").innerHTML += "✅ " + word + "<br>";
-
-document.getElementById("count").innerHTML = data.found.length;
-
-document.getElementById("coins").innerHTML = data.coins;
-
-clearWord();
-}
-
-else if(data.result=="win"){
-
-document.getElementById("result").innerHTML =
-"<div class='win'>🎉 YOU WON 🎉</div><br><button onclick='nextLevel()'>CHAPTER NEXT ➜</button>";
-}
-
-else if(data.result=="wrong"){
-
-alert("❌ Wrong Word");
-
-location.reload();
-}
-
-else if(data.result=="gameover"){
-
-alert("💀 Better Luck Next Time");
-
-window.location="/jumble/restart";
-}
-
-})
-
-}
-
-function getHint(){
-
-fetch("/jumble/hint")
-
-.then(r=>r.json())
-
-.then(data=>{
-
-if(data.hint){
-
-alert("💡 Hint: " + data.hint);
-
-document.getElementById("coins").innerHTML = data.coins;
-}
-
-else{
-
-alert(data.error);
-}
-
-})
-
-}
-
-function nextLevel(){
-
-window.location="/jumble";
-}
-
-</script>
+<script src="{{ url_for('static', filename='jumble.js') }}"></script>
 
 <audio id="correctSound">
-    <source src="{{ url_for('static', filename='sounds/correct.mp3') }}" type="audio/mpeg">
+    <source src="{{ url_for('static', filename='sounds/correct sound.wav') }}" type="audio/wav">
 </audio>
 
 <audio id="wrongSound">
-    <source src="{{ url_for('static', filename='sounds/wrong.mp3') }}" type="audio/mpeg">
+    <source src="{{ url_for('static', filename='sounds/wrong sound.mp3') }}" type="audio/mpeg">
 </audio>
 
 <audio id="loseSound">
-    <source src="{{ url_for('static', filename='sounds/lose.mp3') }}" type="audio/mpeg">
+    <source src="{{ url_for('static', filename='sounds/lose sound.mp3') }}" type="audio/mpeg">
 </audio>
 
 <audio id="hintSound">
-    <source src="{{ url_for('static', filename='sounds/hint.mp3') }}" type="audio/mpeg">
+    <source src="{{ url_for('static', filename='sounds/hint sound.wav') }}" type="audio/wav">
 </audio>
   
 </body>
