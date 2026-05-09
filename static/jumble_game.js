@@ -1,3 +1,17 @@
+function playSound(id){
+
+    let sound = document.getElementById(id);
+
+    sound.pause();
+
+    sound.currentTime = 0;
+
+    sound.play();
+
+}
+
+
+
 function submitWord() {
     let answer = document.getElementById("answerBox").value;
 
@@ -140,16 +154,5 @@ function checkAnswer(selected){
         }
 
     });
-
-}
-function playSound(id){
-
-    let sound = document.getElementById(id);
-
-    sound.pause();
-
-    sound.currentTime = 0;
-
-    sound.play();
 
 }
