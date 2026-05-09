@@ -27,32 +27,87 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ADMIN_PASSWORD = "priyanrkp098"  # changable.......
 
-PUZZLES = [
-    {"words": ["python"], "letters": "PYTHON"},
-    {"words": ["flask", "app"], "letters": "FLASKAPP"},
-    {"words": ["code", "debug"], "letters": "CODEDEBUG"}
+WORD_PUZZLES = [
+    {
+        "letters": "JOGGLE",
+        "words": ["jog", "log", "lego"]
+    },
+    {
+        "letters": "PYTHON",
+        "words": ["python", "thon"]
+    },
+    {
+        "letters": "FLASKA",
+        "words": ["flask", "ask"]
+    }
 ]
 
 @app.route('/jumble')
 def jumble():
-    if 'level' not in session:
-        session['level'] = 0
-        session['lives'] = 5
-        session['coins'] = 0
 
-    level = session['level']
-    if level >= len(PUZZLES):
-        session['level'] = 0
+    if 'jumble_level' not in session:
+        session['jumble_level'] = 0
+        session['jumble_lives'] = 5
 
-    game = PUZZLES[session['level']]
+    level = session['jumble_level']
+
+    if level >= len(WORD_PUZZLES):
+        level = 0
+        session['jumble_level'] = 0
+
+    game = WORD_PUZZLES[level]
 
     return render_template(
         "jumble_game.html",
         letters=list(game['letters']),
-        words=game['words'],
-        lives=session['lives'],
-        coins=session['coins']
+        total_words=len(game['words']),
+        lives=session['jumble_lives']
     )
+
+
+@app.route('/jumble/check', methods=['POST'])
+def jumble_check():
+
+    data = request.get_json()
+
+    answer = data.get("answer", "").lower()
+
+    level = session.get('jumble_level', 0)
+
+    game = WORD_PUZZLES[level]
+
+    if answer in game['words']:
+
+        return {
+            "result": "correct"
+        }
+
+    else:
+
+        session['jumble_lives'] -= 1
+
+        if session['jumble_lives'] <= 0:
+
+            session['jumble_lives'] = 5
+
+            return {
+                "result": "gameover"
+            }
+
+        return {
+            "result": "wrong",
+            "lives": session['jumble_lives']
+        }
+
+
+@app.route('/jumble/restart')
+def jumble_restart():
+
+    session['jumble_lives'] = 5
+
+    return redirect('/jumble')
+
+
 @app.route('/jumble/submit', methods=['POST'])
 def submit():
     user_answer = request.json.get("answer", "").lower()
