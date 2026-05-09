@@ -48,7 +48,8 @@ def jumble():
     if 'jumble_level' not in session:
         session['jumble_level'] = 0
         session['jumble_lives'] = 5
-
+        session['found_words'] = []
+        
     level = session['jumble_level']
 
     if level >= len(WORD_PUZZLES):
@@ -65,40 +66,6 @@ def jumble():
     )
 
 
-@app.route('/jumble/check', methods=['POST'])
-def jumble_check():
-
-    data = request.get_json()
-
-    answer = data.get("answer", "").lower()
-
-    level = session.get('jumble_level', 0)
-
-    game = WORD_PUZZLES[level]
-
-    if answer in game['words']:
-
-        return {
-            "result": "correct"
-        }
-
-    else:
-
-        session['jumble_lives'] -= 1
-
-        if session['jumble_lives'] <= 0:
-
-            session['jumble_lives'] = 5
-
-            return {
-                "result": "gameover"
-            }
-
-        return {
-            "result": "wrong",
-            "lives": session['jumble_lives']
-        }
-
 
 @app.route('/jumble/restart')
 def jumble_restart():
@@ -108,7 +75,67 @@ def jumble_restart():
     return redirect('/jumble')
 
 
+@app.route('/jumble/check', methods=['POST'])
+def jumble_check():
 
+    data = request.get_json()
+
+    answer = data.get("answer", "").lower().strip()
+
+    level = session.get('jumble_level', 0)
+
+    game = WORD_PUZZLES[level]
+
+    found_words = session.get('found_words', [])
+
+    # ✅ CORRECT WORD
+    if answer in game['words'] and answer not in found_words:
+
+        found_words.append(answer)
+
+        session['found_words'] = found_words
+
+        # 🪙 coins add
+        session['coins'] = session.get('coins', 0) + 20
+
+        # 🎉 ALL WORDS COMPLETED
+        if len(found_words) == len(game['words']):
+
+            session['jumble_level'] += 1
+
+            session['jumble_lives'] = 5
+
+            session['found_words'] = []
+
+            return {
+                "result": "completed"
+            }
+
+        return {
+            "result": "correct",
+            "found": found_words
+        }
+
+    # ❌ WRONG WORD
+    else:
+
+        session['jumble_lives'] -= 1
+
+        # 💀 GAME OVER
+        if session['jumble_lives'] <= 0:
+
+            session['jumble_lives'] = 5
+
+            session['found_words'] = []
+
+            return {
+                "result": "gameover"
+            }
+
+        return {
+            "result": "wrong",
+            "lives": session['jumble_lives']
+        }
 
 @app.route('/set_mode/<mode>')
 def set_mode(mode):
