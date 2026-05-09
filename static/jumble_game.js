@@ -115,7 +115,7 @@ function checkAnswer(selected){
 
         if(data.correct){
 
-            playWinSound();
+            playWinSound("correctSound");
 
             setTimeout(()=>{
 
