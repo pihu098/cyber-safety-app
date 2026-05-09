@@ -29,55 +29,20 @@ ADMIN_PASSWORD = "priyanrkp098"  # changable.......
 
 WORD_PUZZLES = [
 
-    {
-        "letters": [
-            ["J","O","G","G","L","E"],
-            ["B","U","B","B","L","E"],
-            ["T","A","C","K","L","E"],
-            ["B","A","B","B","L","E"],
-            ["R","A","M","B","L","E"],
-            ["G","A","M","B","L","E"]
-        ],
-
-        "words": ["joggle", "bubble", "tackle"],
-
-        "hints": {
-            "joggle": "Move roughly",
-            "bubble": "Soap air ball",
-            "tackle": "Catch opponent"
-        }
-    },
-
-    {
-        "letters": [
-            ["P","Y","T","H","O","N"],
-            ["C","O","D","I","N","G"],
-            ["F","L","A","S","K","X"],
-            ["D","E","B","U","G","R"],
-            ["S","E","R","V","E","R"],
-            ["A","P","P","L","I","C"]
-        ],
-
-        "words": ["python", "flask", "debug"],
-
-        "hints": {
-            "python": "Programming language",
-            "flask": "Python framework",
-            "debug": "Fix errors"
-        }
-    }
-        WORD_PUZZLES = [
-
-# ================= EASY =================
+# =================================================
+# EASY
+# =================================================
 
 {
     "letters": [
-        ["P","Y","T","H","O","N"],
-        ["C","O","D","I","N","G"],
-        ["F","L","A","S","K","X"],
-        ["D","E","B","U","G","R"],
-        ["S","E","R","V","E","R"],
-        ["A","P","P","L","I","C"]
+        ["P","Y","T","H","O","N","A","B"],
+        ["C","D","E","F","L","A","S","K"],
+        ["G","H","I","J","K","L","M","N"],
+        ["O","P","Q","D","E","B","U","G"],
+        ["R","S","T","U","V","W","X","Y"],
+        ["Z","A","P","P","L","I","C","B"],
+        ["S","E","R","V","E","R","D","E"],
+        ["F","G","H","I","J","K","L","M"]
     ],
 
     "words": ["python", "flask", "debug"],
@@ -91,31 +56,35 @@ WORD_PUZZLES = [
 
 {
     "letters": [
-        ["V","I","R","U","S","A"],
-        ["H","A","C","K","E","R"],
-        ["M","A","L","W","A","R"],
-        ["P","A","S","S","W","D"],
-        ["S","P","Y","W","A","R"],
-        ["S","A","F","E","T","Y"]
+        ["V","I","R","U","S","A","B","C"],
+        ["D","E","F","G","H","I","J","K"],
+        ["H","A","C","K","E","R","L","M"],
+        ["N","O","P","Q","R","S","T","U"],
+        ["S","A","F","E","T","Y","V","W"],
+        ["X","Y","Z","A","B","C","D","E"],
+        ["M","A","L","W","A","R","E","F"],
+        ["G","H","I","J","K","L","M","N"]
     ],
 
     "words": ["virus", "hacker", "safety"],
 
     "hints": {
         "virus": "Harmful software",
-        "hacker": "Accesses systems illegally",
-        "safety": "Protection online"
+        "hacker": "Illegal access person",
+        "safety": "Online protection"
     }
 },
 
 {
     "letters": [
-        ["L","O","G","I","N","S"],
-        ["P","A","S","S","W","D"],
-        ["S","E","C","U","R","E"],
-        ["O","T","P","C","O","D"],
-        ["F","I","R","E","W","L"],
-        ["A","C","C","E","S","S"]
+        ["L","O","G","I","N","A","B","C"],
+        ["D","E","F","G","H","I","J","K"],
+        ["S","E","C","U","R","E","L","M"],
+        ["N","O","P","Q","R","S","T","U"],
+        ["A","C","C","E","S","S","V","W"],
+        ["X","Y","Z","A","B","C","D","E"],
+        ["P","A","S","S","W","O","R","D"],
+        ["F","G","H","I","J","K","L","M"]
     ],
 
     "words": ["login", "secure", "access"],
@@ -127,35 +96,41 @@ WORD_PUZZLES = [
     }
 },
 
-# ================= MEDIUM =================
+# =================================================
+# MEDIUM
+# =================================================
 
 {
     "letters": [
-        ["E","N","C","R","Y","P"],
-        ["D","A","T","A","S","X"],
-        ["F","I","R","E","W","L"],
-        ["P","R","I","V","A","C"],
-        ["B","A","C","K","U","P"],
-        ["T","R","A","C","K","R"]
+        ["E","N","C","R","Y","P","T","A"],
+        ["B","C","D","E","F","G","H","I"],
+        ["P","R","I","V","A","C","Y","J"],
+        ["K","L","M","N","O","P","Q","R"],
+        ["B","A","C","K","U","P","S","T"],
+        ["U","V","W","X","Y","Z","A","B"],
+        ["F","I","R","E","W","A","L","L"],
+        ["C","D","E","F","G","H","I","J"]
     ],
 
-    "words": ["encrypt", "backup", "privacy"],
+    "words": ["encrypt", "privacy", "backup"],
 
     "hints": {
         "encrypt": "Protect information",
-        "backup": "Extra saved copy",
-        "privacy": "Personal information protection"
+        "privacy": "Personal protection",
+        "backup": "Saved copy"
     }
 },
 
 {
     "letters": [
-        ["A","N","T","I","V","I"],
-        ["R","A","N","S","O","M"],
-        ["S","P","A","M","M","Y"],
-        ["P","H","I","S","H","X"],
-        ["F","R","A","U","D","S"],
-        ["S","C","A","M","M","R"]
+        ["S","P","A","M","A","B","C","D"],
+        ["E","F","G","H","I","J","K","L"],
+        ["F","R","A","U","D","M","N","O"],
+        ["P","Q","R","S","T","U","V","W"],
+        ["S","C","A","M","X","Y","Z","A"],
+        ["B","C","D","E","F","G","H","I"],
+        ["P","H","I","S","H","I","N","G"],
+        ["J","K","L","M","N","O","P","Q"]
     ],
 
     "words": ["spam", "fraud", "scam"],
@@ -169,12 +144,14 @@ WORD_PUZZLES = [
 
 {
     "letters": [
-        ["N","E","T","W","O","R"],
-        ["B","R","O","W","S","R"],
-        ["S","E","R","V","E","R"],
-        ["D","A","T","A","B","S"],
-        ["C","L","I","E","N","T"],
-        ["S","Y","S","T","E","M"]
+        ["N","E","T","W","O","R","K","A"],
+        ["B","C","D","E","F","G","H","I"],
+        ["S","E","R","V","E","R","J","K"],
+        ["L","M","N","O","P","Q","R","S"],
+        ["C","L","I","E","N","T","T","U"],
+        ["V","W","X","Y","Z","A","B","C"],
+        ["B","R","O","W","S","E","R","D"],
+        ["E","F","G","H","I","J","K","L"]
     ],
 
     "words": ["network", "server", "client"],
@@ -186,16 +163,20 @@ WORD_PUZZLES = [
     }
 },
 
-# ================= HARD =================
+# =================================================
+# HARD
+# =================================================
 
 {
     "letters": [
-        ["A","U","T","H","E","N"],
-        ["D","E","C","R","Y","P"],
-        ["I","N","T","E","G","R"],
-        ["C","O","N","F","I","D"],
-        ["A","V","A","I","L","A"],
-        ["V","A","L","I","D","X"]
+        ["D","E","C","R","Y","P","T","A"],
+        ["B","C","D","E","F","G","H","I"],
+        ["I","N","T","E","G","R","I","T"],
+        ["J","K","L","M","N","O","P","Y"],
+        ["V","A","L","I","D","Q","R","S"],
+        ["T","U","V","W","X","Y","Z","A"],
+        ["A","U","T","H","E","N","T","I"],
+        ["B","C","D","E","F","G","H","C"]
     ],
 
     "words": ["decrypt", "integrity", "valid"],
@@ -203,18 +184,20 @@ WORD_PUZZLES = [
     "hints": {
         "decrypt": "Unlock coded data",
         "integrity": "Data correctness",
-        "valid": "Proper or correct"
+        "valid": "Correct value"
     }
 },
 
 {
     "letters": [
-        ["C","Y","B","E","R","X"],
-        ["S","E","C","U","R","E"],
-        ["A","T","T","A","C","K"],
-        ["P","R","O","T","E","C"],
-        ["M","A","L","W","A","R"],
-        ["D","E","F","E","N","D"]
+        ["C","Y","B","E","R","A","B","C"],
+        ["D","E","F","G","H","I","J","K"],
+        ["A","T","T","A","C","K","L","M"],
+        ["N","O","P","Q","R","S","T","U"],
+        ["D","E","F","E","N","D","V","W"],
+        ["X","Y","Z","A","B","C","D","E"],
+        ["M","A","L","W","A","R","E","F"],
+        ["G","H","I","J","K","L","M","N"]
     ],
 
     "words": ["cyber", "attack", "defend"],
@@ -228,12 +211,14 @@ WORD_PUZZLES = [
 
 {
     "letters": [
-        ["P","R","O","G","R","A"],
-        ["D","E","V","E","L","O"],
-        ["F","U","N","C","T","I"],
-        ["V","A","R","I","A","B"],
-        ["A","P","P","L","I","C"],
-        ["S","O","F","T","W","R"]
+        ["P","R","O","G","R","A","M","A"],
+        ["B","C","D","E","F","G","H","I"],
+        ["D","E","V","E","L","O","P","J"],
+        ["K","L","M","N","O","P","Q","R"],
+        ["S","O","F","T","W","A","R","E"],
+        ["T","U","V","W","X","Y","Z","A"],
+        ["F","U","N","C","T","I","O","N"],
+        ["B","C","D","E","F","G","H","I"]
     ],
 
     "words": ["program", "develop", "software"],
@@ -241,200 +226,24 @@ WORD_PUZZLES = [
     "hints": {
         "program": "Written code",
         "develop": "Create software",
-        "software": "Computer application"
+        "software": "Computer app"
     }
 },
 
-# ================= BONUS =================
-WORD_PUZZLES = [
-
-# ================= EASY =================
-
-{
-    "letters": [
-        ["P","Y","T","H","O","N"],
-        ["C","O","D","I","N","G"],
-        ["F","L","A","S","K","X"],
-        ["D","E","B","U","G","R"],
-        ["S","E","R","V","E","R"],
-        ["A","P","P","L","I","C"]
-    ],
-
-    "words": ["python", "flask", "debug"],
-
-    "hints": {
-        "python": "Programming language",
-        "flask": "Python framework",
-        "debug": "Fix errors"
-    }
-},
+# =================================================
+# BONUS
+# =================================================
 
 {
     "letters": [
-        ["V","I","R","U","S","A"],
-        ["H","A","C","K","E","R"],
-        ["M","A","L","W","A","R"],
-        ["P","A","S","S","W","D"],
-        ["S","P","Y","W","A","R"],
-        ["S","A","F","E","T","Y"]
-    ],
-
-    "words": ["virus", "hacker", "safety"],
-
-    "hints": {
-        "virus": "Harmful software",
-        "hacker": "Accesses systems illegally",
-        "safety": "Protection online"
-    }
-},
-
-{
-    "letters": [
-        ["L","O","G","I","N","S"],
-        ["P","A","S","S","W","D"],
-        ["S","E","C","U","R","E"],
-        ["O","T","P","C","O","D"],
-        ["F","I","R","E","W","L"],
-        ["A","C","C","E","S","S"]
-    ],
-
-    "words": ["login", "secure", "access"],
-
-    "hints": {
-        "login": "Enter account",
-        "secure": "Protected",
-        "access": "Enter system"
-    }
-},
-
-# ================= MEDIUM =================
-
-{
-    "letters": [
-        ["E","N","C","R","Y","P"],
-        ["D","A","T","A","S","X"],
-        ["F","I","R","E","W","L"],
-        ["P","R","I","V","A","C"],
-        ["B","A","C","K","U","P"],
-        ["T","R","A","C","K","R"]
-    ],
-
-    "words": ["encrypt", "backup", "privacy"],
-
-    "hints": {
-        "encrypt": "Protect information",
-        "backup": "Extra saved copy",
-        "privacy": "Personal information protection"
-    }
-},
-
-{
-    "letters": [
-        ["A","N","T","I","V","I"],
-        ["R","A","N","S","O","M"],
-        ["S","P","A","M","M","Y"],
-        ["P","H","I","S","H","X"],
-        ["F","R","A","U","D","S"],
-        ["S","C","A","M","M","R"]
-    ],
-
-    "words": ["spam", "fraud", "scam"],
-
-    "hints": {
-        "spam": "Unwanted messages",
-        "fraud": "Online cheating",
-        "scam": "Fake trick"
-    }
-},
-
-{
-    "letters": [
-        ["N","E","T","W","O","R"],
-        ["B","R","O","W","S","R"],
-        ["S","E","R","V","E","R"],
-        ["D","A","T","A","B","S"],
-        ["C","L","I","E","N","T"],
-        ["S","Y","S","T","E","M"]
-    ],
-
-    "words": ["network", "server", "client"],
-
-    "hints": {
-        "network": "Connected systems",
-        "server": "Provides services",
-        "client": "Uses services"
-    }
-},
-
-# ================= HARD =================
-
-{
-    "letters": [
-        ["A","U","T","H","E","N"],
-        ["D","E","C","R","Y","P"],
-        ["I","N","T","E","G","R"],
-        ["C","O","N","F","I","D"],
-        ["A","V","A","I","L","A"],
-        ["V","A","L","I","D","X"]
-    ],
-
-    "words": ["decrypt", "integrity", "valid"],
-
-    "hints": {
-        "decrypt": "Unlock coded data",
-        "integrity": "Data correctness",
-        "valid": "Proper or correct"
-    }
-},
-
-{
-    "letters": [
-        ["C","Y","B","E","R","X"],
-        ["S","E","C","U","R","E"],
-        ["A","T","T","A","C","K"],
-        ["P","R","O","T","E","C"],
-        ["M","A","L","W","A","R"],
-        ["D","E","F","E","N","D"]
-    ],
-
-    "words": ["cyber", "attack", "defend"],
-
-    "hints": {
-        "cyber": "Internet world",
-        "attack": "Harm system",
-        "defend": "Protect system"
-    }
-},
-
-{
-    "letters": [
-        ["P","R","O","G","R","A"],
-        ["D","E","V","E","L","O"],
-        ["F","U","N","C","T","I"],
-        ["V","A","R","I","A","B"],
-        ["A","P","P","L","I","C"],
-        ["S","O","F","T","W","R"]
-    ],
-
-    "words": ["program", "develop", "software"],
-
-    "hints": {
-        "program": "Written code",
-        "develop": "Create software",
-        "software": "Computer application"
-    }
-},
-
-# ================= BONUS =================
-
-{
-    "letters": [
-        ["G","O","O","G","L","E"],
-        ["Y","O","U","T","U","B"],
-        ["A","N","D","R","O","I"],
-        ["W","E","B","S","I","T"],
-        ["I","N","T","E","R","N"],
-        ["B","R","O","W","S","R"]
+        ["G","O","O","G","L","E","A","B"],
+        ["C","D","E","F","G","H","I","J"],
+        ["A","N","D","R","O","I","D","K"],
+        ["L","M","N","O","P","Q","R","S"],
+        ["B","R","O","W","S","E","R","T"],
+        ["U","V","W","X","Y","Z","A","B"],
+        ["W","E","B","S","I","T","E","C"],
+        ["D","E","F","G","H","I","J","K"]
     ],
 
     "words": ["google", "android", "browser"],
@@ -448,12 +257,14 @@ WORD_PUZZLES = [
 
 {
     "letters": [
-        ["S","E","C","U","R","I"],
-        ["P","R","O","T","E","C"],
-        ["F","I","R","E","W","L"],
-        ["P","A","S","S","W","D"],
-        ["E","N","C","R","Y","P"],
-        ["L","O","G","I","N","S"]
+        ["S","E","C","U","R","I","T","Y"],
+        ["P","R","O","T","E","C","T","A"],
+        ["F","I","R","E","W","A","L","L"],
+        ["P","A","S","S","W","O","R","D"],
+        ["E","N","C","R","Y","P","T","B"],
+        ["L","O","G","I","N","C","D","E"],
+        ["B","A","C","K","U","P","F","G"],
+        ["H","I","J","K","L","M","N","O"]
     ],
 
     "words": ["security", "protect", "login"],
@@ -466,6 +277,7 @@ WORD_PUZZLES = [
 }
 
 ]
+
 
 @app.route('/jumble')
 def jumble():
@@ -653,59 +465,289 @@ def game_play():
         return render_template("puzzle_game.html")
 #-----------------------puzzle---------------
 word_puzzles = [
-    {"jumbled": "phsiihng", "answer": "phishing"},
-    {"jumbled": "pwaorssd", "answer": "password"},
-    {"jumbled": "lmarewa", "answer": "malware"},
-    {"jumbled": "spyarewa", "answer": "spyware"},
-    {"jumbled": "ransmoware", "answer": "ransomware"},
-    {"jumbled": "virsu", "answer": "virus"},
-    {"jumbled": "otp", "answer": "otp"},
-    {"jumbled": "kcahre", "answer": "hacker"},
-    {"jumbled": "erwallif", "answer": "firewall"},
-    {"jumbled": "susrevi", "answer": "viruses"},
-    {"jumbled": "etcnepionrcy", "answer": "encryption"},
-    {"jumbled": "atad", "answer": "data"},
-    {"jumbled": "ytiruces", "answer": "security"},
-    {"jumbled": "ssecca", "answer": "access"},
-    {"jumbled": "gnigol", "answer": "logging"},
-    {"jumbled": "pukcab", "answer": "backup"},
-    {"jumbled": "resu", "answer": "user"},
-    {"jumbled": "tenretni", "answer": "internet"},
-    {"jumbled": "krowten", "answer": "network"},
 
-    # 🔥 NEW ADDED (NO DUPLICATES)
+{
+    "jumbled": "phsiihng",
+    "answer": "phishing",
+    "options": ["phishing", "fishing", "phsihing"]
+},
 
-    {"jumbled": "evicde", "answer": "device"},
-    {"jumbled": "resworb", "answer": "browser"},
-    {"jumbled": "liame", "answer": "email"},
-    {"jumbled": "elif", "answer": "file"},
-    {"jumbled": "revres", "answer": "server"},
-    {"jumbled": "tneilc", "answer": "client"},
-    {"jumbled": "noitacilppa", "answer": "application"},
-    {"jumbled": "metsys", "answer": "system"},
-    {"jumbled": "etisbew", "answer": "website"},
-    {"jumbled": "esabatad", "answer": "database"},
-    {"jumbled": "gnikcart", "answer": "tracking"},
-    {"jumbled": "noitacifitnedi", "answer": "identification"},
-    {"jumbled": "noitacitnehtua", "answer": "authentication"},
-    {"jumbled": "ytirgetni", "answer": "integrity"},
-    {"jumbled": "ytaitnedifnoc", "answer": "confidentiality"},
-    {"jumbled": "ytilibaliava", "answer": "availability"},
-    {"jumbled": "gnitpyrcne", "answer": "encrypting"},
-    {"jumbled": "noitpyrcne", "answer": "encryption"},
-    {"jumbled": "noitpyrcsed", "answer": "decryption"},
-    {"jumbled": "noitadilav", "answer": "validation"},
-    {"jumbled": "noitazirohtua", "answer": "authorization"},
-    {"jumbled": "noitcetorP".lower(), "answer": "protection"},
-    {"jumbled": "ytirucesrebcy", "answer": "cybersecurity"},
-    {"jumbled": "kcatta", "answer": "attack"},
-    {"jumbled": "tcejorp", "answer": "project"},
-    {"jumbled": "edoc", "answer": "code"},
-    {"jumbled": "gnimmargorp", "answer": "programming"},
-    {"jumbled": "noitcnuf", "answer": "function"},
-    {"jumbled": "elbairav", "answer": "variable"},
-    {"jumbled": "tupni", "answer": "input"},
-    {"jumbled": "tuptuo", "answer": "output"}
+{
+    "jumbled": "pwaorssd",
+    "answer": "password",
+    "options": ["password", "passward", "pasword"]
+},
+
+{
+    "jumbled": "lmarewa",
+    "answer": "malware",
+    "options": ["malware", "maleware", "maleware"]
+},
+
+{
+    "jumbled": "spyarewa",
+    "answer": "spyware",
+    "options": ["spyware", "spayware", "spywore"]
+},
+
+{
+    "jumbled": "ransmoware",
+    "answer": "ransomware",
+    "options": ["ransomware", "randsomware", "ransomeware"]
+},
+
+{
+    "jumbled": "virsu",
+    "answer": "virus",
+    "options": ["virus", "virsu", "visur"]
+},
+
+{
+    "jumbled": "otp",
+    "answer": "otp",
+    "options": ["otp", "top", "opt"]
+},
+
+{
+    "jumbled": "kcahre",
+    "answer": "hacker",
+    "options": ["hacker", "hackerx", "haccker"]
+},
+
+{
+    "jumbled": "erwallif",
+    "answer": "firewall",
+    "options": ["firewall", "firewal", "firwall"]
+},
+
+{
+    "jumbled": "etcnepionrcy",
+    "answer": "encryption",
+    "options": ["encryption", "encyption", "encrypton"]
+},
+
+{
+    "jumbled": "ytiruces",
+    "answer": "security",
+    "options": ["security", "securitty", "secutiry"]
+},
+
+{
+    "jumbled": "ssecca",
+    "answer": "access",
+    "options": ["access", "acess", "acccess"]
+},
+
+{
+    "jumbled": "gnigol",
+    "answer": "logging",
+    "options": ["logging", "loging", "lagging"]
+},
+
+{
+    "jumbled": "pukcab",
+    "answer": "backup",
+    "options": ["backup", "bakcup", "backub"]
+},
+
+{
+    "jumbled": "resu",
+    "answer": "user",
+    "options": ["user", "uers", "useer"]
+},
+
+{
+    "jumbled": "tenretni",
+    "answer": "internet",
+    "options": ["internet", "internett", "interneet"]
+},
+
+{
+    "jumbled": "krowten",
+    "answer": "network",
+    "options": ["network", "netwrok", "newtork"]
+},
+
+{
+    "jumbled": "evicde",
+    "answer": "device",
+    "options": ["device", "devise", "deivce"]
+},
+
+{
+    "jumbled": "resworb",
+    "answer": "browser",
+    "options": ["browser", "browzer", "broswer"]
+},
+
+{
+    "jumbled": "liame",
+    "answer": "email",
+    "options": ["email", "emial", "mail"]
+},
+
+{
+    "jumbled": "elif",
+    "answer": "file",
+    "options": ["file", "fill", "fil"]
+},
+
+{
+    "jumbled": "revres",
+    "answer": "server",
+    "options": ["server", "sever", "servar"]
+},
+
+{
+    "jumbled": "tneilc",
+    "answer": "client",
+    "options": ["client", "cliant", "clinet"]
+},
+
+{
+    "jumbled": "noitacilppa",
+    "answer": "application",
+    "options": ["application", "aplication", "appliction"]
+},
+
+{
+    "jumbled": "metsys",
+    "answer": "system",
+    "options": ["system", "sysem", "systum"]
+},
+
+{
+    "jumbled": "etisbew",
+    "answer": "website",
+    "options": ["website", "webiste", "websait"]
+},
+
+{
+    "jumbled": "esabatad",
+    "answer": "database",
+    "options": ["database", "databese", "databass"]
+},
+
+{
+    "jumbled": "gnikcart",
+    "answer": "tracking",
+    "options": ["tracking", "trakcing", "traking"]
+},
+
+{
+    "jumbled": "noitacifitnedi",
+    "answer": "identification",
+    "options": ["identification", "identfication", "identifcation"]
+},
+
+{
+    "jumbled": "noitacitnehtua",
+    "answer": "authentication",
+    "options": ["authentication", "authentification", "authntication"]
+},
+
+{
+    "jumbled": "ytirgetni",
+    "answer": "integrity",
+    "options": ["integrity", "integrety", "intigirity"]
+},
+
+{
+    "jumbled": "ytaitnedifnoc",
+    "answer": "confidentiality",
+    "options": ["confidentiality", "confidenciality", "confidentality"]
+},
+
+{
+    "jumbled": "ytilibaliava",
+    "answer": "availability",
+    "options": ["availability", "availibility", "availabality"]
+},
+
+{
+    "jumbled": "gnitpyrcne",
+    "answer": "encrypting",
+    "options": ["encrypting", "encryptng", "encripting"]
+},
+
+{
+    "jumbled": "noitpyrcsed",
+    "answer": "decryption",
+    "options": ["decryption", "decrypton", "decripton"]
+},
+
+{
+    "jumbled": "noitadilav",
+    "answer": "validation",
+    "options": ["validation", "validtion", "valadation"]
+},
+
+{
+    "jumbled": "noitazirohtua",
+    "answer": "authorization",
+    "options": ["authorization", "authorisation", "authoriztion"]
+},
+
+{
+    "jumbled": "noitcetorP".lower(),
+    "answer": "protection",
+    "options": ["protection", "protecton", "protction"]
+},
+
+{
+    "jumbled": "ytirucesrebcy",
+    "answer": "cybersecurity",
+    "options": ["cybersecurity", "cybersecurty", "cybersecurrity"]
+},
+
+{
+    "jumbled": "kcatta",
+    "answer": "attack",
+    "options": ["attack", "attak", "atack"]
+},
+
+{
+    "jumbled": "tcejorp",
+    "answer": "project",
+    "options": ["project", "projeckt", "projet"]
+},
+
+{
+    "jumbled": "edoc",
+    "answer": "code",
+    "options": ["code", "cod", "coed"]
+},
+
+{
+    "jumbled": "gnimmargorp",
+    "answer": "programming",
+    "options": ["programming", "programing", "proggramming"]
+},
+
+{
+    "jumbled": "noitcnuf",
+    "answer": "function",
+    "options": ["function", "functon", "fuction"]
+},
+
+{
+    "jumbled": "elbairav",
+    "answer": "variable",
+    "options": ["variable", "vairable", "varible"]
+},
+
+{
+    "jumbled": "tupni",
+    "answer": "input",
+    "options": ["input", "inut", "inpt"]
+},
+
+{
+    "jumbled": "tuptuo",
+    "answer": "output",
+    "options": ["output", "outpt", "otput"]
+}
+
 ]
 sentence_puzzles = [
 {
