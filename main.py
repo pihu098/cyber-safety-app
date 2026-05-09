@@ -108,39 +108,7 @@ def jumble_restart():
     return redirect('/jumble')
 
 
-@app.route('/jumble/submit', methods=['POST'])
-def submit():
-    user_answer = request.json.get("answer", "").lower()
-    level = session['level']
-    game = PUZZLES[level]
 
-    if user_answer in game['words']:
-        game['words'].remove(user_answer)
-
-        if len(game['words']) == 0:
-            session['coins'] += 10
-            session['level'] += 1
-            return {"result": "correct", "next": True}
-
-        return {"result": "partial", "left": len(game['words'])}
-
-    else:
-        session['lives'] -= 1
-        if session['lives'] <= 0:
-            return {"result": "gameover"}
-
-        return {"result": "wrong", "lives": session['lives']}
-
-
-@app.route('/jumble/quit')
-def quit_game():
-    level = session['level']
-    game = PUZZLES[level]
-
-    return {
-        "answers": game['words'],
-        "next_level": True
-    }
 
 @app.route('/set_mode/<mode>')
 def set_mode(mode):
