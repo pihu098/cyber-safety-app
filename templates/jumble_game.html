@@ -118,16 +118,25 @@ transform:scale(1.2);
 
 <br>
 
-<button onclick="submitWord()">Submit</button>
+<div style="margin-top:20px;">
 
-<button onclick="clearWord()">Clear</button>
+<button id="submitBtn">
+Submit
+</button>
 
-<button onclick="getHint()">Hint (-5)</button>
+<button id="clearBtn">
+Clear
+</button>
+
+<button id="hintBtn">
+Hint (-5)
+</button>
+
+</div>
 
 <div class="found" id="foundWords"></div>
 
 <h2 id="result"></h2>
-
 
 <audio id="correctSound">
     <source src="{{ url_for('static', filename='sounds/correct.wav') }}" type="audio/wav">
