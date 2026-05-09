@@ -233,15 +233,21 @@ window.location="/jumble";
 
 </script>
 
-<audio id="winSound" src="/static/sounds/win.mp3"></audio>
+<audio id="correctSound">
+    <source src="{{ url_for('static', filename='sounds/correct.mp3') }}" type="audio/mpeg">
+</audio>
 
-<audio id="loseSound" src="/static/sounds/lose.mp3"></audio>
+<audio id="wrongSound">
+    <source src="{{ url_for('static', filename='sounds/wrong.mp3') }}" type="audio/mpeg">
+</audio>
 
-<audio id="correctSound" src="/static/sounds/correct.mp3"></audio>
+<audio id="loseSound">
+    <source src="{{ url_for('static', filename='sounds/lose.mp3') }}" type="audio/mpeg">
+</audio>
 
-<audio id="hintSound" src="/static/sounds/hint.mp3"></audio>
-
-<script src="/static/js/game.js"></script>
+<audio id="hintSound">
+    <source src="{{ url_for('static', filename='sounds/hint.mp3') }}" type="audio/mpeg">
+</audio>
   
 </body>
 </html>
