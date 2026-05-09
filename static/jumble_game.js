@@ -97,7 +97,7 @@ function submitWord(){
         // 🎉 ALL WORDS FOUND
         else if(data.result=="win"){
 
-            playSound("correctSound");
+            playSound("winSound");
 
             document.getElementById("result").innerHTML =
 
