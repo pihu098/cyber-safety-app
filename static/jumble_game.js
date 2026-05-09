@@ -2,109 +2,54 @@ function playSound(id){
 
     let sound = document.getElementById(id);
 
-    sound.pause();
+    if(sound){
 
-    sound.currentTime = 0;
+        sound.pause();
 
-    sound.play();
+        sound.currentTime = 0;
+
+        sound.play();
+
+    }
+
+}
+
+
+
+function stopAllSounds(){
+
+    let sounds = document.querySelectorAll("audio");
+
+    sounds.forEach(sound => {
+
+        sound.pause();
+
+        sound.currentTime = 0;
+
+    });
 
 }
 
 
 
 function submitWord() {
+
     let answer = document.getElementById("answerBox").value;
 
     fetch("/jumble/submit", {
+
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({answer: answer})
-    })
-    .then(res => res.json())
-    .then(data => {
 
-        if (data.result === "correct") {
-            document.getElementById("status").innerText = "🎉 Correct! Next Level";
-            setTimeout(() => location.reload(), 1000);
-        }
+        headers: {
 
-        else if (data.result === "partial") {
-            document.getElementById("status").innerText =
-                data.left + " word left 🔥";
-        }
+            "Content-Type": "application/json"
 
-        else if (data.result === "wrong") {
-            document.getElementById("status").innerText =
-                "❌ Wrong! Lives left: " + data.lives;
-        }
-
-        else if (data.result === "gameover") {
-            document.body.innerHTML = "<h1>💀 You Lost! Try Again</h1>";
-        }
-
-    });
-}
-
-
-function quitGame() {
-    fetch("/jumble/quit")
-    .then(res => res.json())
-    .then(data => {
-
-        document.body.innerHTML =
-        "<h2>🚪 You Quit Game</h2>" +
-        "<h3>Answers were:</h3>" +
-        "<p>" + data.answers.join(", ") + "</p>" +
-        "<button onclick='location.reload()'>Next Level</button>";
-    });
-}
-
-function playWinSound(){
-
-    let sound = document.getElementById("winSound");
-
-    sound.pause();
-
-    sound.currentTime = 0;
-
-    sound.play();
-
-}
-
-function playLoseSound(){
-
-    let sound = document.getElementById("loseSound");
-
-    sound.pause();
-
-    sound.currentTime = 0;
-
-    sound.play();
-
-}
-
-
-function stopSounds(){
-
-    document.getElementById("winSound").pause();
-
-    document.getElementById("loseSound").pause();
-
-}
-
-
-function checkAnswer(selected){
-
-    fetch("/check_answer",{
-
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json"
         },
 
-        body:JSON.stringify({
-            answer:selected
+        body: JSON.stringify({
+
+            answer: answer
+
         })
 
     })
@@ -113,46 +58,146 @@ function checkAnswer(selected){
 
     .then(data => {
 
-        if(data.correct){
+        // ✅ CORRECT WORD
+        if (data.result === "correct") {
 
-            playWinSound("correctSound");
+            playSound("correctSound");
 
-            setTimeout(()=>{
+            document.getElementById("status").innerText =
+                "🎉 Correct! Next Level";
 
-                alert("🎉 YOU WON");
-
-                stopSounds();
-
-                location.reload();
-
-            },1000);
-
-        }
-
-        else if(data.gameover){
-
-            playLoseSound();
-
-            setTimeout(()=>{
-
-                alert("💀 Better Luck Next Time");
-
-                stopSounds();
+            setTimeout(() => {
 
                 location.reload();
 
-            },1000);
+            }, 1200);
 
         }
 
-        else{
+        // ✅ SOME WORDS LEFT
+        else if (data.result === "partial") {
 
-            playLoseSound();
+            playSound("correctSound");
 
-            alert("❌ Wrong Answer");
+            document.getElementById("status").innerText =
+                "🔥 " + data.left + " word left";
+
+        }
+
+        // ❌ WRONG ANSWER
+        else if (data.result === "wrong") {
+
+            playSound("wrongSound");
+
+            document.getElementById("status").innerText =
+                "❌ Wrong! Lives left: " + data.lives;
+
+        }
+
+        // 💀 GAME OVER
+        else if (data.result === "gameover") {
+
+            playSound("loseSound");
+
+            document.body.innerHTML = `
+
+                <div style="text-align:center;margin-top:100px;">
+
+                    <h1 style="color:red;">💀 Better Luck Next Time</h1>
+
+                    <button onclick="restartGame()"
+                    style="
+                        padding:15px 30px;
+                        border:none;
+                        border-radius:10px;
+                        background:#ff9800;
+                        color:white;
+                        font-size:20px;
+                        cursor:pointer;
+                    ">
+                        🔄 Restart
+                    </button>
+
+                </div>
+
+            `;
 
         }
 
     });
+
+}
+
+
+
+function restartGame(){
+
+    stopAllSounds();
+
+    window.location.href = "/jumble/restart";
+
+}
+
+
+
+function quitGame() {
+
+    fetch("/jumble/quit")
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        playSound("loseSound");
+
+        document.body.innerHTML = `
+
+            <div style="text-align:center;margin-top:50px;">
+
+                <h2>🚪 You Quit Game</h2>
+
+                <h3>Answers were:</h3>
+
+                <p style="font-size:25px;">
+                    ${data.answers.join(", ")}
+                </p>
+
+                <button onclick="nextLevel()"
+                style="
+                    padding:15px 30px;
+                    border:none;
+                    border-radius:10px;
+                    background:#4CAF50;
+                    color:white;
+                    font-size:20px;
+                    cursor:pointer;
+                ">
+                    ▶ Next Level
+                </button>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+
+function nextLevel(){
+
+    stopAllSounds();
+
+    location.reload();
+
+}
+
+
+
+// 💡 HINT SOUND
+function useHint(){
+
+    playSound("hintSound");
 
 }
