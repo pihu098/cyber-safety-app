@@ -66,6 +66,405 @@ WORD_PUZZLES = [
             "debug": "Fix errors"
         }
     }
+        WORD_PUZZLES = [
+
+# ================= EASY =================
+
+{
+    "letters": [
+        ["P","Y","T","H","O","N"],
+        ["C","O","D","I","N","G"],
+        ["F","L","A","S","K","X"],
+        ["D","E","B","U","G","R"],
+        ["S","E","R","V","E","R"],
+        ["A","P","P","L","I","C"]
+    ],
+
+    "words": ["python", "flask", "debug"],
+
+    "hints": {
+        "python": "Programming language",
+        "flask": "Python framework",
+        "debug": "Fix errors"
+    }
+},
+
+{
+    "letters": [
+        ["V","I","R","U","S","A"],
+        ["H","A","C","K","E","R"],
+        ["M","A","L","W","A","R"],
+        ["P","A","S","S","W","D"],
+        ["S","P","Y","W","A","R"],
+        ["S","A","F","E","T","Y"]
+    ],
+
+    "words": ["virus", "hacker", "safety"],
+
+    "hints": {
+        "virus": "Harmful software",
+        "hacker": "Accesses systems illegally",
+        "safety": "Protection online"
+    }
+},
+
+{
+    "letters": [
+        ["L","O","G","I","N","S"],
+        ["P","A","S","S","W","D"],
+        ["S","E","C","U","R","E"],
+        ["O","T","P","C","O","D"],
+        ["F","I","R","E","W","L"],
+        ["A","C","C","E","S","S"]
+    ],
+
+    "words": ["login", "secure", "access"],
+
+    "hints": {
+        "login": "Enter account",
+        "secure": "Protected",
+        "access": "Enter system"
+    }
+},
+
+# ================= MEDIUM =================
+
+{
+    "letters": [
+        ["E","N","C","R","Y","P"],
+        ["D","A","T","A","S","X"],
+        ["F","I","R","E","W","L"],
+        ["P","R","I","V","A","C"],
+        ["B","A","C","K","U","P"],
+        ["T","R","A","C","K","R"]
+    ],
+
+    "words": ["encrypt", "backup", "privacy"],
+
+    "hints": {
+        "encrypt": "Protect information",
+        "backup": "Extra saved copy",
+        "privacy": "Personal information protection"
+    }
+},
+
+{
+    "letters": [
+        ["A","N","T","I","V","I"],
+        ["R","A","N","S","O","M"],
+        ["S","P","A","M","M","Y"],
+        ["P","H","I","S","H","X"],
+        ["F","R","A","U","D","S"],
+        ["S","C","A","M","M","R"]
+    ],
+
+    "words": ["spam", "fraud", "scam"],
+
+    "hints": {
+        "spam": "Unwanted messages",
+        "fraud": "Online cheating",
+        "scam": "Fake trick"
+    }
+},
+
+{
+    "letters": [
+        ["N","E","T","W","O","R"],
+        ["B","R","O","W","S","R"],
+        ["S","E","R","V","E","R"],
+        ["D","A","T","A","B","S"],
+        ["C","L","I","E","N","T"],
+        ["S","Y","S","T","E","M"]
+    ],
+
+    "words": ["network", "server", "client"],
+
+    "hints": {
+        "network": "Connected systems",
+        "server": "Provides services",
+        "client": "Uses services"
+    }
+},
+
+# ================= HARD =================
+
+{
+    "letters": [
+        ["A","U","T","H","E","N"],
+        ["D","E","C","R","Y","P"],
+        ["I","N","T","E","G","R"],
+        ["C","O","N","F","I","D"],
+        ["A","V","A","I","L","A"],
+        ["V","A","L","I","D","X"]
+    ],
+
+    "words": ["decrypt", "integrity", "valid"],
+
+    "hints": {
+        "decrypt": "Unlock coded data",
+        "integrity": "Data correctness",
+        "valid": "Proper or correct"
+    }
+},
+
+{
+    "letters": [
+        ["C","Y","B","E","R","X"],
+        ["S","E","C","U","R","E"],
+        ["A","T","T","A","C","K"],
+        ["P","R","O","T","E","C"],
+        ["M","A","L","W","A","R"],
+        ["D","E","F","E","N","D"]
+    ],
+
+    "words": ["cyber", "attack", "defend"],
+
+    "hints": {
+        "cyber": "Internet world",
+        "attack": "Harm system",
+        "defend": "Protect system"
+    }
+},
+
+{
+    "letters": [
+        ["P","R","O","G","R","A"],
+        ["D","E","V","E","L","O"],
+        ["F","U","N","C","T","I"],
+        ["V","A","R","I","A","B"],
+        ["A","P","P","L","I","C"],
+        ["S","O","F","T","W","R"]
+    ],
+
+    "words": ["program", "develop", "software"],
+
+    "hints": {
+        "program": "Written code",
+        "develop": "Create software",
+        "software": "Computer application"
+    }
+},
+
+# ================= BONUS =================
+WORD_PUZZLES = [
+
+# ================= EASY =================
+
+{
+    "letters": [
+        ["P","Y","T","H","O","N"],
+        ["C","O","D","I","N","G"],
+        ["F","L","A","S","K","X"],
+        ["D","E","B","U","G","R"],
+        ["S","E","R","V","E","R"],
+        ["A","P","P","L","I","C"]
+    ],
+
+    "words": ["python", "flask", "debug"],
+
+    "hints": {
+        "python": "Programming language",
+        "flask": "Python framework",
+        "debug": "Fix errors"
+    }
+},
+
+{
+    "letters": [
+        ["V","I","R","U","S","A"],
+        ["H","A","C","K","E","R"],
+        ["M","A","L","W","A","R"],
+        ["P","A","S","S","W","D"],
+        ["S","P","Y","W","A","R"],
+        ["S","A","F","E","T","Y"]
+    ],
+
+    "words": ["virus", "hacker", "safety"],
+
+    "hints": {
+        "virus": "Harmful software",
+        "hacker": "Accesses systems illegally",
+        "safety": "Protection online"
+    }
+},
+
+{
+    "letters": [
+        ["L","O","G","I","N","S"],
+        ["P","A","S","S","W","D"],
+        ["S","E","C","U","R","E"],
+        ["O","T","P","C","O","D"],
+        ["F","I","R","E","W","L"],
+        ["A","C","C","E","S","S"]
+    ],
+
+    "words": ["login", "secure", "access"],
+
+    "hints": {
+        "login": "Enter account",
+        "secure": "Protected",
+        "access": "Enter system"
+    }
+},
+
+# ================= MEDIUM =================
+
+{
+    "letters": [
+        ["E","N","C","R","Y","P"],
+        ["D","A","T","A","S","X"],
+        ["F","I","R","E","W","L"],
+        ["P","R","I","V","A","C"],
+        ["B","A","C","K","U","P"],
+        ["T","R","A","C","K","R"]
+    ],
+
+    "words": ["encrypt", "backup", "privacy"],
+
+    "hints": {
+        "encrypt": "Protect information",
+        "backup": "Extra saved copy",
+        "privacy": "Personal information protection"
+    }
+},
+
+{
+    "letters": [
+        ["A","N","T","I","V","I"],
+        ["R","A","N","S","O","M"],
+        ["S","P","A","M","M","Y"],
+        ["P","H","I","S","H","X"],
+        ["F","R","A","U","D","S"],
+        ["S","C","A","M","M","R"]
+    ],
+
+    "words": ["spam", "fraud", "scam"],
+
+    "hints": {
+        "spam": "Unwanted messages",
+        "fraud": "Online cheating",
+        "scam": "Fake trick"
+    }
+},
+
+{
+    "letters": [
+        ["N","E","T","W","O","R"],
+        ["B","R","O","W","S","R"],
+        ["S","E","R","V","E","R"],
+        ["D","A","T","A","B","S"],
+        ["C","L","I","E","N","T"],
+        ["S","Y","S","T","E","M"]
+    ],
+
+    "words": ["network", "server", "client"],
+
+    "hints": {
+        "network": "Connected systems",
+        "server": "Provides services",
+        "client": "Uses services"
+    }
+},
+
+# ================= HARD =================
+
+{
+    "letters": [
+        ["A","U","T","H","E","N"],
+        ["D","E","C","R","Y","P"],
+        ["I","N","T","E","G","R"],
+        ["C","O","N","F","I","D"],
+        ["A","V","A","I","L","A"],
+        ["V","A","L","I","D","X"]
+    ],
+
+    "words": ["decrypt", "integrity", "valid"],
+
+    "hints": {
+        "decrypt": "Unlock coded data",
+        "integrity": "Data correctness",
+        "valid": "Proper or correct"
+    }
+},
+
+{
+    "letters": [
+        ["C","Y","B","E","R","X"],
+        ["S","E","C","U","R","E"],
+        ["A","T","T","A","C","K"],
+        ["P","R","O","T","E","C"],
+        ["M","A","L","W","A","R"],
+        ["D","E","F","E","N","D"]
+    ],
+
+    "words": ["cyber", "attack", "defend"],
+
+    "hints": {
+        "cyber": "Internet world",
+        "attack": "Harm system",
+        "defend": "Protect system"
+    }
+},
+
+{
+    "letters": [
+        ["P","R","O","G","R","A"],
+        ["D","E","V","E","L","O"],
+        ["F","U","N","C","T","I"],
+        ["V","A","R","I","A","B"],
+        ["A","P","P","L","I","C"],
+        ["S","O","F","T","W","R"]
+    ],
+
+    "words": ["program", "develop", "software"],
+
+    "hints": {
+        "program": "Written code",
+        "develop": "Create software",
+        "software": "Computer application"
+    }
+},
+
+# ================= BONUS =================
+
+{
+    "letters": [
+        ["G","O","O","G","L","E"],
+        ["Y","O","U","T","U","B"],
+        ["A","N","D","R","O","I"],
+        ["W","E","B","S","I","T"],
+        ["I","N","T","E","R","N"],
+        ["B","R","O","W","S","R"]
+    ],
+
+    "words": ["google", "android", "browser"],
+
+    "hints": {
+        "google": "Search engine",
+        "android": "Mobile OS",
+        "browser": "Open websites"
+    }
+},
+
+{
+    "letters": [
+        ["S","E","C","U","R","I"],
+        ["P","R","O","T","E","C"],
+        ["F","I","R","E","W","L"],
+        ["P","A","S","S","W","D"],
+        ["E","N","C","R","Y","P"],
+        ["L","O","G","I","N","S"]
+    ],
+
+    "words": ["security", "protect", "login"],
+
+    "hints": {
+        "security": "Stay protected",
+        "protect": "Keep safe",
+        "login": "Access account"
+    }
+}
+
 ]
 
 @app.route('/jumble')
