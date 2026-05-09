@@ -4,16 +4,19 @@ function playSound(id){
 
     if(sound){
 
-        sound.pause();
-
         sound.currentTime = 0;
 
-        sound.play();
+        sound.play()
+        .then(() => {
+            console.log("playing");
+        })
+        .catch(err => {
+            console.log("sound error", err);
+        });
 
     }
 
 }
-
 
 
 function stopAllSounds(){
