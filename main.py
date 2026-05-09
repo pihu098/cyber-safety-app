@@ -28,17 +28,43 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ADMIN_PASSWORD = "priyanrkp098"  # changable.......
 
 WORD_PUZZLES = [
+
     {
-        "letters": "JOGGLE",
-        "words": ["jog", "log", "lego"]
+        "letters": [
+            ["J","O","G","G","L","E"],
+            ["B","U","B","B","L","E"],
+            ["T","A","C","K","L","E"],
+            ["B","A","B","B","L","E"],
+            ["R","A","M","B","L","E"],
+            ["G","A","M","B","L","E"]
+        ],
+
+        "words": ["joggle", "bubble", "tackle"],
+
+        "hints": {
+            "joggle": "Move roughly",
+            "bubble": "Soap air ball",
+            "tackle": "Catch opponent"
+        }
     },
+
     {
-        "letters": "PYTHON",
-        "words": ["python", "thon"]
-    },
-    {
-        "letters": "FLASKA",
-        "words": ["flask", "ask"]
+        "letters": [
+            ["P","Y","T","H","O","N"],
+            ["C","O","D","I","N","G"],
+            ["F","L","A","S","K","X"],
+            ["D","E","B","U","G","R"],
+            ["S","E","R","V","E","R"],
+            ["A","P","P","L","I","C"]
+        ],
+
+        "words": ["python", "flask", "debug"],
+
+        "hints": {
+            "python": "Programming language",
+            "flask": "Python framework",
+            "debug": "Fix errors"
+        }
     }
 ]
 
@@ -48,8 +74,9 @@ def jumble():
     if 'jumble_level' not in session:
         session['jumble_level'] = 0
         session['jumble_lives'] = 5
-        session['found_words'] = []
-        
+        session['jumble_found'] = []
+        session['coins'] = 50
+
     level = session['jumble_level']
 
     if level >= len(WORD_PUZZLES):
@@ -60,11 +87,12 @@ def jumble():
 
     return render_template(
         "jumble_game.html",
-        letters=list(game['letters']),
+        grid=game['letters'],
         total_words=len(game['words']),
-        lives=session['jumble_lives']
+        found=session.get('jumble_found', []),
+        lives=session['jumble_lives'],
+        coins=session['coins']
     )
-
 
 
 @app.route('/jumble/restart')
@@ -74,59 +102,98 @@ def jumble_restart():
 
     return redirect('/jumble')
 
+@app.route('/wordsearch/hint')
+def wordsearch_hint():
 
+    level = session['ws_level']
+
+    game = WORD_SEARCH[level]
+
+    found = session.get('ws_found', [])
+
+    coins = session.get('coins', 0)
+
+    # ❌ not enough coins
+    if coins < 30:
+
+        return {
+            "result":"nocoin"
+        }
+
+    # 🔥 remaining hidden words
+    remaining_words = []
+
+    for w in game['words']:
+
+        if w not in found:
+            remaining_words.append(w)
+
+    # 🎉 all found
+    if not remaining_words:
+
+        return {
+            "result":"done"
+        }
+
+    # 💰 remove coins
+    session['coins'] -= 30
+
+    # 🎯 random hint word
+    hint_word = random.choice(remaining_words)
+
+    return {
+        "result":"success",
+        "word":hint_word
+    }
+    
 @app.route('/jumble/check', methods=['POST'])
 def jumble_check():
 
     data = request.get_json()
 
-    answer = data.get("answer", "").lower().strip()
+    answer = data.get("answer", "").lower()
 
     level = session.get('jumble_level', 0)
 
     game = WORD_PUZZLES[level]
 
-    found_words = session.get('found_words', [])
+    found = session.get('jumble_found', [])
 
-    # ✅ CORRECT WORD
-    if answer in game['words'] and answer not in found_words:
+    # ✅ correct word
+    if answer in game['words'] and answer not in found:
 
-        found_words.append(answer)
+        found.append(answer)
 
-        session['found_words'] = found_words
+        session['jumble_found'] = found
 
-        # 🪙 coins add
-        session['coins'] = session.get('coins', 0) + 20
+        session['coins'] += 10
 
-        # 🎉 ALL WORDS COMPLETED
-        if len(found_words) == len(game['words']):
+        # 🎉 all words completed
+        if len(found) == len(game['words']):
 
             session['jumble_level'] += 1
-
-            session['jumble_lives'] = 5
-
-            session['found_words'] = []
+            session['jumble_found'] = []
 
             return {
-                "result": "completed"
+                "result": "win",
+                "next_level": session['jumble_level']
             }
 
         return {
             "result": "correct",
-            "found": found_words
+            "found": found,
+            "coins": session['coins']
         }
 
-    # ❌ WRONG WORD
+    # ❌ wrong word
     else:
 
         session['jumble_lives'] -= 1
 
-        # 💀 GAME OVER
         if session['jumble_lives'] <= 0:
 
             session['jumble_lives'] = 5
-
-            session['found_words'] = []
+            session['jumble_found'] = []
 
             return {
                 "result": "gameover"
@@ -137,6 +204,37 @@ def jumble_check():
             "lives": session['jumble_lives']
         }
 
+
+@app.route('/jumble/hint')
+def jumble_hint():
+
+    level = session.get('jumble_level', 0)
+
+    game = WORD_PUZZLES[level]
+
+    found = session.get('jumble_found', [])
+
+    remaining = [w for w in game['words'] if w not in found]
+
+    if session.get('coins', 0) < 5:
+        return {
+            "error": "Not enough coins"
+        }
+
+    if not remaining:
+        return {
+            "error": "No words left"
+        }
+
+    word = random.choice(remaining)
+
+    session['coins'] -= 5
+
+    return {
+        "hint": game['hints'][word],
+        "coins": session['coins']
+    }
+    
 @app.route('/set_mode/<mode>')
 def set_mode(mode):
     session['game_mode'] = mode
