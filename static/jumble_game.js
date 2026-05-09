@@ -169,3 +169,17 @@ function nextLevel(){
     window.location="/jumble";
 
 }
+
+
+window.onload = function(){
+
+    document.getElementById("submitBtn")
+    .addEventListener("click", submitWord);
+
+    document.getElementById("clearBtn")
+    .addEventListener("click", clearWord);
+
+    document.getElementById("hintBtn")
+    .addEventListener("click", getHint);
+
+}
