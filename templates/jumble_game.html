@@ -1,142 +1,234 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Jumble Game</title>
+<title>Word Jumble</title>
 
 <style>
 
 body{
-    background:#2b1d12;
-    color:white;
-    text-align:center;
-    font-family:Arial;
+background:#1f1f1f;
+font-family:Arial;
+text-align:center;
+color:white;
+}
+
+.top{
+display:flex;
+justify-content:space-around;
+margin:15px;
+font-size:20px;
 }
 
 .grid{
-    display:grid;
-    grid-template-columns:repeat(6,60px);
-    gap:8px;
-    justify-content:center;
-    margin-top:30px;
+display:inline-block;
+margin-top:20px;
+}
+
+.row{
+display:flex;
 }
 
 .cell{
-    width:60px;
-    height:60px;
-    background:#5a3921;
-    border:2px solid #8b5a2b;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    font-weight:bold;
-    border-radius:8px;
+width:55px;
+height:55px;
+background:#5a3419;
+margin:3px;
+line-height:55px;
+font-size:30px;
+font-weight:bold;
+border-radius:8px;
+cursor:pointer;
+}
+
+#answer{
+margin-top:20px;
+font-size:28px;
+letter-spacing:10px;
+min-height:40px;
 }
 
 input{
-    padding:12px;
-    width:220px;
-    margin-top:25px;
-    border:none;
-    border-radius:10px;
-    font-size:18px;
+padding:12px;
+width:220px;
+font-size:20px;
+border-radius:10px;
+border:none;
+margin-top:15px;
 }
 
 button{
-    padding:12px 20px;
-    border:none;
-    border-radius:10px;
-    background:orange;
-    color:white;
-    font-size:18px;
-    cursor:pointer;
-    margin-top:15px;
+padding:12px 20px;
+font-size:18px;
+border:none;
+border-radius:10px;
+margin:10px;
+cursor:pointer;
+background:orange;
+color:white;
+}
+
+.found{
+margin-top:20px;
+font-size:22px;
+color:lime;
+}
+
+.win{
+font-size:40px;
+color:gold;
+animation: pop 1s infinite;
+}
+
+@keyframes pop{
+50%{
+transform:scale(1.2);
+}
 }
 
 </style>
-</head>
 
+</head>
 <body>
 
-<h2>🧩 Word Jumble</h2>
-
-<p>
-❤️ Lives: <span id="lives">{{lives}}</span>
-</p>
-
-<p>
-🎯 Total Words: {{total_words}}
-</p>
+<div class="top">
+<div>❤️ Lives: {{ lives }}</div>
+<div>🪙 Coins: <span id="coins">{{ coins }}</span></div>
+<div>📘 Words: <span id="count">{{ found|length }}</span>/{{ total_words }}</div>
+</div>
 
 <div class="grid">
 
-{% for letter in letters %}
-<div class="cell">{{letter}}</div>
+{% for row in grid %}
+<div class="row">
+
+{% for letter in row %}
+<div class="cell" onclick="pick('{{ letter }}')">
+{{ letter }}
+</div>
+{% endfor %}
+
+</div>
 {% endfor %}
 
 </div>
 
-<input id="word" placeholder="Enter word">
+<div id="answer"></div>
+
+<input type="text" id="wordInput" placeholder="Type word">
 
 <br>
 
-<button onclick="checkWord()">Submit</button>
+<button onclick="submitWord()">Submit</button>
 
-<p id="msg"></p>
+<button onclick="clearWord()">Clear</button>
+
+<button onclick="getHint()">Hint (-5)</button>
+
+<div class="found" id="foundWords"></div>
+
+<h2 id="result"></h2>
 
 <script>
 
-let found = 0;
-let total = {{total_words}};
+let currentWord = "";
 
-async function checkWord(){
+function pick(letter){
 
-    let word = document.getElementById("word").value;
+currentWord += letter;
 
-    let res = await fetch("/jumble/check",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            answer:word
-        })
-    });
+document.getElementById("answer").innerHTML = currentWord;
 
-    let data = await res.json();
+document.getElementById("wordInput").value = currentWord;
+}
 
-    if(data.result=="correct"){
+function clearWord(){
 
-        found++;
+currentWord = "";
 
-        document.getElementById("msg").innerHTML =
-        "✅ Correct Word";
+document.getElementById("answer").innerHTML = "";
+document.getElementById("wordInput").value = "";
+}
 
-        if(found >= total){
+function submitWord(){
 
-            document.getElementById("msg").innerHTML =
-            "🎉 YOU WON!";
-        }
+let word = document.getElementById("wordInput").value;
 
-    }
+fetch("/jumble/check",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+answer:word
+})
+})
 
-    else if(data.result=="wrong"){
+.then(r=>r.json())
 
-        document.getElementById("lives").innerText =
-        data.lives;
+.then(data=>{
 
-        document.getElementById("msg").innerHTML =
-        "❌ Wrong Word";
+if(data.result=="correct"){
 
-    }
+document.getElementById("foundWords").innerHTML += "✅ " + word + "<br>";
 
-    else if(data.result=="gameover"){
+document.getElementById("count").innerHTML = data.found.length;
 
-        alert("💀 Better Luck Next Time");
+document.getElementById("coins").innerHTML = data.coins;
 
-        window.location.href="/jumble/restart";
-    }
+clearWord();
+}
 
+else if(data.result=="win"){
+
+document.getElementById("result").innerHTML =
+"<div class='win'>🎉 YOU WON 🎉</div><br><button onclick='nextLevel()'>CHAPTER NEXT ➜</button>";
+}
+
+else if(data.result=="wrong"){
+
+alert("❌ Wrong Word");
+
+location.reload();
+}
+
+else if(data.result=="gameover"){
+
+alert("💀 Better Luck Next Time");
+
+window.location="/jumble/restart";
+}
+
+})
+
+}
+
+function getHint(){
+
+fetch("/jumble/hint")
+
+.then(r=>r.json())
+
+.then(data=>{
+
+if(data.hint){
+
+alert("💡 Hint: " + data.hint);
+
+document.getElementById("coins").innerHTML = data.coins;
+}
+
+else{
+
+alert(data.error);
+}
+
+})
+
+}
+
+function nextLevel(){
+
+window.location="/jumble";
 }
 
 </script>
