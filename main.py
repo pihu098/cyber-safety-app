@@ -356,7 +356,6 @@ def wordsearch_hint():
         "result":"success",
         "word":hint_word
     }
-    
 @app.route('/jumble/check', methods=['POST'])
 def jumble_check():
 
@@ -368,35 +367,40 @@ def jumble_check():
 
     game = WORD_PUZZLES[level]
 
-    found = session.get('jumble_found', [])
+    # first time found list
+    if "found_words" not in session:
+        session["found_words"] = []
 
-    # ✅ correct word
+    found = session["found_words"]
+
+    # ✅ CORRECT
     if answer in game['words'] and answer not in found:
 
         found.append(answer)
 
-        session['jumble_found'] = found
+        session["found_words"] = found
 
-        session['coins'] += 10
+        session["coins"] = session.get("coins", 0) + 5
 
-        # 🎉 all words completed
+        # 🎉 WIN
         if len(found) == len(game['words']):
 
             session['jumble_level'] += 1
-            session['jumble_found'] = []
+
+            session['found_words'] = []
 
             return {
                 "result": "win",
-                "next_level": session['jumble_level']
+                "coins": session["coins"]
             }
 
         return {
             "result": "correct",
             "found": found,
-            "coins": session['coins']
+            "coins": session["coins"]
         }
 
-    # ❌ wrong word
+    # ❌ WRONG
     else:
 
         session['jumble_lives'] -= 1
@@ -404,7 +408,8 @@ def jumble_check():
         if session['jumble_lives'] <= 0:
 
             session['jumble_lives'] = 5
-            session['jumble_found'] = []
+
+            session["found_words"] = []
 
             return {
                 "result": "gameover"
@@ -413,8 +418,7 @@ def jumble_check():
         return {
             "result": "wrong",
             "lives": session['jumble_lives']
-        }
-
+        }    
 
 @app.route('/jumble/hint')
 def jumble_hint():
