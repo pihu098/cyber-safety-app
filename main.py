@@ -99,7 +99,7 @@ def jumble():
 def jumble_restart():
 
     session['jumble_lives'] = 5
-
+    session['jumble_found'] = []
     return redirect('/jumble')
 
 @app.route('/wordsearch/hint')
