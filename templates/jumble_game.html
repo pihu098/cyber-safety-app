@@ -1,32 +1,144 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jumble Game</title>
-    <script src="/static/js/jumble_game.js"></script>
+<title>Jumble Game</title>
+
+<style>
+
+body{
+    background:#2b1d12;
+    color:white;
+    text-align:center;
+    font-family:Arial;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(6,60px);
+    gap:8px;
+    justify-content:center;
+    margin-top:30px;
+}
+
+.cell{
+    width:60px;
+    height:60px;
+    background:#5a3921;
+    border:2px solid #8b5a2b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    font-weight:bold;
+    border-radius:8px;
+}
+
+input{
+    padding:12px;
+    width:220px;
+    margin-top:25px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:orange;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+</style>
 </head>
 
 <body>
 
-<h2>🧩 Jumble Game</h2>
+<h2>🧩 Word Jumble</h2>
 
-<p>❤️ Lives: {{ lives }} | 💰 Coins: {{ coins }}</p>
+<p>
+❤️ Lives: <span id="lives">{{lives}}</span>
+</p>
 
-<h3 id="letters"></h3>
+<p>
+🎯 Total Words: {{total_words}}
+</p>
 
-<input id="answerBox" placeholder="Type word here">
+<div class="grid">
 
-<br><br>
+{% for letter in letters %}
+<div class="cell">{{letter}}</div>
+{% endfor %}
 
-<button onclick="submitWord()">Submit</button>
-<button onclick="quitGame()">Quit</button>
+</div>
 
-<p id="status"></p>
+<input id="word" placeholder="Enter word">
 
+<br>
 
+<button onclick="checkWord()">Submit</button>
+
+<p id="msg"></p>
 
 <script>
-    let letters = {{ letters|tojson }};
-    let wordsLeft = {{ words|length }};
+
+let found = 0;
+let total = {{total_words}};
+
+async function checkWord(){
+
+    let word = document.getElementById("word").value;
+
+    let res = await fetch("/jumble/check",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            answer:word
+        })
+    });
+
+    let data = await res.json();
+
+    if(data.result=="correct"){
+
+        found++;
+
+        document.getElementById("msg").innerHTML =
+        "✅ Correct Word";
+
+        if(found >= total){
+
+            document.getElementById("msg").innerHTML =
+            "🎉 YOU WON!";
+        }
+
+    }
+
+    else if(data.result=="wrong"){
+
+        document.getElementById("lives").innerText =
+        data.lives;
+
+        document.getElementById("msg").innerHTML =
+        "❌ Wrong Word";
+
+    }
+
+    else if(data.result=="gameover"){
+
+        alert("💀 Better Luck Next Time");
+
+        window.location.href="/jumble/restart";
+    }
+
+}
+
 </script>
 
 </body>
