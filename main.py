@@ -229,7 +229,93 @@ WORD_PUZZLES = [
         "software": "Computer app"
     }
 },
+{
+  "letters": [
+    ["C","L","O","U","D","A","B","C"],
+    ["S","E","R","V","E","R","D","E"],
+    ["N","E","T","W","O","R","K","F"],
+    ["D","A","T","A","C","E","N","T"],
+    ["S","T","O","R","A","G","E","X"],
+    ["C","O","M","P","U","T","E","R"],
+    ["P","R","O","C","E","S","S","O"]
+  ],
+  "words": ["cloud", "server", "network"],
+  "hints": {
+    "cloud": "Online storage",
+    "server": "Data provider",
+    "network": "Connected systems"
+  }
+},
 
+{
+  "letters": [
+    ["F","I","R","E","S","Y","S","T","E","M"],
+    ["D","A","T","A","S","E","C","U","R","E"],
+    ["B","R","O","W","S","E","R","X","Y","Z"],
+    ["A","L","G","O","R","I","T","H","M","A"],
+    ["C","O","D","E","R","P","Q","R","S","T"],
+    ["D","E","B","U","G","G","I","N","G","H"],
+    ["N","E","T","W","O","R","K","L","M","N"]
+  ],
+  "words": ["fire system", "algorithm", "debugging"],
+  "hints": {
+    "fire system": "Safety mechanism against fire",
+    "algorithm": "Step-by-step logic",
+    "debugging": "Fixing code errors"
+  }
+},
+{
+  "letters": [
+    ["A","P","P","D","E","V","E","L","O","P"],
+    ["U","I","D","E","S","I","G","N","X","Y"],
+    ["F","R","O","N","T","E","N","D","A","B"],
+    ["B","A","C","K","E","N","D","C","D","E"],
+    ["S","O","F","T","W","A","R","E","F","G"],
+    ["H","A","R","D","W","A","R","E","H","I"],
+    ["I","N","T","E","R","F","A","C","E","J"]
+  ],
+  "words": ["frontend", "backend", "interface"],
+  "hints": {
+    "frontend": "User side of app",
+    "backend": "Server side logic",
+    "interface": "Connection between systems"
+  }
+},
+{
+  "letters": [
+    ["E","N","C","R","Y","P","T","I","O","N"],
+    ["D","E","C","O","D","E","R","A","B","C"],
+    ["A","U","T","H","E","N","T","I","C","A"],
+    ["P","R","O","T","O","C","O","L","D","E"],
+    ["S","E","R","V","I","C","E","X","Y","Z"],
+    ["C","Y","B","E","R","S","E","C","U","R"],
+    ["T","R","A","F","F","I","C","N","O","P"]
+  ],
+  "words": ["encryption", "authentication", "protocol"],
+  "hints": {
+    "encryption": "Securing data",
+    "authentication": "Verifying identity",
+    "protocol": "Rules for communication"
+  }
+},
+{
+  "letters": [
+    ["M","E","M","O","R","Y","S","T","O","R"],
+    ["C","P","U","P","R","O","C","E","S","S"],
+    ["G","R","A","P","H","I","C","S","A","B"],
+    ["D","R","I","V","E","R","S","C","D","E"],
+    ["O","P","E","R","A","T","I","N","G","F"],
+    ["S","Y","S","T","E","M","X","Y","Z","Q"],
+    ["H","A","R","D","W","A","R","E","P","L"]
+  ],
+  "words": ["memory", "processor", "graphics"],
+  "hints": {
+    "memory": "Stores data temporarily",
+    "processor": "Brain of computer",
+    "graphics": "Visual output system"
+  }
+},
+    
 # =================================================
 # BONUS
 # =================================================
