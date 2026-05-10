@@ -4,4 +4,4 @@ werkzeug
 gunicorn
 requests
 deep-translator
-openai
+openai==1.30.1
