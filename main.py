@@ -1939,10 +1939,9 @@ Reply in friendly simple style.
         )
 
         return response.choices[0].message.content
-
+    
     except Exception as e:
-
-        return "⚠️ AI Error"
+    return str(e)
 #--------leaderboard---------------
 
 
