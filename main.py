@@ -1907,24 +1907,13 @@ def ai_response(msg):
 
         response = client.chat.completions.create(
 
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
 
             messages=[
 
                 {
                     "role": "system",
-                    "content": """
-You are Cyber Safety Guard AI.
-
-You help users with:
-- cyber safety
-- scams
-- coding
-- technology
-- general questions
-
-Reply in friendly simple style.
-"""
+                    "content": "You are a friendly cyber safety AI assistant."
                 },
 
                 {
@@ -1934,16 +1923,15 @@ Reply in friendly simple style.
 
             ],
 
-            max_tokens=200
+            max_tokens=150
 
         )
 
         return response.choices[0].message.content
-    
+
     except Exception as e:
-       return f"ERROR: {str(e)}"
-        
-      
+
+        return f"ERROR: {str(e)}"
 #--------leaderboard---------------
 
 
