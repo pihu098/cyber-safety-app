@@ -95,6 +95,93 @@ WORD_PUZZLES = [
         "access": "Enter system"
     }
 },
+"letters": [
+    ["I","A","B","C","D","E","F","G","H","I"],
+    ["J","N","K","L","M","N","O","P","Q","R"],
+    ["S","T","S","U","V","W","X","Y","Z","A"],
+    ["B","C","D","T","E","F","G","H","I","J"],
+    ["K","L","M","N","A","O","P","Q","R","S"],
+    ["T","U","V","W","X","G","Y","Z","A","B"],
+    ["C","D","E","F","G","H","R","I","J","K"],
+    ["L","M","N","O","P","Q","R","A","S","T"],
+    ["U","V","W","X","Y","Z","A","M","B","C"],
+    ["D","E","F","G","H","I","J","K","P","L"]
+],
+
+"words": ["instagram", "kalilinux", "spam"],
+
+"hints": {
+    "instagram": "Popular social media app",
+    "kalilinux": "Operating system for cybersecurity",
+    "spam": "Unwanted messages or emails"
+},
+{
+    "letters": [
+        ["A","B","C","D","E","F","G","H","I","J"],
+        ["K","P","L","M","N","O","P","Q","R","S"],
+        ["T","U","H","V","W","X","Y","Z","A","B"],
+        ["C","D","E","I","F","G","H","I","J","K"],
+        ["L","M","N","S","S","O","C","I","A","L"],
+        ["P","Q","R","H","T","S","U","R","V","W"],
+        ["X","Y","Z","I","A","B","C","D","E","F"],
+        ["G","H","I","N","C","Y","B","E","R","J"],
+        ["K","L","M","G","K","L","M","N","O","P"],
+        ["Q","R","S","T","A","C","K","E","R","S"]
+    ],
+
+    "words": ["phishing", "social", "hackers"],
+
+    "hints": {
+        "phishing": "Fake scam attack",
+        "social": "Media platforms category",
+        "hackers": "People who break into systems"
+    }
+},
+{
+    "letters": [
+        ["A","B","C","D","E","F","G","H","I","J"],
+        ["K","M","L","N","O","P","Q","R","S","T"],
+        ["U","A","V","W","X","Y","Z","A","B","C"],
+        ["D","L","E","F","G","H","I","J","K","L"],
+        ["M","W","N","I","F","I","R","E","W","A"],
+        ["O","A","P","R","Q","R","S","T","U","L"],
+        ["V","R","W","U","X","Y","Z","A","B","L"],
+        ["C","E","D","S","E","C","U","R","E","E"],
+        ["F","G","H","T","I","J","K","L","M","T"],
+        ["N","O","P","Q","R","S","T","U","V","W"]
+    ],
+
+    "words": ["malware", "virus", "firewall"],
+
+    "hints": {
+        "malware": "Harmful software",
+        "virus": "Infects devices",
+        "firewall": "Protects network security"
+    }
+},
+{
+    "letters": [
+        ["A","B","C","D","E","F","G","H","I","J"],
+        ["K","S","L","M","N","O","P","Q","R","S"],
+        ["T","P","U","V","W","X","Y","Z","A","B"],
+        ["C","A","D","E","F","G","H","I","J","K"],
+        ["L","M","M","N","O","P","Q","R","S","T"],
+        ["U","V","E","W","X","Y","Z","A","B","C"],
+        ["D","E","R","F","G","H","I","J","K","L"],
+        ["M","N","P","A","S","S","W","O","R","D"],
+        ["Q","R","T","S","U","V","W","X","Y","Z"],
+        ["A","B","C","E","N","C","R","Y","P","T"]
+    ],
+
+    "words": ["spam", "password", "encrypt"],
+
+    "hints": {
+        "spam": "Unwanted online content",
+        "password": "Secret login key",
+        "encrypt": "Convert data into secure code"
+    }
+},
+
 
 # =================================================
 # MEDIUM
@@ -338,6 +425,49 @@ WORD_PUZZLES = [
         "google": "Search engine",
         "android": "Mobile OS",
         "browser": "Open websites"
+    }
+},
+{
+    "letters": [
+        ["A","B","C","D","E","F","G","H","I","J"],
+        ["K","L","M","N","O","P","Q","R","S","T"],
+        ["U","V","P","W","X","Y","Z","A","B","C"],
+        ["D","E","H","F","G","H","I","J","K","L"],
+        ["M","N","I","O","P","Q","R","S","T","U"],
+        ["V","W","S","X","Y","Z","A","B","C","D"],
+        ["E","F","H","G","H","I","J","K","L","M"],
+        ["N","O","I","P","R","O","X","Y","Q","R"],
+        ["S","T","N","U","V","W","X","Y","Z","A"],
+        ["B","C","G","D","E","F","G","H","I","J"]
+    ],
+
+    "words": ["phishing", "proxy"],
+
+    "hints": {
+        "phishing": "Cyber attack using fake messages",
+        "proxy": "Server between user and internet"
+    }
+},
+{
+    "letters": [
+        ["A","B","C","D","E","F","G","H","I","J"],
+        ["K","T","L","M","N","O","P","Q","R","S"],
+        ["U","R","V","W","X","Y","Z","A","B","C"],
+        ["D","O","E","F","G","H","I","J","K","L"],
+        ["M","J","N","S","E","C","U","R","E","O"],
+        ["P","A","Q","R","S","T","U","V","W","G"],
+        ["X","N","Y","Z","A","B","C","D","E","I"],
+        ["F","H","G","H","A","C","K","I","N","N"],
+        ["J","O","K","L","M","N","O","P","Q","S"],
+        ["R","R","S","T","U","V","W","X","Y","T"]
+    ],
+
+    "words": ["trojan", "hacking", "secure"],
+
+    "hints": {
+        "trojan": "Malicious software disguised as safe",
+        "hacking": "Accessing systems or networks",
+        "secure": "Protected from danger"
     }
 },
 
