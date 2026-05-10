@@ -1907,7 +1907,7 @@ def ai_response(msg):
 
         response = client.chat.completions.create(
 
-            model="gpt-4.1-mini",
+            model="gpt-3.5-turbo",
 
             messages=[
 
@@ -1941,7 +1941,7 @@ Reply in friendly simple style.
         return response.choices[0].message.content
     
     except Exception as e:
-         return str(e)
+       return f"ERROR: {str(e)}"
         
       
 #--------leaderboard---------------
