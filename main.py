@@ -2261,10 +2261,6 @@ def community():
     return render_template("community.html", posts=posts)
 
 # ---------------- CHATBOT ----------------
-@app.route('/chat', methods=['POST'])
-def chat():
-    user_msg = request.form.get('message', "")
-    return ai_response(user_msg)
 
 # ---------------- PASSWORD GENERATOR ----------------
 @app.route('/password', methods=['GET', 'POST'])
