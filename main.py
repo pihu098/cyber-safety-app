@@ -8,7 +8,12 @@ from datetime import date, timedelta
 import time
 import requests
 import mysql.connector
+from openai import OpenAI
 import os
+
+client = OpenAI(
+    api_key="YOUR_API_KEY"
+)
 os 
 app = Flask(__name__)
 app.secret_key = "secret123"
@@ -1888,200 +1893,47 @@ quiz_levels = {
 
 # ---------------- AI RESPONSE ----------------
 def ai_response(msg):
-    msg = msg.lower()
 
-    if "fraud" in msg or "scam" in msg:
-        return """🚨 If you are victim of cyber fraud:
-👉 Report: https://cybercrime.gov.in
-📞 Call: 1930
-Stay calm & act fast!"""
+    try:
 
-    elif "hlo" in msg or "hello" in msg:
-        return "👋 Hello buddy! If you have any cyber safety queries, ask me."
+        response = client.chat.completions.create(
 
-    elif "otp" in msg:
-        return "🚫 Never share OTP!"
+            model="gpt-4.1-mini",
 
-    elif "phishing" in msg:
-        return "🎣 Phishing is fake message to steal data"
-    elif "my account hacked" in msg or "account hack" in msg:
-        return """🚨 Account hacked?
-         1️⃣ Change password immediately
-         2️⃣ Enable 2FA
-         3️⃣ Check login activity
-         4️⃣ Report platform support
-         ⚡ Act fast to recover!"""    
+            messages=[
 
-    elif "how are you" in msg:
-        return "😊 I'm good! Ready to help you stay safe online."
+                {
+                    "role": "system",
+                    "content": """
+You are Cyber Safety Guard AI.
 
-    elif "money deducted" in msg or "upi fraud" in msg or "lost money" in msg:
-       return """💸 Money lost in scam?
-👉 Call 1930 immediately
-👉 Report: cybercrime.gov.in
-⏰ Report within 24 hrs for better recovery chance!"""
+You help users with:
+- cyber safety
+- scams
+- coding
+- technology
+- general questions
 
-    elif "whatsapp hack" in msg or "whatsapp scam" in msg:
-       return """📱 WhatsApp Safety:
-🚫 Never share OTP
-🚫 Don't click unknown links
-✅ Enable 2-step verification"""
+Reply in friendly simple style.
+"""
+                },
 
-    elif "email fake" in msg or "fake email" in msg:
-       return """📧 Fake Email Signs:
-⚠️ Unknown sender
-⚠️ Urgent message ("act now")
-⚠️ Suspicious links
-👉 Always verify sender!"""
+                {
+                    "role": "user",
+                    "content": msg
+                }
 
-    elif "free fire hack" in msg or "game hack" in msg or "free skins" in msg:
-       return """🎮 Gaming Scam Alert:
-🚫 No real hacks or free skins
-🚫 Don't download mod apps
-💡 These steal your account!"""
+            ],
 
-    elif "shopping scam" in msg or "fake website" in msg:
-        return """🛒 Shopping Safety:
-✅ Check reviews
-✅ Use trusted sites
-🚫 Avoid too-good-to-be-true deals"""
+            max_tokens=200
 
-    elif "how to create password" in msg:
-       return """🔐 Strong Password Tips:
-✔️ Use 12+ characters
-✔️ Mix letters, numbers, symbols
-✔️ Avoid name/DOB"""
+        )
 
-    
-    elif "kyc" in msg:
-        return """📄 KYC Scam Alert:
-🚫 Bank never asks KYC via link
-🚫 Don't share OTP or details
-⚠️ Always visit official website"""
+        return response.choices[0].message.content
 
-    elif "instagram hack" in msg or "social media hacked" in msg:
-        return """📷 Social Media Safety:
-🔒 Enable 2FA
-🔑 Change password
-👀 Remove unknown devices"""
+    except Exception as e:
 
-    elif "is this safe" in msg or "safe or not" in msg:
-        return """🤔 Not sure?
-👉 Don't click unknown links
-👉 Don't share personal info
-💡 When in doubt = avoid!"""
-
-    elif "job scam" in msg or "fake job" in msg:
-        return """💼 Job Scam Alert:
-🚫 No legit job asks money
-🚫 Avoid random WhatsApp jobs
-✅ Verify company first"""
-
-    elif "card details" in msg or "credit card scam" in msg:
-        return """💳 Card Safety:
-🚫 Never share CVV/OTP
-🔐 Use secure payment gateway
-⚠️ Block card if suspicious"""
-
-    elif "confused" in msg or "don't know" in msg:
-        return "😅 No worries! Tell me your problem, I'll guide you step by step."
- 
-    elif "virus" in msg:
-        return "🛡️ Use antivirus and avoid unknown downloads"
-
-    elif "safe" in msg:
-        return "🔐 Use HTTPS and strong passwords"
-
-    elif "link" in msg:
-        return "⚠️ Suspicious link ho sakta hai"
-
-    elif "password" in msg:
-        return "💪 Use strong password with symbols"
-
-    elif "hi" in msg or "brother" in msg:
-        return "Hlo brother/sister, do you have any question about cyber safety?"
-
-    elif "hack" in msg or "hacked" in msg:
-        return "⚠️ Stay safe! Avoid suspicious links and enable 2FA."
-
-    elif "wifi" in msg:
-        return "📶 Avoid public WiFi for sensitive activities like banking."
-
-    elif "bank" in msg or "payment" in msg:
-        return "💳 Use secure websites (HTTPS) and never share bank details."
-
-    elif "cyber" in msg:
-        return "🌐 Cyber safety means protecting your data and privacy online."
-
-    # ---------------- HELPLINE SYSTEM (SMART ADDON) ----------------
-
-    elif any(word in msg for word in ["women", "woman", "lady", "girl", "mahila", "harassment", "abuse"]):
-        return "👩 Women Helpline: 📞 1091"
-
-    elif any(word in msg for word in ["child", "kid", "bacha", "minor", "children"]):
-        return "🧒 Child Helpline: 📞 1098"
-
-    elif any(word in msg for word in ["police", "theft", "crime", "attack", "danger"]):
-        return "🚓 Police Helpline: 📞 100"
-
-    elif any(word in msg for word in ["ambulance", "medical", "hospital", "injury"]):
-        return "🚑 Ambulance: 📞 102 / 108"
-
-    elif any(word in msg for word in ["fire", "aag", "blast"]):
-        return "🔥 Fire Emergency: 📞 101"
-
-    elif any(word in msg for word in ["help", "helpline", "emergency", "number"]):
-        return """📞 Important Helplines:
-
-👩 Women: 1091  
-🧒 Child: 1098  
-🚓 Police: 100  
-🚑 Ambulance: 102 / 108  
-🔥 Fire: 101  
-💻 Cyber Crime: 1930"""
-
-    # ---------------- NORMAL FLOW ----------------
-
-    elif "yes" in msg:
-        return "Okay! Feel free to ask anything."
-
-    elif "have a question" in msg:
-        return "Sure! Ask me anything about cyber safety."
-
-    elif "no" in msg:
-        return "🙂 No problem! Ask something else."
-
-    elif "thanks" in msg or "thank you" in msg:
-        return "😊 You're welcome! Stay safe online."
-
-    else:
-        return "🤖 I can help with cyber safety, scams, passwords, suspicious links and helplines!"
-
-def init_user():
-    if 'coins' not in session:
-        session['coins'] = 200
-    if 'owned_chars' not in session:
-        session['owned_chars'] = ["🤖"]
-    if 'xp' not in session:
-        session['xp'] = 0
-    if 'level' not in session:
-        session['level'] = 1
-
-
-
-@app.route('/dashboard')
-def dashboard():
-    if 'user' not in session:
-        return redirect('/')
-
-    init_user()   # 👈 yaha lagana hai
-
-    return render_template("dashboard.html",
-        name=session['user'],
-        level=session['level'],
-        coins=session['coins'],
-        streak=session['streak']
-    )
+        return "⚠️ AI Error"
 #--------leaderboard---------------
 
 
