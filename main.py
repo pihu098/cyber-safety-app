@@ -1940,10 +1940,15 @@ def ai_response(msg):
 
         return f"ERROR: {str(e)}"
 
+
+#--------leaderboard---------------
+#--------chatbot----------
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    user_message = request.json["message"]
+    data = request.get_json()
+
+    user_message = data.get("message")
 
     try:
         response = client.chat.completions.create(
@@ -1955,12 +1960,14 @@ def chat():
 
         reply = response.choices[0].message.content
 
-        return {"reply": reply}
+        return jsonify({
+            "reply": reply
+        })
 
     except Exception as e:
-        return {"reply": str(e)}
-#--------leaderboard---------------
-
+        return jsonify({
+            "reply": str(e)
+        })
 
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
