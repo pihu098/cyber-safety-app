@@ -100,27 +100,7 @@ WORD_PUZZLES = [
         "access": "Enter system"
     }
 },
-{    
-    "letters": [
-    ["I","A","B","C","D","E","F","G","H","I"],
-    ["J","N","K","L","M","N","O","P","Q","R"],
-    ["S","T","S","U","V","W","X","Y","Z","A"],
-    ["B","C","D","T","E","F","G","H","I","J"],
-    ["K","L","M","N","A","O","P","Q","R","S"],
-    ["T","U","V","W","X","G","Y","Z","A","B"],
-    ["C","D","E","F","G","H","R","I","J","K"],
-    ["L","M","N","O","P","Q","R","A","S","T"],
-    ["U","V","W","X","Y","Z","A","M","B","C"],
-    ["D","E","F","G","H","I","J","K","P","L"]
-],
 
-"words": ["instagram", "kalilinux", "spam"],
-
-"hints": {
-    "instagram": "Popular social media app",
-    "kalilinux": "Operating system for cybersecurity",
-    "spam": "Unwanted messages or emails"
-},
 {
     "letters": [
         ["A","B","C","D","E","F","G","H","I","J"],
@@ -187,6 +167,34 @@ WORD_PUZZLES = [
         "encrypt": "Convert data into secure code"
     }
 },
+{
+
+    "letters": [
+        ["I","A","B","C","D","E","F","G","H","I"],
+        ["J","N","K","L","M","N","O","P","Q","R"],
+        ["S","T","S","U","V","W","X","Y","Z","A"],
+        ["B","C","D","T","E","F","G","H","I","J"],
+        ["K","L","M","N","A","O","P","Q","R","S"],
+        ["T","U","V","W","X","G","Y","Z","A","B"],
+        ["C","D","E","F","G","H","R","I","J","K"],
+        ["L","M","N","O","P","Q","R","A","S","T"],
+        ["U","V","W","X","Y","Z","A","M","B","C"],
+        ["D","E","F","G","H","I","J","K","P","L"]
+    ],
+
+    "words": ["instagram", "kalilinux", "spam"],
+
+    "hints": {
+
+        "instagram": "Popular social media app",
+
+        "kalilinux": "Operating system for cybersecurity",
+
+        "spam": "Unwanted messages or emails"
+
+    }
+
+},    
 
 
 # =================================================
