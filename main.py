@@ -11,12 +11,14 @@ import mysql.connector
 from openai import OpenAI
 import os
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
-)
+
 os 
 app = Flask(__name__)
 app.secret_key = "secret123"
+
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 app.permanent_session_lifetime = timedelta(days=365)  # 1 YEAR LOGIN
 print("🔥 App starting...")
@@ -1932,6 +1934,26 @@ def ai_response(msg):
     except Exception as e:
 
         return f"ERROR: {str(e)}"
+
+@app.route("/chat", methods=["POST"])
+def chat():
+
+    user_message = request.json["message"]
+
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": user_message}
+            ]
+        )
+
+        reply = response.choices[0].message.content
+
+        return {"reply": reply}
+
+    except Exception as e:
+        return {"reply": str(e)}
 #--------leaderboard---------------
 
 
