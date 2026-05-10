@@ -4,3 +4,4 @@ werkzeug
 gunicorn
 requests
 deep-translator
+openai
