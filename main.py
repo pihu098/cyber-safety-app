@@ -100,7 +100,8 @@ WORD_PUZZLES = [
         "access": "Enter system"
     }
 },
-"letters": [
+{    
+    "letters": [
     ["I","A","B","C","D","E","F","G","H","I"],
     ["J","N","K","L","M","N","O","P","Q","R"],
     ["S","T","S","U","V","W","X","Y","Z","A"],
@@ -322,7 +323,7 @@ WORD_PUZZLES = [
     }
 },
 {
-  "letters": [
+    "letters": [
     ["C","L","O","U","D","A","B","C"],
     ["S","E","R","V","E","R","D","E"],
     ["N","E","T","W","O","R","K","F"],
@@ -340,7 +341,7 @@ WORD_PUZZLES = [
 },
 
 {
-  "letters": [
+    "letters": [
     ["F","I","R","E","S","Y","S","T","E","M"],
     ["D","G","T","A","S","Z","C","U","R","E"],
     ["B","R","O","W","S","E","R","X","Y","Z"],
@@ -357,7 +358,7 @@ WORD_PUZZLES = [
   }
 },
 {
-  "letters": [
+    "letters": [
     ["A","P","P","D","E","X","E","L","O","P"],
     ["U","I","D","E","S","I","G","N","X","Y"],
     ["F","R","O","N","T","E","N","D","A","B"],
@@ -374,7 +375,7 @@ WORD_PUZZLES = [
   }
 },
 {
-  "letters": [
+    "letters": [
     ["E","N","C","R","Y","P","T","I","O","N"],
     ["D","E","C","O","D","E","R","A","B","C"],
     ["A","U","T","H","E","N","T","I","C","A"],
@@ -391,7 +392,7 @@ WORD_PUZZLES = [
   }
 },
 {
-  "letters": [
+    "letters": [
     ["M","E","M","O","R","Y","S","T","O","R"],
     ["C","P","U","P","R","O","C","E","S","S"],
     ["G","R","A","P","H","I","C","S","A","B"],
