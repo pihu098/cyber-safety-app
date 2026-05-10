@@ -34,6 +34,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ADMIN_PASSWORD = "priyanrkp098"  # changable.......
 
+@app.route("/chatbot")
+def chatbot():
+    return render_template("chatbot.html")
+
+
 WORD_PUZZLES = [
 
 # =================================================
