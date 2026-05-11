@@ -329,26 +329,29 @@ body {
 
     <input id="msg" type="text" placeholder="Ask something..." />
 
-    <button type="button" id="sendBtn">Send</button>
+    <button type="button" onclick="sendMsg()">Send</button>
 
     <p id="reply"></p>
 </div>
 
 <script>
 
-console.log("CHAT JS LOADED");
+console.log("JS LOADED ✔️");
 
-document.getElementById("sendBtn").addEventListener("click", async function () {
+async function sendMsg() {
 
-    console.log("BUTTON CLICKED");
+    console.log("BUTTON CLICKED ✔️");
 
     let message = document.getElementById("msg").value.trim();
 
-    if (!message) return;
+    if (!message) {
+        alert("Type something first");
+        return;
+    }
 
     try {
 
-        let res = await fetch("/chat", {
+        let response = await fetch("/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -358,16 +361,17 @@ document.getElementById("sendBtn").addEventListener("click", async function () {
             })
         });
 
-        let data = await res.json();
+        let data = await response.json();
 
         document.getElementById("reply").innerText = data.reply;
 
-    } cat  ch (err) {
-        console.log(err);
+        document.getElementById("msg").value = "";
+
+    } catch (error) {
+        console.log(error);
         document.getElementById("reply").innerText = "Error occurred";
     }
-
-});
+}
 
 </script>
 
