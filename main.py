@@ -1963,38 +1963,30 @@ def ai_response(msg):
 def chat():
 
     try:
+        print("CONTENT TYPE:", request.content_type)
+
         data = request.get_json(force=True)
 
-        if not data:
-            return jsonify({"reply": "No input received"})
+        print("DATA:", data)
 
-        user_message = data.get("message", "").strip()
+        msg = data.get("message", "")
 
-        if not user_message:
+        if not msg:
             return jsonify({"reply": "Empty message"})
 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {
-                    "role": "system",
-                    "content": "You are a highly intelligent, friendly AI assistant. Respond like ChatGPT with clear, helpful answers."
-                },
-                {
-                    "role": "user",
-                    "content": user_message
-                }
-            ],
-            temperature=0.7,
-            max_tokens=300
+                {"role": "system", "content": "You are a helpful AI assistant."},
+                {"role": "user", "content": msg}
+            ]
         )
 
-        reply = response.choices[0].message.content
-
-        return jsonify({"reply": reply})
+        return jsonify({"reply": response.choices[0].message.content})
 
     except Exception as e:
-        return jsonify({"reply": f"Error: {str(e)}"})
+        print("ERROR:", e)
+        return jsonify({"reply": str(e)})
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
