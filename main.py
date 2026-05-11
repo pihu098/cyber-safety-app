@@ -1946,18 +1946,25 @@ def ai_response(msg):
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    
-data = request.get_json(silent=True)
-if not data:
-    return jsonify({"reply": "No JSON received"})
-    
+    data = request.get_json(silent=True)
+
+    if not data:
+        return jsonify({
+            "reply": "No JSON received"
+        })
+
     user_message = data.get("message")
 
     try:
+
         response = client.chat.completions.create(
-            model="gpt-4o-mini"
+            model="gpt-4o-mini",
+
             messages=[
-                {"role": "user", "content": user_message}
+                {
+                    "role": "user",
+                    "content": user_message
+                }
             ]
         )
 
@@ -1968,10 +1975,10 @@ if not data:
         })
 
     except Exception as e:
+
         return jsonify({
             "reply": str(e)
         })
-
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
