@@ -1963,36 +1963,30 @@ def ai_response(msg):
 def chat():
 
     try:
+        data = request.get_json(force=True)
 
-        # ✅ SAFE JSON READ
-        data = request.get_json(silent=True)
-
-        print("JSON DATA:", data)
-
-        # ❌ if request broken
         if not data:
-            return jsonify({"reply": "No JSON received"})
+            return jsonify({"reply": "No input received"})
 
-        # ✅ user message
         user_message = data.get("message", "").strip()
 
         if not user_message:
             return jsonify({"reply": "Empty message"})
 
-        # 🤖 OpenAI call
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a friendly cyber safety AI assistant."
+                    "content": "You are a highly intelligent, friendly AI assistant. Respond like ChatGPT with clear, helpful answers."
                 },
                 {
                     "role": "user",
                     "content": user_message
                 }
             ],
-            max_tokens=150
+            temperature=0.7,
+            max_tokens=300
         )
 
         reply = response.choices[0].message.content
@@ -2000,8 +1994,7 @@ def chat():
         return jsonify({"reply": reply})
 
     except Exception as e:
-        print("CHAT ERROR:", str(e))
-        return jsonify({"reply": f"ERROR: {str(e)}"})
+        return jsonify({"reply": f"Error: {str(e)}"})
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
