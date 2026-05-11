@@ -1964,14 +1964,15 @@ def chat():
 
     try:
 
-        # ✅ RAW REQUEST DEBUG
-        print("HEADERS:", request.headers)
-        print("RAW:", request.data)
+        # ✅ RAW BODY READ
+        raw_data = request.data.decode("utf-8")
 
-        # ✅ FORCE JSON
-        data = request.get_json(force=True)
+        print("RAW DATA:", raw_data)
 
-        print("DATA:", data)
+        import json
+
+        # ✅ MANUAL JSON PARSE
+        data = json.loads(raw_data)
 
         user_message = data.get("message", "")
 
