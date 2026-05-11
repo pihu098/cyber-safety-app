@@ -6,8 +6,8 @@
 </head>
 
 <body style="background:black;color:white;font-family:Arial;text-align:center;">
-<h1 style="color:red;">NEW AI PAGE</h1>
-<h1>🤖 Cyber AI</h1>
+
+<h1 style="color:cyan;">🤖 NEW CYBER AI PAGE</h1>
 
 <input type="text" id="userInput" placeholder="Ask anything...">
 
@@ -19,7 +19,7 @@
 
 <script>
 
-document.getElementById("sendBtn").addEventListener("click", async function(){
+document.getElementById("sendBtn").addEventListener("click", async () => {
 
     let message = document.getElementById("userInput").value;
 
@@ -27,7 +27,7 @@ document.getElementById("sendBtn").addEventListener("click", async function(){
 
     try {
 
-        let response = await fetch("/chat", {
+        const response = await fetch("/chat", {
 
             method: "POST",
 
@@ -41,20 +41,20 @@ document.getElementById("sendBtn").addEventListener("click", async function(){
 
         });
 
-        let data = await response.json();
+        const data = await response.json();
 
-        console.log("DATA:", data);
+        console.log("SERVER:", data);
 
         document.getElementById("chat").innerHTML += `
             <p><b>You:</b> ${message}</p>
             <p><b>AI:</b> ${data.reply}</p>
         `;
 
-    } catch(err){
+    } catch(err) {
 
         console.log(err);
 
-        alert(err);
+        alert("FETCH ERROR");
     }
 
 });
