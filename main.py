@@ -1946,15 +1946,49 @@ def ai_response(msg):
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    data = request.get_json(force=True)
+    try:
 
-    print(data)
+        data = request.json
 
-    user_message = data.get("message")
+        print(data)
 
-    return jsonify({
-        "reply": f"You said: {user_message}"
-    })
+        if not data:
+            return jsonify({
+                "reply": "No JSON received"
+            })
+
+        user_message = data.get("message")
+
+        response = client.chat.completions.create(
+
+            model="gpt-4o-mini",
+
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a friendly cyber safety AI assistant."
+                },
+
+                {
+                    "role": "user",
+                    "content": user_message
+                }
+            ],
+
+            max_tokens=150
+        )
+
+        reply = response.choices[0].message.content
+
+        return jsonify({
+            "reply": reply
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "reply": str(e)
+        })
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
