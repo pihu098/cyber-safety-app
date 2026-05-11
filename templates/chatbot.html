@@ -18,51 +18,29 @@
 <div id="chat"></div>
 
 <script>
-
 async function sendMessage(){
 
-    let inputBox = document.getElementById("userInput");
-    let message = inputBox.value.trim();
+    let message = document.getElementById("userInput").value.trim();
 
-    if (!message) return;
+    if(!message) return;
 
-    console.log("MESSAGE:", message);
+    let response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            message: message
+        })
+    });
 
-    try {
+    let data = await response.json();
 
-        let response = await fetch("/chat", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                message: message
-            })
-
-        });
-
-        let data = await response.json();
-
-        console.log("DATA:", data);
-
-        document.getElementById("chat").innerHTML += `
-            <p><b>You:</b> ${message}</p>
-            <p><b>AI:</b> ${data.reply}</p>
-        `;
-
-        inputBox.value = "";
-
-    } catch(error){
-
-        console.log(error);
-        alert("ERROR");
-    }
+    document.getElementById("chat").innerHTML += `
+        <p><b>You:</b> ${message}</p>
+        <p><b>AI:</b> ${data.reply}</p>
+    `;
 }
-
 </script>
-
 </body>
 </html>
