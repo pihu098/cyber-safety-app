@@ -1964,13 +1964,18 @@ def chat():
 
     try:
 
-        # 🔥 FORCE JSON READ (NO ERROR)
-        data = request.get_json(force=True)
+        # 🔥 try JSON safely
+        data = request.get_json(silent=True)
 
-        print("JSON DATA:", data)
+        print("JSON:", data)
 
+        # 🔥 fallback (if broken request comes)
         if not data:
-            return jsonify({"reply": "No JSON received"})
+            print("RAW:", request.data)
+
+            return jsonify({
+                "reply": "Request format wrong (no JSON received)"
+            })
 
         user_message = data.get("message", "").strip()
 
@@ -1991,7 +1996,7 @@ def chat():
         return jsonify({"reply": reply})
 
     except Exception as e:
-        print("ERROR:", str(e))
+        print("CHAT ERROR:", str(e))
         return jsonify({"reply": f"ERROR: {str(e)}"})
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
