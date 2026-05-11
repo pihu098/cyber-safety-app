@@ -2337,12 +2337,7 @@ def use_char(emoji):
 
 
 # ---------------- LOGOUT ----------------
-@app.route('/logout')
-def logout():
 
-    session.clear()
-
-    return redirect('/')
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
