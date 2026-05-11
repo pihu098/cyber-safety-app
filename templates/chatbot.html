@@ -7,23 +7,23 @@
 
 <body style="background:black;color:white;font-family:Arial;text-align:center;">
 
-    <h1>🤖 Cyber AI</h1>
+<h1>🤖 Cyber AI</h1>
 
-    <input type="text" id="userInput">
+<input type="text" id="userInput" placeholder="Ask anything...">
 
-    <button type="button" onclick="sendMessage()">
-        Send
-    </button>
+<button id="sendBtn">
+    Send
+</button>
 
-    <div id="chat"></div>
+<div id="chat"></div>
 
 <script>
 
-async function sendMessage(){
+document.getElementById("sendBtn").addEventListener("click", async function(){
 
     let message = document.getElementById("userInput").value;
 
-    console.log("Sending:", message);
+    console.log("MESSAGE:", message);
 
     try {
 
@@ -43,7 +43,7 @@ async function sendMessage(){
 
         let data = await response.json();
 
-        console.log("RESPONSE:", data);
+        console.log("DATA:", data);
 
         document.getElementById("chat").innerHTML += `
             <p><b>You:</b> ${message}</p>
@@ -54,9 +54,10 @@ async function sendMessage(){
 
         console.log(err);
 
-        alert("ERROR");
+        alert(err);
     }
-}
+
+});
 
 </script>
 
