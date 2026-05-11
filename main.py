@@ -1964,31 +1964,24 @@ def chat():
 
     try:
 
-        # ✅ JSON ONLY (no confusion)
-        data = request.get_json()
+        # 🔥 FORCE JSON READ (NO ERROR)
+        data = request.get_json(force=True)
 
         print("JSON DATA:", data)
 
         if not data:
-            return jsonify({"reply": "No data received"})
+            return jsonify({"reply": "No JSON received"})
 
         user_message = data.get("message", "").strip()
 
         if not user_message:
             return jsonify({"reply": "Empty message"})
 
-        # 🤖 OPENAI CALL
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {
-                    "role": "system",
-                    "content": "You are a friendly cyber safety AI assistant."
-                },
-                {
-                    "role": "user",
-                    "content": user_message
-                }
+                {"role": "system", "content": "You are a friendly cyber safety AI assistant."},
+                {"role": "user", "content": user_message}
             ],
             max_tokens=150
         )
@@ -1998,7 +1991,7 @@ def chat():
         return jsonify({"reply": reply})
 
     except Exception as e:
-        print("CHAT ERROR:", str(e))
+        print("ERROR:", str(e))
         return jsonify({"reply": f"ERROR: {str(e)}"})
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
