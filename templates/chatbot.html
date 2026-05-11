@@ -9,9 +9,9 @@
 
 <h1 style="color:cyan;">🤖 NEW CYBER AI PAGE</h1>
 
-<input type="text" id="userInput" placeholder="Ask anything...">
+<input type="text" id="userInput" placeholder="Ask anything..." />
 
-<button id="sendBtn">
+<button type="button" onclick="sendMessage()">
     Send
 </button>
 
@@ -21,7 +21,10 @@
 
 async function sendMessage(){
 
-    let message = document.getElementById("userInput").value;
+    let inputBox = document.getElementById("userInput");
+    let message = inputBox.value.trim();
+
+    if (!message) return;
 
     console.log("MESSAGE:", message);
 
@@ -50,17 +53,16 @@ async function sendMessage(){
             <p><b>AI:</b> ${data.reply}</p>
         `;
 
+        inputBox.value = "";
+
     } catch(error){
 
         console.log(error);
-
         alert("ERROR");
     }
 }
 
 </script>
-
-<button type="button" onclick="sendMessage()">Send</button>    
 
 </body>
 </html>
