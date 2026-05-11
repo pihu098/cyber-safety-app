@@ -1946,13 +1946,16 @@ def ai_response(msg):
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    data = request.get_json()
-
+    
+data = request.get_json(silent=True)
+if not data:
+    return jsonify({"reply": "No JSON received"})
+    
     user_message = data.get("message")
 
     try:
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini"
             messages=[
                 {"role": "user", "content": user_message}
             ]
