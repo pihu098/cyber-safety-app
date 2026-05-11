@@ -324,57 +324,26 @@ body {
 
 </div>
 <!-- 🤖 CHAT -->
-<div class="chat">
-    <h3>🤖 AI Chatbot</h3>
-
-    <input id="msg" type="text" placeholder="Ask something..." />
-
-    <button type="button" onclick="sendMsg()">Send</button>
-
-    <p id="reply"></p>
-</div>
-
 <script>
 
-console.log("JS LOADED ✔️");
+async function test(){
 
-async function sendMsg() {
+    let res = await fetch("/chat", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: "hello" })
+    });
 
-    console.log("BUTTON CLICKED ✔️");
+    let data = await res.json();
 
-    let message = document.getElementById("msg").value.trim();
-
-    if (!message) {
-        alert("Type something first");
-        return;
-    }
-
-    try {
-
-        let response = await fetch("/chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                message: message
-            })
-        });
-
-        let data = await response.json();
-
-        document.getElementById("reply").innerText = data.reply;
-
-        document.getElementById("msg").value = "";
-
-    } catch (error) {
-        console.log(error);
-        document.getElementById("reply").innerText = "Error occurred";
-    }
+    console.log(data);
 }
 
 </script>
 
+<button onclick="test()">SEND</button>
     <!-- RIGHT SIDE -->
     <div class="content">
 
