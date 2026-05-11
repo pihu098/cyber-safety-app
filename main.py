@@ -1968,22 +1968,23 @@ def chat():
         print("METHOD:", request.method)
         print("HEADERS:", request.headers)
 
-        # ✅ RAW DATA
-        raw_data = request.data.decode("utf-8")
-
-        print("RAW DATA:", raw_data)
-
-        # ✅ EMPTY CHECK
-        if raw_data.strip() == "":
-            return jsonify({
-                "reply": "No data received from browser"
-            })
-
-        # ✅ JSON PARSE
-        import json
-        data = json.loads(raw_data)
+        # 🔥 FIX: USE get_json FIRST (SAFE WAY)
+        data = request.get_json(silent=True)
 
         print("JSON DATA:", data)
+
+        # ❌ fallback (agar frontend galat bheje)
+        if data is None:
+            raw_data = request.data.decode("utf-8")
+            print("RAW DATA:", raw_data)
+
+            if raw_data.strip() == "":
+                return jsonify({
+                    "reply": "No data received from browser"
+                })
+
+            import json
+            data = json.loads(raw_data)
 
         # ✅ MESSAGE
         user_message = data.get("message", "").strip()
