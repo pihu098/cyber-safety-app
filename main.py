@@ -1394,7 +1394,7 @@ puzzle_levels = {
     ],
 
     2: [
-        {"q": "Is public WiFi safe for banking?", 
+        {"q": "Is public WiFi safe for   f banking?", 
          "options": ["Yes", "No", "Sometimes", "Depends"], 
          "a": "No"},
 
@@ -1824,7 +1824,14 @@ def init_db():
             UNIQUE(username, emoji)
         )
         """)
-   
+          # 🎭 add selected character column safely
+        try:
+            cursor.execute("""
+            ALTER TABLE users
+            ADD COLUMN selected_char VARCHAR(50) DEFAULT '🤖'
+            """)
+        except:
+            pass
 
         
 
@@ -2156,39 +2163,58 @@ def home():
 #-----------profile page--------------
 @app.route('/profile')
 def profile():
+
     if 'user' not in session:
         return redirect('/')
 
     db = get_db()
     cursor = db.cursor(buffered=True)
 
-    cursor.execute("SELECT coins, level, xp FROM users WHERE name=%s", (session['user'],))
+    # 👤 user data
+    cursor.execute(
+        "SELECT coins, level, xp, selected_char FROM users WHERE name=%s",
+        (session['user'],)
+    )
+
     data = cursor.fetchone()
 
     if data:
-        coins, level, xp = data
+        coins, level, xp, selected = data
     else:
-        coins, level, xp = 200, 1, 0
+        coins, level, xp, selected = 200, 1, 0, "🤖"
 
-    owned = session.get("owned_chars", ["🤖"])
-    selected = session.get("selected_char", "🤖")
+    # 🎭 owned chars
+    cursor.execute(
+        "SELECT emoji FROM user_chars WHERE username=%s",
+        (session['user'],)
+    )
+
+    owned = [x[0] for x in cursor.fetchall()]
+
+    if "🤖" not in owned:
+        owned.append("🤖")
 
     characters = [
+
         {"emoji":"🤖","cost":0},
         {"emoji":"👨‍💻","cost":150},
         {"emoji":"🧠","cost":400},
         {"emoji":"👾","cost":500},
-        {"emoji":"🛡️","cost":600}, 
+        {"emoji":"🛡️","cost":600},
         {"emoji":"🕵️‍♂️","cost":700},
         {"emoji":"⚡","cost":950},
         {"emoji":"😈","cost":1000},
         {"emoji":"💀","cost":1500},
         {"emoji":"🔥","cost":2000}
-       
-       ]
+
+    ]
+
+    db.close()
 
     return render_template(
+
         "profile.html",
+
         name=session['user'],
         level=level,
         coins=coins,
@@ -2196,18 +2222,33 @@ def profile():
         owned=owned,
         selected=selected,
         characters=characters
-    )   
-    
+    )
+
+
+# 🎭 BUY CHARACTER
 @app.route('/buy_char', methods=['POST'])
 def buy_char():
+
     try:
+
         user = session.get("user")
+
+        if not user:
+            return "❌ Login required"
+
         emoji = request.form.get("emoji")
 
         char_cost = {
-            "👨‍💻":100, "🕵️‍♂️":1000, "👾":170,
-            "😈":800, "💀":500, "🧠":80,
-            "🛡️":570, "⚡":450, "🔥":900
+
+            "👨‍💻":150,
+            "🧠":400,
+            "👾":500,
+            "🛡️":600,
+            "🕵️‍♂️":700,
+            "⚡":950,
+            "😈":1000,
+            "💀":1500,
+            "🔥":2000
         }
 
         cost = char_cost.get(emoji, 0)
@@ -2215,19 +2256,33 @@ def buy_char():
         db = get_db()
         cursor = db.cursor(buffered=True)
 
-        # 💰 coins
-        cursor.execute("SELECT coins FROM users WHERE name=%s", (user,))
-        coins = cursor.fetchone()[0]
+        # 💰 current coins
+        cursor.execute(
+            "SELECT coins FROM users WHERE name=%s",
+            (user,)
+        )
 
-        # 🎭 check already owned
-        cursor.execute("SELECT emoji FROM user_chars WHERE user=%s", (user,))
+        result = cursor.fetchone()
+
+        if not result:
+            return "❌ User not found"
+
+        coins = result[0]
+
+        # 🎭 already owned?
+        cursor.execute(
+            "SELECT emoji FROM user_chars WHERE username=%s",
+            (user,)
+        )
+
         owned = [x[0] for x in cursor.fetchall()]
 
         if emoji in owned:
             return "⚠️ Already owned"
 
+        # 💸 not enough coins
         if coins < cost:
-            return "😢 Better luck next time"
+            return "😢 Not enough coins"
 
         # 💰 deduct coins
         cursor.execute(
@@ -2235,9 +2290,9 @@ def buy_char():
             (cost, user)
         )
 
-        # 🎭 add character
+        # 🎭 save character
         cursor.execute(
-            "INSERT INTO user_chars (user, emoji) VALUES (%s, %s)",
+            "INSERT INTO user_chars (username, emoji) VALUES (%s, %s)",
             (user, emoji)
         )
 
@@ -2253,27 +2308,41 @@ def buy_char():
         return "✅ Purchased Successfully!"
 
     except Exception as e:
+
         return f"❌ ERROR: {str(e)}"
+
+
+# 🎭 USE CHARACTER
 @app.route('/use_char/<emoji>')
 def use_char(emoji):
+
+    if 'user' not in session:
+        return redirect('/')
 
     db = get_db()
     cursor = db.cursor()
 
+    # ✅ only change selected character
     cursor.execute(
-     "UPDATE users SET coins = coins - %s, selected_char=%s WHERE name=%s",
-    (cost, emoji, session['user'])
-)
-   
+
+        "UPDATE users SET selected_char=%s WHERE name=%s",
+
+        (emoji, session['user'])
+    )
 
     db.commit()
     db.close()
 
     return redirect('/profile')
-@app.route('/buy_char/<emoji>')
-def buy_char_link(emoji):
-    handle_buy(emoji)
-    return redirect('/profile')
+
+
+# ---------------- LOGOUT ----------------
+@app.route('/logout')
+def logout():
+
+    session.clear()
+
+    return redirect('/')
 # ---------------- LOGOUT ----------------
 @app.route('/logout')
 def logout():
