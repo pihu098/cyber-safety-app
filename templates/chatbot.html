@@ -1,46 +1,23 @@
-<!DOCTYPE html>
-<html>
+<input id="userInput" type="text" />
 
-<head>
-    <title>Cyber AI</title>
-</head>
-
-<body style="background:black;color:white;font-family:Arial;text-align:center;">
-
-<h1 style="color:cyan;">🤖 NEW CYBER AI PAGE</h1>
-
-<input type="text" id="userInput" placeholder="Ask anything..." />
-
-<button type="button" onclick="sendMessage()">
-    Send
-</button>
-
-<div id="chat"></div>
+<button type="button" onclick="sendMessage()">Send</button>
 
 <script>
 async function sendMessage(){
 
-    let message = document.getElementById("userInput").value.trim();
+    let msg = document.getElementById("userInput").value.trim();
+    if(!msg) return;
 
-    if(!message) return;
-
-    let response = await fetch("/chat", {
+    let res = await fetch("/chat", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            message: message
-        })
+        body: JSON.stringify({ message: msg })
     });
 
-    let data = await response.json();
+    let data = await res.json();
 
-    document.getElementById("chat").innerHTML += `
-        <p><b>You:</b> ${message}</p>
-        <p><b>AI:</b> ${data.reply}</p>
-    `;
+    console.log(data);
 }
 </script>
-</body>
-</html>
