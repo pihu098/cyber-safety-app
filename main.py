@@ -10,7 +10,7 @@ import requests
 import mysql.connector
 from openai import OpenAI
 import os
-
+import json
 
 os 
 app = Flask(__name__)
