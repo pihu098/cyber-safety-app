@@ -1948,16 +1948,22 @@ def chat():
 
     try:
 
+        # SAFE JSON READ
         data = request.json
 
-        print(data)
+        print("DATA:", data)
 
-        if not data:
+        if data is None:
             return jsonify({
                 "reply": "No JSON received"
             })
 
         user_message = data.get("message")
+
+        if not user_message:
+            return jsonify({
+                "reply": "Empty message"
+            })
 
         response = client.chat.completions.create(
 
@@ -1968,7 +1974,6 @@ def chat():
                     "role": "system",
                     "content": "You are a friendly cyber safety AI assistant."
                 },
-
                 {
                     "role": "user",
                     "content": user_message
@@ -1985,6 +1990,8 @@ def chat():
         })
 
     except Exception as e:
+
+        print("ERROR:", str(e))
 
         return jsonify({
             "reply": str(e)
