@@ -35,6 +35,20 @@ body {
     box-shadow: 0 0 15px #00c6ff;
 }
 
+/* INFO BOX */
+.info-box {
+    background: rgba(0,198,255,0.15);
+    border: 2px solid #00c6ff;
+    width: 240px;
+    margin: 15px auto;
+    padding: 12px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00c6ff;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00e5ff;
+}
+
 /* CARD */
 .card {
     background: rgba(255,255,255,0.1);
@@ -61,20 +75,6 @@ button {
     margin-top: 10px;
     font-weight: bold;
 }
-
-/* XP BOX */
-.xp-box {
-    background: rgba(0,198,255,0.15);
-    border: 2px solid #00c6ff;
-    width: 220px;
-    margin: 15px auto;
-    padding: 12px;
-    border-radius: 15px;
-    box-shadow: 0 0 15px #00c6ff;
-    font-size: 22px;
-    font-weight: bold;
-    color: #00e5ff;
-}
 </style>
 </head>
 
@@ -83,18 +83,28 @@ button {
 <!-- 👤 PROFILE -->
 <div class="profile-box">
 
+    <!-- AVATAR -->
     <div class="avatar">
         {{ selected }}
     </div>
 
-    <h2>{{name}}</h2>
+    <!-- NAME -->
+    <div class="info-box">
+        👤 {{name}}
+    </div>
 
-    <p>🎯 Level {{level}}</p>
+    <!-- LEVEL -->
+    <div class="info-box">
+        🎯 Level {{level}}
+    </div>
 
-    <p>💰 {{coins}} Coins</p>
+    <!-- COINS -->
+    <div class="info-box">
+        💰 {{coins}} Coins
+    </div>
 
-    <!-- ⭐ XP -->
-    <div class="xp-box">
+    <!-- XP -->
+    <div class="info-box">
         ⭐ XP: {{ xp }}
     </div>
 
