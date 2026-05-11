@@ -1814,7 +1814,16 @@ def init_db():
             last_play DATE
         )
         """)
+        # ================= USER CHARACTERS TABLE =================
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS user_chars (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(255),
+            emoji VARCHAR(50),
 
+            UNIQUE(username, emoji)
+        )
+        """)
    
 
         
