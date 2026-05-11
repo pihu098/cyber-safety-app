@@ -1964,23 +1964,36 @@ def chat():
 
     try:
 
-        # ✅ RAW BODY READ
+        # ✅ DEBUG
+        print("METHOD:", request.method)
+        print("HEADERS:", request.headers)
+
+        # ✅ RAW DATA
         raw_data = request.data.decode("utf-8")
 
         print("RAW DATA:", raw_data)
 
-        import json
+        # ✅ EMPTY CHECK
+        if raw_data.strip() == "":
+            return jsonify({
+                "reply": "No data received from browser"
+            })
 
-        # ✅ MANUAL JSON PARSE
+        # ✅ JSON PARSE
+        import json
         data = json.loads(raw_data)
 
-        user_message = data.get("message", "")
+        print("JSON DATA:", data)
 
-        if user_message.strip() == "":
+        # ✅ MESSAGE
+        user_message = data.get("message", "").strip()
+
+        if user_message == "":
             return jsonify({
                 "reply": "Empty message"
             })
 
+        # ✅ OPENAI RESPONSE
         response = client.chat.completions.create(
 
             model="gpt-4o-mini",
@@ -2000,6 +2013,7 @@ def chat():
             ],
 
             max_tokens=150
+
         )
 
         reply = response.choices[0].message.content
@@ -2010,7 +2024,7 @@ def chat():
 
     except Exception as e:
 
-        print("ERROR:", str(e))
+        print("CHAT ERROR:", str(e))
 
         return jsonify({
             "reply": f"ERROR: {str(e)}"
