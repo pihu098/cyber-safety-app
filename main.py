@@ -3091,22 +3091,36 @@ def add_coins():
 
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
+
     if request.method == 'POST':
+
         password = request.form.get('password')
 
         if password != ADMIN_PASSWORD:
             return "❌ Wrong Password"
 
         title = request.form.get('title')
+
         content = request.form.get('content')
 
         file = request.files.get('file')
 
         filename = None
+
         if file and file.filename != "":
-            filename = file.filename
+
+            filename = secure_filename(file.filename)
+
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+
+            file.save(filepath)
+
+            print(filepath)
+
+            print(os.path.exists(filepath))
 
         db = get_db()
+
         cursor = db.cursor()
 
         cursor.execute(
@@ -3115,11 +3129,13 @@ def admin():
         )
 
         db.commit()
+
         db.close()
 
         return "✅ Posted Successfully"
 
     return render_template("admin.html")
+    
 @app.route('/delete_update/<int:id>', methods=['GET', 'POST'])
 def delete_update(id):
 
