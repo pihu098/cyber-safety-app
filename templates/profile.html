@@ -16,7 +16,7 @@ body {
     margin-top: 50px;
 }
 
-/* 🎭 AVATAR FIXED */
+/* 🎭 AVATAR */
 .avatar {
     width: 120px;
     height: 120px;
@@ -38,9 +38,10 @@ body {
 /* CARD */
 .card {
     background: rgba(255,255,255,0.1);
-    margin: 20px;
+    margin: 20px auto;
     padding: 20px;
     border-radius: 15px;
+    width: 80%;
 }
 
 /* SHOP */
@@ -58,6 +59,21 @@ button {
     color: black;
     cursor: pointer;
     margin-top: 10px;
+    font-weight: bold;
+}
+
+/* XP BOX */
+.xp-box {
+    background: rgba(0,198,255,0.15);
+    border: 2px solid #00c6ff;
+    width: 220px;
+    margin: 15px auto;
+    padding: 12px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #00c6ff;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00e5ff;
 }
 </style>
 </head>
@@ -72,8 +88,15 @@ button {
     </div>
 
     <h2>{{name}}</h2>
+
     <p>🎯 Level {{level}}</p>
+
     <p>💰 {{coins}} Coins</p>
+
+    <!-- ⭐ XP -->
+    <div class="xp-box">
+        ⭐ XP: {{ xp }}
+    </div>
 
     <button onclick="toggleShop()">🎭 Characters</button>
 
@@ -88,20 +111,25 @@ button {
         <h1 style="font-size:60px;">{{c.emoji}}</h1>
 
         {% if c.emoji in owned %}
+
             <p>✅ Owned</p>
 
             {% if c.emoji == selected %}
+
                 <p>🟢 Selected</p>
+
             {% else %}
+
                 <a href="/select_char/{{c.emoji}}">
                     <button>Use</button>
                 </a>
+
             {% endif %}
 
         {% else %}
+
             <p>{{c.cost}} coins</p>
 
-            <!-- 🔥 FIXED BUY BUTTON -->
             <button onclick="buyChar('{{c.emoji}}', {{c.cost}})">
                 Buy
             </button>
@@ -115,34 +143,56 @@ button {
 
 <!-- 🔙 BACK -->
 <br>
-<a href="/home"><button>Back</button></a>
+
+<a href="/home">
+    <button>⬅ Back</button>
+</a>
 
 <script>
+
 function toggleShop(){
+
     let shop = document.getElementById("charShop");
-    shop.style.display = (shop.style.display === "block") ? "none" : "block";
+
+    shop.style.display =
+        (shop.style.display === "block")
+        ? "none"
+        : "block";
 }
 
-/* 🔥 BUY SYSTEM FIXED */
+/* 🔥 BUY SYSTEM */
+
 function buyChar(emoji, cost){
 
     fetch("/buy_char", {
+
         method: "POST",
+
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: `emoji=${encodeURIComponent(emoji)}&cost=${cost}`
+
+        body:
+            `emoji=${encodeURIComponent(emoji)}&cost=${cost}`
     })
+
     .then(res => res.text())
+
     .then(msg => {
+
         alert(msg);
+
         location.reload();
     })
+
     .catch(err => {
+
         alert("❌ Error buying character");
+
         console.log(err);
     });
 }
+
 </script>
 
 </body>
