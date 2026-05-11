@@ -1964,29 +1964,33 @@ def chat():
 
     try:
 
-        # 🔥 try JSON safely
+        # ✅ SAFE JSON READ
         data = request.get_json(silent=True)
 
-        print("JSON:", data)
+        print("JSON DATA:", data)
 
-        # 🔥 fallback (if broken request comes)
+        # ❌ if request broken
         if not data:
-            print("RAW:", request.data)
+            return jsonify({"reply": "No JSON received"})
 
-            return jsonify({
-                "reply": "Request format wrong (no JSON received)"
-            })
-
+        # ✅ user message
         user_message = data.get("message", "").strip()
 
         if not user_message:
             return jsonify({"reply": "Empty message"})
 
+        # 🤖 OpenAI call
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are a friendly cyber safety AI assistant."},
-                {"role": "user", "content": user_message}
+                {
+                    "role": "system",
+                    "content": "You are a friendly cyber safety AI assistant."
+                },
+                {
+                    "role": "user",
+                    "content": user_message
+                }
             ],
             max_tokens=150
         )
