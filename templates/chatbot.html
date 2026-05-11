@@ -11,14 +11,17 @@
 
 <input type="text" id="userInput" placeholder="Ask anything..." />
 
-<button type="button" onclick="sendMessage()">Send</button>
+<input id="userInput" type="text" />
 
+<button onclick="sendMessage()" type="button">
+Send
+</button>
 <div id="chat"></div>
 
 <script>
 
 async function sendMessage(){
-
+    console.log("FUNCTION CALLED");
     let inputBox = document.getElementById("userInput");
     let message = inputBox.value.trim();
 
