@@ -1964,72 +1964,34 @@ def chat():
 
     try:
 
-        # ✅ DEBUG
-        print("METHOD:", request.method)
-        print("HEADERS:", request.headers)
-
-        # 🔥 FIX: USE get_json FIRST (SAFE WAY)
-        data = request.get_json(silent=True)
+        data = request.get_json()
 
         print("JSON DATA:", data)
 
-        # ❌ fallback (agar frontend galat bheje)
-        if data is None:
-            raw_data = request.data.decode("utf-8")
-            print("RAW DATA:", raw_data)
+        if not data:
+            return jsonify({"reply": "No JSON received"})
 
-            if raw_data.strip() == "":
-                return jsonify({
-                    "reply": "No data received from browser"
-                })
-
-            import json
-            data = json.loads(raw_data)
-
-        # ✅ MESSAGE
         user_message = data.get("message", "").strip()
 
-        if user_message == "":
-            return jsonify({
-                "reply": "Empty message"
-            })
+        if not user_message:
+            return jsonify({"reply": "Empty message"})
 
-        # ✅ OPENAI RESPONSE
         response = client.chat.completions.create(
-
             model="gpt-4o-mini",
-
             messages=[
-
-                {
-                    "role": "system",
-                    "content": "You are a friendly cyber safety AI assistant."
-                },
-
-                {
-                    "role": "user",
-                    "content": user_message
-                }
-
+                {"role": "system", "content": "You are a friendly cyber safety AI assistant."},
+                {"role": "user", "content": user_message}
             ],
-
             max_tokens=150
-
         )
 
         reply = response.choices[0].message.content
 
-        return jsonify({
-            "reply": reply
-        })
+        return jsonify({"reply": reply})
 
     except Exception as e:
-
         print("CHAT ERROR:", str(e))
-
-        return jsonify({
-            "reply": f"ERROR: {str(e)}"
-        })
+        return jsonify({"reply": f"ERROR: {str(e)}"})
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
