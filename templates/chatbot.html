@@ -2,55 +2,94 @@
 <html>
 
 <head>
-    <title>Cyber AI</title>
+    <title>AI Chat</title>
+
+    <style>
+        body{
+            background:#0f0f0f;
+            color:white;
+            font-family:Arial;
+            text-align:center;
+        }
+
+        #chat{
+            width:80%;
+            margin:auto;
+            margin-top:20px;
+            text-align:left;
+        }
+
+        .msg{
+            padding:10px;
+            margin:8px;
+            border-radius:10px;
+        }
+
+        .user{
+            background:#1e90ff;
+        }
+
+        .ai{
+            background:#333;
+        }
+
+        input{
+            width:60%;
+            padding:10px;
+        }
+
+        button{
+            padding:10px 15px;
+            cursor:pointer;
+        }
+    </style>
+
 </head>
 
-<body style="background:black;color:white;font-family:Arial;text-align:center;">
+<body>
 
-<h1 style="color:cyan;">🤖 Cyber AI Chat</h1>
+<h1>🤖 My AI Chatbot</h1>
 
-<input type="text" id="userInput" placeholder="Ask anything..." />
+<input id="userInput" placeholder="Ask anything..." />
+<button onclick="sendMessage()">Send</button>
 
-<input id="userInput" type="text" />
-
-<button onclick="sendMessage()" type="button">
-Send
-</button>
 <div id="chat"></div>
 
 <script>
 
 async function sendMessage(){
-    console.log("FUNCTION CALLED");
-    let inputBox = document.getElementById("userInput");
-    let message = inputBox.value.trim();
+
+    let input = document.getElementById("userInput");
+    let message = input.value.trim();
 
     if(!message) return;
 
+    // show user message instantly
+    document.getElementById("chat").innerHTML += `
+        <div class="msg user">You: ${message}</div>
+    `;
+
+    input.value = "";
+
     try {
 
-        let response = await fetch("/chat", {
+        let res = await fetch("/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                message: message
-            })
+            body: JSON.stringify({ message })
         });
 
-        let data = await response.json();
+        let data = await res.json();
 
+        // show AI reply
         document.getElementById("chat").innerHTML += `
-            <p><b>You:</b> ${message}</p>
-            <p><b>AI:</b> ${data.reply}</p>
+            <div class="msg ai">AI: ${data.reply}</div>
         `;
 
-        inputBox.value = "";
-
-    } catch(error){
-        console.log(error);
-        alert("ERROR OCCURRED");
+    } catch(err){
+        console.log(err);
     }
 }
 
