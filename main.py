@@ -1946,11 +1946,7 @@ def ai_response(msg):
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    print(request.content_type)
-
     data = request.get_json(silent=True)
-
-    print(data)
 
     if not data:
         return jsonify({
@@ -1959,9 +1955,30 @@ def chat():
 
     user_message = data.get("message")
 
-    return jsonify({
-        "reply": f"You said: {user_message}"
-    })
+    try:
+
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+
+            messages=[
+                {
+                    "role": "user",
+                    "content": user_message
+                }
+            ]
+        )
+
+        reply = response.choices[0].message.content
+
+        return jsonify({
+            "reply": reply
+        })
+
+    except Exception as e:
+
+        return jsonify({
+            "reply": str(e)
+        })
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
