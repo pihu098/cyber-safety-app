@@ -1964,22 +1964,11 @@ def chat():
 
     try:
 
-        # SAFE JSON READ
-        data = request.get_json(force=True, silent=True)
+        data = request.get_json(force=True)
 
         print("DATA:", data)
 
-        if data is None:
-            return jsonify({
-                "reply": "No JSON received"
-            })
-
         user_message = data.get("message")
-
-        if not user_message:
-            return jsonify({
-                "reply": "Empty message"
-            })
 
         response = client.chat.completions.create(
 
