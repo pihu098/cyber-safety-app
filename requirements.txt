@@ -2,7 +2,6 @@ flask
 mysql-connector-python
 werkzeug
 gunicorn
-
 requests
 deep-translator
 openai==1.30.1
