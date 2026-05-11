@@ -1965,7 +1965,7 @@ def chat():
     try:
 
         # SAFE JSON READ
-        data = request.json
+        data = request.get_json(force=True, silent=True)
 
         print("DATA:", data)
 
