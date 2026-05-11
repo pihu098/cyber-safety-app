@@ -1964,25 +1964,38 @@ def chat():
 
     try:
 
+        # ✅ RAW REQUEST DEBUG
+        print("HEADERS:", request.headers)
+        print("RAW:", request.data)
+
+        # ✅ FORCE JSON
         data = request.get_json(force=True)
 
         print("DATA:", data)
 
-        user_message = data.get("message")
+        user_message = data.get("message", "")
+
+        if user_message.strip() == "":
+            return jsonify({
+                "reply": "Empty message"
+            })
 
         response = client.chat.completions.create(
 
             model="gpt-4o-mini",
 
             messages=[
+
                 {
                     "role": "system",
                     "content": "You are a friendly cyber safety AI assistant."
                 },
+
                 {
                     "role": "user",
                     "content": user_message
                 }
+
             ],
 
             max_tokens=150
@@ -1999,7 +2012,7 @@ def chat():
         print("ERROR:", str(e))
 
         return jsonify({
-            "reply": str(e)
+            "reply": f"ERROR: {str(e)}"
         })
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
