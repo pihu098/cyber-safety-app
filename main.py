@@ -1963,16 +1963,17 @@ def ai_response(msg):
 def chat():
 
     try:
+
         print("CONTENT TYPE:", request.content_type)
 
-        data = request.get_json(force=True)
+        # 🔥 SAFE RAW READ (NO JSON FAIL)
+        raw = request.get_data(as_text=True)
+        print("RAW:", raw)
 
-        print("DATA:", data)
+        import json
+        data = json.loads(raw)
 
         msg = data.get("message", "")
-
-        if not msg:
-            return jsonify({"reply": "Empty message"})
 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
