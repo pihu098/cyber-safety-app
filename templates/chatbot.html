@@ -19,7 +19,7 @@
 
 <script>
 
-document.getElementById("sendBtn").addEventListener("click", async () => {
+async function sendMessage(){
 
     let message = document.getElementById("userInput").value;
 
@@ -27,7 +27,7 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
 
     try {
 
-        const response = await fetch("/chat", {
+        let response = await fetch("/chat", {
 
             method: "POST",
 
@@ -41,25 +41,26 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
 
         });
 
-        const data = await response.json();
+        let data = await response.json();
 
-        console.log("SERVER:", data);
+        console.log("DATA:", data);
 
         document.getElementById("chat").innerHTML += `
             <p><b>You:</b> ${message}</p>
             <p><b>AI:</b> ${data.reply}</p>
         `;
 
-    } catch(err) {
+    } catch(error){
 
-        console.log(err);
+        console.log(error);
 
-        alert("FETCH ERROR");
+        alert("ERROR");
     }
-
-});
+}
 
 </script>
+
+<button type="button" onclick="sendMessage()">Send</button>    
 
 </body>
 </html>
