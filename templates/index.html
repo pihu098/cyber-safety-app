@@ -59,7 +59,44 @@ a {
 </head>
 
 <body>
+    <h1>Cyber Safety AI</h1>
 
+    <input type="text" id="msg">
+    <button onclick="sendMessage()">Send</button>
+
+    <div id="chat"></div>
+
+<script>
+
+async function sendMessage(){
+
+    let message = document.getElementById("msg").value;
+
+    let response = await fetch("/chat", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+            message: message
+        })
+
+    });
+
+    let data = await response.json();
+
+    document.getElementById("chat").innerHTML +=
+    "<p><b>You:</b> " + message + "</p>";
+
+    document.getElementById("chat").innerHTML +=
+    "<p><b>AI:</b> " + data.reply + "</p>";
+}
+
+</script>
+    
 <div class="container">
 <h2>🔐 Cyber Safety Login</h2>
 
@@ -110,6 +147,8 @@ function handleLogin(){
 
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
+
+    
     
 </body>
 </html>
