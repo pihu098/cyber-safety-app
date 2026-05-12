@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <title>Login</title>
 
 <style>
@@ -56,16 +58,20 @@ a {
     text-decoration: none;
 }
 </style>
+
 </head>
 
+<body>
 
 <div class="container">
+
 <h2>🔐 Cyber Safety Login</h2>
 
-<!-- 🔥 IMPORTANT: onsubmit control -->
+<!-- 🔥 LOGIN FORM -->
 <form method="POST" action="/login" onsubmit="return handleLogin()">
 
 <input type="email" name="email" placeholder="Email" required><br>
+
 <input type="password" name="password" placeholder="Password" required><br>
 
 <button type="submit">Login</button>
@@ -73,11 +79,13 @@ a {
 </form>
 
 <p>Don't have an account?</p>
+
 <a href="/signup">
 <button type="button">Signup</button>
 </a>
 
 </div>
+
 <!-- 🔊 SOUND -->
 <audio id="bgMusic" loop>
     <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
@@ -94,6 +102,7 @@ function handleLogin(){
 
     music.play();
 
+    // ⏳ delay before login
     setTimeout(() => {
 
         document.querySelector("form").submit();
@@ -104,7 +113,7 @@ function handleLogin(){
 }
 
 
-// 🎵 DASHBOARD SOUND
+// 🎵 AUTO PLAY AFTER FIRST CLICK
 window.onload = function(){
 
     let music = document.getElementById("bgMusic");
@@ -120,10 +129,10 @@ window.onload = function(){
 }
 
 </script>
+
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
 
-<form onsubmit="return handleLogin()">
-    
 </body>
+
 </html>
