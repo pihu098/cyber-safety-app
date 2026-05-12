@@ -78,34 +78,57 @@ a {
 </a>
 
 </div>
-
-<!-- 🔊 SOUND FILE -->
+<!-- 🔊 LOGIN SOUND -->
 <audio id="clickSound">
-    <source src="/static/sounds//ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3
-" type="audio/mpeg">
+    <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🔊 DASHBOARD SOUND -->
+<audio id="dashboardSound" loop>
+    <source src="/static/sounds/dashboard.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+
 function handleLogin(){
 
     let audio = document.getElementById("clickSound");
+
     audio.volume = 0.2;
+
     audio.play();
 
-    // 🔥 mark that sound started
+    // 🔥 save sound state
     sessionStorage.setItem("sound_on", "yes");
 
     // ⏳ delay
     setTimeout(()=>{
+
         document.querySelector("form").submit();
+
     }, 800);
 
     return false;
 }
+
+
+// 🎵 PLAY DASHBOARD MUSIC
+window.onload = function(){
+
+    if(sessionStorage.getItem("sound_on") === "yes"){
+
+        let bg = document.getElementById("dashboardSound");
+
+        bg.volume = 0.05;
+
+        bg.play().catch(()=>{});
+
+    }
+
+}
+
 </script>
 
-<!-- 🔊 Click Sound -->
-<audio id="clickSound" src="click.mp3" preload="auto"></audio>
 
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
