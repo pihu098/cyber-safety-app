@@ -636,17 +636,7 @@ document.getElementById("tipsBox").innerHTML=html;
 }
 
 
-// 🤖 CHAT
-async function sendMsg(){
-let msg=document.getElementById("msg").value;
-let res=await fetch("/chat",{
-method:"POST",
-headers:{"Content-Type":"application/x-www-form-urlencoded"},
-body:"message="+encodeURIComponent(msg)
-});
-document.getElementById("reply").innerText=await res.text();
-}
-</script>
+/
 
  <script>
 let char = localStorage.getItem("character") || "🤖";
