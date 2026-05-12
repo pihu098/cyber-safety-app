@@ -1962,32 +1962,41 @@ def ai_response(msg):
 @app.route("/chat", methods=["POST"])
 def chat():
 
+    data = request.get_json()
+
+    user_message = data.get("message")
+
     try:
 
-        print("CONTENT TYPE:", request.content_type)
-
-        # 🔥 SAFE RAW READ (NO JSON FAIL)
-        raw = request.get_data(as_text=True)
-        print("RAW:", raw)
-
-        import json
-        data = json.loads(raw)
-
-        msg = data.get("message", "")
-
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4.1-mini",
+
             messages=[
-                {"role": "system", "content": "You are a helpful AI assistant."},
-                {"role": "user", "content": msg}
+                {
+                    "role": "system",
+                    "content": "You are a helpful cyber safety AI assistant."
+                },
+
+                {
+                    "role": "user",
+                    "content": user_message
+                }
             ]
         )
 
-        return jsonify({"reply": response.choices[0].message.content})
+        reply = response.choices[0].message.content
+
+        return jsonify({
+            "reply": reply
+        })
 
     except Exception as e:
-        print("ERROR:", e)
-        return jsonify({"reply": str(e)})
+
+        return jsonify({
+            "reply": str(e)
+        })
+
+
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
 def login():
