@@ -1965,31 +1965,17 @@ def ai_response(msg):
 
 #--------leaderboard---------------
 #--------chatbot----------
+
 @app.route("/chat", methods=["POST"])
 def chat():
 
-    data = request.get_json()
-
-    user_message = data.get("message")
-
     try:
 
-        prompt = f"""
-You are a cyber safety AI assistant.
+        data = request.get_json()
 
-Help users with:
-- phishing
-- scams
-- online fraud
-- cyber bullying
-- password safety
-- malware awareness
+        user_message = data.get("message")
 
-User Question:
-{user_message}
-"""
-
-        response = model.generate_content(prompt)
+        response = model.generate_content(user_message)
 
         return jsonify({
             "reply": response.text
@@ -1997,9 +1983,12 @@ User Question:
 
     except Exception as e:
 
+        print("GEMINI ERROR:", e)
+
         return jsonify({
-            "reply": "⚠️ Error connecting to Gemini AI"
+            "reply": f"⚠️ {str(e)}"
         })
+
 
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
