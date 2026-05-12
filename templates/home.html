@@ -461,13 +461,14 @@ async function sendMessage(){
 
     let message = input.value;
 
+    // EMPTY CHECK
     if(message.trim() === ""){
         return;
     }
 
     let chatBox = document.getElementById("chat-box");
 
-    // USER
+    // USER MESSAGE
     chatBox.innerHTML += `
         <div class="user">
             ${message}
@@ -489,20 +490,21 @@ async function sendMessage(){
 
         let response = await fetch("/chat", {
 
-            method:"POST",
+            method: "POST",
 
-            headers:{
-                "Content-Type":"application/json"
+            headers: {
+                "Content-Type": "application/json"
             },
 
-            body:JSON.stringify({
-                message:message
+            body: JSON.stringify({
+                message: message
             })
 
         });
 
         let data = await response.json();
 
+        // REMOVE LOADING
         document.getElementById("loading").remove();
 
         // AI RESPONSE
@@ -518,76 +520,18 @@ async function sendMessage(){
 
     catch(error){
 
+        // REMOVE LOADING
         document.getElementById("loading").remove();
 
+        // ERROR MESSAGE
         chatBox.innerHTML += `
             <div class="ai">
                 Error connecting to AI.
             </div>
         `;
+
     }
 
-}
-
-</script>
-
-    
-async function sendMessage(){
-
-    let input = document.getElementById("msg");
-
-    let message = input.value;
-
-    if(message.trim() === ""){
-        return;
-    }
-
-    let chatBox = document.getElementById("chat-box");
-
-    // USER MESSAGE
-    chatBox.innerHTML += `
-        <div class="user-msg">
-            ${message}
-        </div>
-    `;
-
-    input.value = "";
-
-    // LOADING
-    chatBox.innerHTML += `
-        <div class="ai-msg" id="typing">
-            Typing...
-        </div>
-    `;
-
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    let response = await fetch("/chat", {
-
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-            message: message
-        })
-
-    });
-
-    let data = await response.json();
-
-    document.getElementById("typing").remove();
-
-    // AI MESSAGE
-    chatBox.innerHTML += `
-        <div class="ai-msg">
-            ${data.reply}
-        </div>
-    `;
-
-    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 </script>
