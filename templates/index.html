@@ -128,24 +128,27 @@ window.onload = function(){
 }
 
 </script>
-
 <!-- 🔊 DASHBOARD MUSIC -->
 <audio id="dashboardSound" loop>
+
     <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+
 </audio>
 
 <script>
 
-window.onload = function(){
+// PLAY AFTER FIRST CLICK ANYWHERE
+document.addEventListener("click", function(){
 
     let bg = document.getElementById("dashboardSound");
 
     bg.volume = 0.05;
 
-    bg.play().catch(()=>{});
+    bg.play();
 
-}
+}, {once:true});
 
+</script>
 
 
 
