@@ -4,5 +4,4 @@ werkzeug
 gunicorn
 requests
 deep-translator
-openai
-httpx==0.27.0
+google-generativeai
