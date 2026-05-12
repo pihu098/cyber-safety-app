@@ -476,6 +476,39 @@ function buyChar(emoji, cost){
 }
 </script>  
 
+<script>
+
+function showTips(){
+
+    fetch('/get_tip')
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        let html = "";
+
+        data.tips.forEach(tip => {
+
+            html += "👉 " + tip + "<br><br>";
+
+        });
+
+        document.getElementById("tipsBox").innerHTML = html;
+
+    })
+
+    .catch(error => {
+
+        document.getElementById("tipsBox").innerHTML =
+        "⚠️ Unable to load tips.";
+
+    });
+
+}
+
+</script>        
+
  
 </body>
 </html>
