@@ -1966,29 +1966,6 @@ def ai_response(msg):
 #--------leaderboard---------------
 #--------chatbot----------
 
-@app.route("/chat", methods=["POST"])
-def chat():
-
-    try:
-
-        data = request.get_json()
-
-        user_message = data.get("message")
-
-        response = model.generate_content(user_message)
-
-        return jsonify({
-            "reply": response.text
-        })
-
-    except Exception as e:
-
-        print("GEMINI ERROR:", e)
-
-        return jsonify({
-            "reply": f"⚠️ {str(e)}"
-        })
-
 
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
