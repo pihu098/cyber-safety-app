@@ -79,25 +79,21 @@ a {
 
 </div>
 <!-- 🔊 SOUND -->
-<audio id="clickSound" loop>
+<audio id="bgMusic" loop>
     <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
+// 🔐 LOGIN SOUND
 function handleLogin(){
 
-    let audio = document.getElementById("clickSound");
+    let music = document.getElementById("bgMusic");
 
-    audio.volume = 0.2;
+    music.volume = 0.2;
 
-    // PLAY SOUND
-    audio.play();
+    music.play();
 
-    // SAVE STATE
-    sessionStorage.setItem("sound_on", "yes");
-
-    // LOGIN DELAY
     setTimeout(() => {
 
         document.querySelector("form").submit();
@@ -107,33 +103,27 @@ function handleLogin(){
     return false;
 }
 
-</script>
-    
-<!-- 🔊 DASHBOARD SOUND -->
-<audio id="dashboardMusic" loop>
 
-    <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
+// 🎵 DASHBOARD SOUND
+window.onload = function(){
 
-</audio>
-
-<script>
-
-document.addEventListener("click", function(){
-
-    let music = document.getElementById("dashboardMusic");
+    let music = document.getElementById("bgMusic");
 
     music.volume = 0.05;
 
-    music.play();
+    document.body.addEventListener("click", function(){
 
-}, {once:true});
+        music.play();
+
+    }, {once:true});
+
+}
 
 </script>
-    
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
 
-
+<form onsubmit="return handleLogin()">
     
 </body>
 </html>
