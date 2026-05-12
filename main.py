@@ -8,24 +8,16 @@ from datetime import date, timedelta
 import time
 import requests
 import mysql.connector
-import google.generativeai as genai
+
 import os
-import json
+
 
 os 
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-genai.configure(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
 
-model = genai.GenerativeModel("gemini-1.5-flash")
 
-@app.route("/")
-def home_():
-    return render_template("home.html")
-    
 app.permanent_session_lifetime = timedelta(days=365)  # 1 YEAR LOGIN
 print("🔥 App starting...")
 
