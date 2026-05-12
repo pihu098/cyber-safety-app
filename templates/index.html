@@ -106,26 +106,41 @@ function handleLogin(){
     return false;
 }
 <!-- 🔊 DASHBOARD SOUND -->
-<audio id="dashboardSound" autoplay loop>
+<audio id="dashboardSound" loop>
 
     <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
 
 </audio>
 
+<button onclick="playMusic()" 
+style="
+position:fixed;
+bottom:20px;
+right:20px;
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:#00c6ff;
+color:white;
+cursor:pointer;
+z-index:999;
+">
+🎵 Start Music
+</button>
+
 <script>
 
-window.onload = function(){
+function playMusic(){
 
     let bg = document.getElementById("dashboardSound");
 
     bg.volume = 0.05;
 
-    bg.play().catch(()=>{});
+    bg.play();
 
 }
 
 </script>
-
 
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
