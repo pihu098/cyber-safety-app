@@ -105,37 +105,28 @@ function handleLogin(){
 
     return false;
 }
+<!-- 🔊 DASHBOARD SOUND -->
+<audio id="dashboardSound" autoplay loop>
 
+    <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
 
-// 🎵 PLAY SAME SOUND ON DASHBOARD
+</audio>
+
+<script>
+
 window.onload = function(){
 
-    if(sessionStorage.getItem("sound_on") === "yes"){
-
-        let bg = document.getElementById("clickSound");
-
-        bg.volume = 0.05;
-
-        bg.play().catch(()=>{});
-
-    }
-
-}
-
-
-// 🔥 Browser autoplay fix
-document.addEventListener("click", function(){
-
-    let bg = document.getElementById("clickSound");
+    let bg = document.getElementById("dashboardSound");
 
     bg.volume = 0.05;
 
-    bg.play();
+    bg.play().catch(()=>{});
 
-}, {once:true});
+}
 
 </script>
-    
+
+
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
 
