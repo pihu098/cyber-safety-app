@@ -8,7 +8,7 @@ from datetime import date, timedelta
 import time
 import requests
 import mysql.connector
-from openai import OpenAI
+import google.generativeai as genai
 import os
 import json
 
@@ -16,10 +16,16 @@ os
 app = Flask(__name__)
 app.secret_key = "secret123"
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
+genai.configure(
+    api_key=os.getenv("GEMINI_API_KEY")
 )
 
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+@app.route("/")
+def home_():
+    return render_template("home.html")
+    
 app.permanent_session_lifetime = timedelta(days=365)  # 1 YEAR LOGIN
 print("🔥 App starting...")
 
@@ -1968,34 +1974,32 @@ def chat():
 
     try:
 
-        response = client.chat.completions.create(
-            model="gpt-4.1-mini",
+        prompt = f"""
+You are a cyber safety AI assistant.
 
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a helpful cyber safety AI assistant."
-                },
+Help users with:
+- phishing
+- scams
+- online fraud
+- cyber bullying
+- password safety
+- malware awareness
 
-                {
-                    "role": "user",
-                    "content": user_message
-                }
-            ]
-        )
+User Question:
+{user_message}
+"""
 
-        reply = response.choices[0].message.content
+        response = model.generate_content(prompt)
 
         return jsonify({
-            "reply": reply
+            "reply": response.text
         })
 
     except Exception as e:
 
         return jsonify({
-            "reply": str(e)
+            "reply": "⚠️ Error connecting to Gemini AI"
         })
-
 
 # ---------------- LOGIN --------------
 @app.route('/login', methods=['GET', 'POST'])
