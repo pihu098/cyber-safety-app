@@ -322,18 +322,127 @@ body {
     <p><a href="tel:102">🚑 Ambulance: 102</a></p>
     <p><a href="tel:1930">💻 Cyber Crime: 1930</a></p>
 
-<div class="ai-chat-box">
 
-    <h2>Cyber Safety AI</h2>
+ <title>Cyber Safety AI</title>
 
-    <div id="chat-box"></div>
+<style>
 
-    <div class="chat-input-area">
+body{
+
+    background:#0f172a;
+
+    font-family:Arial;
+
+    color:white;
+
+    margin:0;
+}
+
+.container{
+
+    width:90%;
+
+    max-width:600px;
+
+    margin:30px auto;
+}
+
+.chat-box{
+
+    background:#111827;
+
+    height:350px;
+
+    overflow-y:auto;
+
+    padding:15px;
+
+    border-radius:15px;
+}
+
+.user{
+
+    background:#2563eb;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    margin:10px 0;
+
+    text-align:right;
+}
+
+.ai{
+
+    background:#1f2937;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    margin:10px 0;
+}
+
+.input-area{
+
+    display:flex;
+
+    margin-top:15px;
+
+    gap:10px;
+}
+
+input{
+
+    flex:1;
+
+    padding:12px;
+
+    border:none;
+
+    border-radius:10px;
+}
+
+button{
+
+    padding:12px 20px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Cyber Safety AI</h1>
+
+    <div class="chat-box" id="chat-box">
+
+        <div class="ai">
+            Hello 👋 Ask me about cyber safety.
+        </div>
+
+    </div>
+
+    <div class="input-area">
 
         <input 
             type="text" 
-            id="msg" 
-            placeholder="Ask anything about cyber safety..."
+            id="msg"
+            placeholder="Ask something..."
         >
 
         <button onclick="sendMessage()">
@@ -344,113 +453,85 @@ body {
 
 </div>
 
-
-<style>
-
-.ai-chat-box{
-
-    width: 90%;
-    max-width: 700px;
-
-    margin: 40px auto;
-
-    background: #111;
-
-    border-radius: 15px;
-
-    padding: 20px;
-
-    color: white;
-
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
-
-.ai-chat-box h2{
-
-    text-align: center;
-
-    margin-bottom: 20px;
-}
-
-#chat-box{
-
-    height: 400px;
-
-    overflow-y: auto;
-
-    background: #1b1b1b;
-
-    padding: 15px;
-
-    border-radius: 10px;
-
-    margin-bottom: 15px;
-}
-
-.user-msg{
-
-    background: #2563eb;
-
-    padding: 10px;
-
-    border-radius: 10px;
-
-    margin: 10px 0;
-
-    text-align: right;
-}
-
-.ai-msg{
-
-    background: #333;
-
-    padding: 10px;
-
-    border-radius: 10px;
-
-    margin: 10px 0;
-}
-
-.chat-input-area{
-
-    display: flex;
-
-    gap: 10px;
-}
-
-.chat-input-area input{
-
-    flex: 1;
-
-    padding: 12px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    outline: none;
-}
-
-.chat-input-area button{
-
-    padding: 12px 20px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #2563eb;
-
-    color: white;
-
-    cursor: pointer;
-}
-
-</style>
-
-
 <script>
 
+async function sendMessage(){
+
+    let input = document.getElementById("msg");
+
+    let message = input.value;
+
+    if(message.trim() === ""){
+        return;
+    }
+
+    let chatBox = document.getElementById("chat-box");
+
+    // USER
+    chatBox.innerHTML += `
+        <div class="user">
+            ${message}
+        </div>
+    `;
+
+    input.value = "";
+
+    // LOADING
+    chatBox.innerHTML += `
+        <div class="ai" id="loading">
+            Typing...
+        </div>
+    `;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    try{
+
+        let response = await fetch("/chat", {
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                message:message
+            })
+
+        });
+
+        let data = await response.json();
+
+        document.getElementById("loading").remove();
+
+        // AI RESPONSE
+        chatBox.innerHTML += `
+            <div class="ai">
+                ${data.reply}
+            </div>
+        `;
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+    }
+
+    catch(error){
+
+        document.getElementById("loading").remove();
+
+        chatBox.innerHTML += `
+            <div class="ai">
+                Error connecting to AI.
+            </div>
+        `;
+    }
+
+}
+
+</script>
+
+    
 async function sendMessage(){
 
     let input = document.getElementById("msg");
