@@ -113,22 +113,36 @@ function handleLogin(){
 }
 
 
-// 🎵 AUTO PLAY AFTER FIRST CLICK
-window.onload = function(){
+// 🎵 DASHBOARD MUSIC BUTTON
+function startMusic(){
 
     let music = document.getElementById("bgMusic");
 
     music.volume = 0.05;
 
-    document.body.addEventListener("click", function(){
-
-        music.play();
-
-    }, {once:true});
+    music.play();
 
 }
 
 </script>
+
+
+<!-- 🎵 MUSIC BUTTON -->
+<button onclick="startMusic()" 
+style="
+position:fixed;
+bottom:20px;
+right:20px;
+padding:10px 20px;
+border:none;
+border-radius:10px;
+background:#00c6ff;
+color:white;
+cursor:pointer;
+z-index:999;
+">
+🎵 Music
+</button>
 
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
