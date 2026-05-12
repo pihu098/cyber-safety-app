@@ -78,7 +78,7 @@ a {
 </a>
 
 </div>
-<!-- 🔊 LOGIN + DASHBOARD SOUND -->
+<!-- 🔊 SOUND -->
 <audio id="clickSound" loop>
     <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
 </audio>
@@ -91,13 +91,14 @@ function handleLogin(){
 
     audio.volume = 0.2;
 
+    // PLAY SOUND
     audio.play();
 
-    // 🔥 save state
+    // SAVE STATE
     sessionStorage.setItem("sound_on", "yes");
 
-    // ⏳ delay before login
-    setTimeout(()=>{
+    // LOGIN DELAY
+    setTimeout(() => {
 
         document.querySelector("form").submit();
 
@@ -105,43 +106,36 @@ function handleLogin(){
 
     return false;
 }
-<!-- 🔊 DASHBOARD SOUND -->
-<audio id="dashboardSound" loop>
 
-    <source src="/static/sounds/ribhavagrawal-a-savage-hackerbass-boosted-199368.mp3" type="audio/mpeg">
 
-</audio>
+// 🔥 AUTO PLAY ON DASHBOARD
+window.onload = function(){
 
-<button onclick="playMusic()" 
-style="
-position:fixed;
-bottom:20px;
-right:20px;
-padding:10px 20px;
-border:none;
-border-radius:10px;
-background:#00c6ff;
-color:white;
-cursor:pointer;
-z-index:999;
-">
-🎵 Start Music
-</button>
+    if(sessionStorage.getItem("sound_on") === "yes"){
 
-<script>
+        let bg = document.getElementById("clickSound");
 
-function playMusic(){
+        bg.volume = 0.05;
 
-    let bg = document.getElementById("dashboardSound");
+        bg.play().catch(() => {});
+
+    }
+
+}
+
+
+// 🔥 BROWSER AUTOPLAY FIX
+document.addEventListener("click", function(){
+
+    let bg = document.getElementById("clickSound");
 
     bg.volume = 0.05;
 
     bg.play();
 
-}
+}, {once:true});
 
 </script>
-
 <!-- 📊 Result Box -->
 <div id="resultBox"></div>
 
