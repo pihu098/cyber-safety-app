@@ -4,4 +4,3 @@ werkzeug
 gunicorn
 requests
 deep-translator
-google-generativeai
