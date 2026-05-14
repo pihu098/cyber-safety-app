@@ -184,7 +184,7 @@ WORD_PUZZLES = [
         ["C","D","E","F","G","H","R","I","J","K"],
         ["L","M","N","O","P","Q","R","A","S","T"],
         ["U","V","W","X","Y","Z","A","M","M","C"],
-        ["K","A","L","I","L","I","N",U","X","L"]
+        ["K","A","L","I","L","I","N","U","X","L"]
     ],
 
     "words": ["instagram", "kalilinux", "spam"],
