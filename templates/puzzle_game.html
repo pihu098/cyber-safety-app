@@ -4,27 +4,31 @@
 <title>Cyber Puzzle Learning</title>
 
 <style>
+
 body {
     font-family: Arial;
     background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
     color: white;
     text-align: center;
+    margin: 0;
+    padding: 15px;
 }
 
 .card {
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     margin: auto;
-    margin-top: 60px;
+    margin-top: 30px;
     background: rgba(255,255,255,0.1);
-    padding: 25px;
+    padding: 20px;
     border-radius: 15px;
     backdrop-filter: blur(10px);
 }
 
 button {
-    width: 90%;
+    width: 95%;
     padding: 12px;
-    margin: 8px;
+    margin: 8px 0;
     border: none;
     border-radius: 10px;
     background: #00c6ff;
@@ -34,11 +38,12 @@ button {
 }
 
 input {
-    width: 90%;
-    padding: 10px;
+    width: 92%;
+    padding: 12px;
     border-radius: 8px;
     border: none;
     margin-top: 10px;
+    font-size: 16px;
 }
 
 .progress {
@@ -58,6 +63,32 @@ input {
     color: #ff4d4d;
     font-size: 18px;
 }
+
+#wordBox button{
+    width:auto;
+    padding:10px 15px;
+    margin:5px;
+}
+
+@media(max-width:600px){
+
+    h2{
+        font-size:22px;
+    }
+
+    h3{
+        font-size:18px;
+    }
+
+    button{
+        font-size:15px;
+    }
+
+    input{
+        font-size:15px;
+    }
+}
+
 </style>
 </head>
 
