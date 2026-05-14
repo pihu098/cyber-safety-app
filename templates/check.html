@@ -13,5 +13,28 @@
     <button type="submit" style="padding:10px 20px;">Scan Website</button>
 </form>
 
+    
+<audio id="resultSound" autoplay>
+    <source src="/static/sounds/mm.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+window.addEventListener("load", function () {
+
+    let sound = document.getElementById("resultSound");
+
+    if(sound){
+
+        sound.volume = 0.2;
+
+        sound.play().catch(()=>{});
+
+    }
+
+});
+
+</script>
+    
 </body>
 </html>
