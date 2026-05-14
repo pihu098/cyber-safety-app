@@ -509,6 +509,28 @@ function showTips(){
 
 </script>        
 
+<audio id="bgMusic" loop>
+    <source src="/static/sounds/dashboard.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+document.addEventListener("click", function () {
+
+    let music = document.getElementById("bgMusic");
+
+    if (music) {
+
+        music.volume = 0.15;
+
+        music.play().catch(()=>{});
+
+    }
+
+}, { once: true });
+
+</script>    
+        
  
 </body>
 </html>
