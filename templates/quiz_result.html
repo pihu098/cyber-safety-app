@@ -22,6 +22,26 @@ body { font-family: Arial; background:#0f2027; color:white; text-align:center; }
 {% endfor %}
 
 <a href="/home"><button>Back</button></a>
+<audio id="bgMusic" loop>
+    <source src="/static/sounds/result.wav.mp3" type="audio/mp3">
+</audio>
 
+<script>
+
+document.addEventListener("click", function () {
+
+    let music = document.getElementById("bgMusic");
+
+    if (music) {
+
+        music.volume = 0.12;
+
+        music.play().catch(()=>{});
+
+    }
+
+}, { once: true });
+
+</script>    
 </body>
 </html>
