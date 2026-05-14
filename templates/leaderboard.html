@@ -57,5 +57,26 @@ th, td {
     <button>⬅ Back</button>
 </a>    
 
+<audio id="bgMusic" loop>
+    <source src="/static/sounds/win sound.wav.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+document.addEventListener("click", function () {
+
+    let music = document.getElementById("bgMusic");
+
+    if (music) {
+
+        music.volume = 0.15;
+
+        music.play().catch(()=>{});
+
+    }
+
+}, { once: true });
+
+</script>    
 </body>
 </html>
