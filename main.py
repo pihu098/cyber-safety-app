@@ -51,7 +51,7 @@ WORD_PUZZLES = [
         ["O","P","Q","D","E","B","U","G"],
         ["R","S","T","U","V","W","X","Y"],
         ["Z","A","P","P","L","I","C","B"],
-        ["S","E","R","V","E","R","D","E"],
+        ["S","E","R","V","F","R","D","E"],
         ["F","G","H","I","J","K","L","M"]
     ],
 
@@ -111,12 +111,12 @@ WORD_PUZZLES = [
         ["A","B","C","D","E","F","G","H","I","J"],
         ["K","P","L","M","N","O","P","Q","R","S"],
         ["T","U","H","V","W","X","Y","Z","A","B"],
-        ["C","D","E","I","F","G","H","I","J","K"],
-        ["L","M","N","S","S","O","C","I","A","L"],
-        ["P","Q","R","H","T","S","U","R","V","W"],
-        ["X","Y","Z","I","A","B","C","D","E","F"],
-        ["G","H","I","N","C","Y","B","E","R","J"],
-        ["K","L","M","G","K","L","M","N","O","P"],
+        ["C","D","A","I","F","G","H","I","J","K"],
+        ["L","M","C","S","S","O","C","I","A","L"],
+        ["P","Q","K","H","T","H","U","R","V","W"],
+        ["X","Y","E","I","A","B","I","D","E","F"],
+        ["G","H","R","N","C","Y","B","N","R","J"],
+        ["K","L","S","G","K","L","M","N","G","P"],
         ["Q","R","S","T","A","C","K","E","R","S"]
     ],
 
@@ -134,11 +134,11 @@ WORD_PUZZLES = [
         ["K","M","L","N","O","P","Q","R","S","T"],
         ["U","A","V","W","X","Y","Z","A","B","C"],
         ["D","L","E","F","G","H","I","J","K","L"],
-        ["M","W","N","I","F","I","R","E","W","A"],
+        ["M","W","F","I","R","E","W","A","L",,"L"],
         ["O","A","P","R","Q","R","S","T","U","L"],
         ["V","R","W","U","X","Y","Z","A","B","L"],
         ["C","E","D","S","E","C","U","R","E","E"],
-        ["F","G","H","T","I","J","K","L","M","T"],
+        ["F","G","H","V","I","R","U","S","M","T"],
         ["N","O","P","Q","R","S","T","U","V","W"]
     ],
 
@@ -154,11 +154,11 @@ WORD_PUZZLES = [
     "letters": [
         ["A","B","C","D","E","F","G","H","I","J"],
         ["K","S","L","M","N","O","P","Q","R","S"],
-        ["T","P","U","V","W","X","Y","Z","A","B"],
-        ["C","A","D","E","F","G","H","I","J","K"],
-        ["L","M","M","N","O","P","Q","R","S","T"],
-        ["U","V","E","W","X","Y","Z","A","B","C"],
-        ["D","E","R","F","G","H","I","J","K","L"],
+        ["T","P","U","V","C","X","Y","Z","A","B"],
+        ["C","A","D","E","R","G","H","I","J","K"],
+        ["L","M","M","N","Y","P","Q","R","S","T"],
+        ["U","V","E","W","P","Y","Z","A","B","C"],
+        ["D","E","R","F","O","H","I","J","K","L"],
         ["M","N","P","A","S","S","W","O","R","D"],
         ["Q","R","T","S","U","V","W","X","Y","Z"],
         ["A","B","C","E","N","C","R","Y","P","T"]
@@ -178,13 +178,13 @@ WORD_PUZZLES = [
         ["I","A","B","C","D","E","F","G","H","I"],
         ["J","N","K","L","M","N","O","P","Q","R"],
         ["S","T","S","U","V","W","X","Y","Z","A"],
-        ["B","C","D","T","E","F","G","H","I","J"],
-        ["K","L","M","N","A","O","P","Q","R","S"],
-        ["T","U","V","W","X","G","Y","Z","A","B"],
+        ["P","C","D","T","E","F","G","H","I","J"],
+        ["A","L","M","N","A","O","P","Q","R","S"],
+        ["M","U","V","W","X","G","Y","Z","A","B"],
         ["C","D","E","F","G","H","R","I","J","K"],
         ["L","M","N","O","P","Q","R","A","S","T"],
-        ["U","V","W","X","Y","Z","A","M","B","C"],
-        ["D","E","F","G","H","I","J","K","P","L"]
+        ["U","V","W","X","Y","Z","A","M","M","C"],
+        ["K","A","L","I","L","I","N",U","X","L"]
     ],
 
     "words": ["instagram", "kalilinux", "spam"],
@@ -275,14 +275,14 @@ WORD_PUZZLES = [
 
 {
     "letters": [
-        ["D","E","C","R","Y","P","T","A"],
-        ["B","C","D","E","F","G","H","I"],
-        ["I","N","T","E","G","R","I","T"],
-        ["J","K","L","M","N","O","P","Y"],
-        ["V","A","L","I","D","Q","R","S"],
-        ["T","U","V","W","X","Y","Z","A"],
-        ["A","U","T","F","E","N","T","I"],
-        ["B","C","D","E","F","G","H","C"]
+        ["D","E","C","R","Y","P","T","A","F"],
+        ["B","C","D","E","F","G","H","I","S"],
+        ["I","N","T","E","G","R","I","T","Y"],
+        ["J","K","L","M","N","O","P","Y","K"],
+        ["V","A","L","I","D","Q","R","S","I"],
+        ["T","U","V","W","X","Y","Z","A","H"],
+        ["A","U","T","F","E","N","T","I","H"],
+        ["B","C","D","E","F","G","H","C","H"]
     ],
 
     "words": ["decrypt", "integrity", "valid"],
@@ -302,7 +302,7 @@ WORD_PUZZLES = [
         ["N","O","P","Q","R","S","T","U"],
         ["D","E","F","E","N","D","V","W"],
         ["X","Y","Z","A","B","C","D","E"],
-        ["M","A","D","W","A","R","E","F"],
+        ["M","A","D","W","O","R","E","F"],
         ["G","H","I","J","K","L","M","N"]
     ],
 
@@ -357,11 +357,11 @@ WORD_PUZZLES = [
     "letters": [
     ["F","I","R","E","S","Y","S","T","E","M"],
     ["D","G","T","A","S","Z","C","U","R","E"],
-    ["B","R","O","W","S","E","R","X","Y","Z"],
+    ["B","R","O","W","T","E","R","X","Y","Z"],
     ["A","L","G","O","R","I","T","H","M","A"],
     ["C","O","D","X","R","P","Q","R","S","T"],
-    ["D","E","B","S","G","G","I","N","G","H"],
-    ["N","E","T","W","M","R","K","L","M","N"]
+    ["D","E","B","U","G","G","I","N","G","H"],
+    ["N","E","T","W","M","R","O","L","M","N"]
   ],
   "words": ["fire system", "algorithm", "debugging"],
   "hints": {
@@ -390,17 +390,17 @@ WORD_PUZZLES = [
 {
     "letters": [
     ["E","N","C","R","Y","P","T","I","O","N"],
-    ["D","E","C","O","D","E","R","A","B","C"],
-    ["A","U","T","H","E","N","T","I","C","A"],
+    ["D","E","C","A","D","E","R","A","B","C"],
+    ["A","U","T","H","E","N","T","I","O","A"],
     ["P","R","O","T","O","C","O","L","D","E"],
-    ["S","E","R","V","I","C","E","X","Y","Z"],
+    ["S","E","R","V","E","R","E","X","Y","Z"],
     ["C","Y","B","E","R","S","D","C","U","R"],
     ["T","R","A","F","F","I","S","N","O","P"]
   ],
-  "words": ["encryption", "authentication", "protocol"],
+  "words": ["encryption", "server", "protocol"],
   "hints": {
     "encryption": "Securing data",
-    "authentication": "Verifying identity",
+    "authentication": "provide service",
     "protocol": "Rules for communication"
   }
 },
@@ -410,9 +410,9 @@ WORD_PUZZLES = [
     ["C","P","U","P","R","O","C","E","S","S"],
     ["G","R","A","P","H","I","C","S","A","B"],
     ["D","R","I","V","D","R","S","C","D","E"],
-    ["O","P","E","R","A","T","I","N","G","F"],
-    ["S","Y","S","T","E","M","X","Y","Z","Q"],
-    ["H","A","R","D","W","A","R","E","P","L"]
+    ["O","P","E","R","H","T","I","N","G","F"],
+    ["S","Y","S","V","E","M","X","Y","Z","Q"],
+    ["H","A","R","D","F","A","R","E","P","L"]
   ],
   "words": ["memory", "process", "graphics"],
   "hints": {
@@ -512,32 +512,39 @@ WORD_PUZZLES = [
 }
 
 ]
-
-
 @app.route('/jumble')
 def jumble():
 
     if 'jumble_level' not in session:
+
         session['jumble_level'] = 0
         session['jumble_lives'] = 5
         session['jumble_found'] = []
         session['coins'] = 50
 
-    level = session['jumble_level']
+    level = session.get('jumble_level', 0)
 
     if level >= len(WORD_PUZZLES):
-        level = 0
+
         session['jumble_level'] = 0
+        level = 0
 
     game = WORD_PUZZLES[level]
 
     return render_template(
+
         "jumble_game.html",
+
         grid=game['letters'],
+
         total_words=len(game['words']),
+
         found=session.get('jumble_found', []),
-        lives=session['jumble_lives'],
-        coins=session['coins']
+
+        lives=session.get('jumble_lives', 5),
+
+        coins=session.get('coins', 0)
+
     )
 
 
@@ -546,51 +553,10 @@ def jumble_restart():
 
     session['jumble_lives'] = 5
     session['jumble_found'] = []
+
     return redirect('/jumble')
 
-@app.route('/wordsearch/hint')
-def wordsearch_hint():
 
-    level = session['ws_level']
-
-    game = WORD_SEARCH[level]
-
-    found = session.get('ws_found', [])
-
-    coins = session.get('coins', 0)
-
-    # ❌ not enough coins
-    if coins < 30:
-
-        return {
-            "result":"nocoin"
-        }
-
-    # 🔥 remaining hidden words
-    remaining_words = []
-
-    for w in game['words']:
-
-        if w not in found:
-            remaining_words.append(w)
-
-    # 🎉 all found
-    if not remaining_words:
-
-        return {
-            "result":"done"
-        }
-
-    # 💰 remove coins
-    session['coins'] -= 30
-
-    # 🎯 random hint word
-    hint_word = random.choice(remaining_words)
-
-    return {
-        "result":"success",
-        "word":hint_word
-    }
 @app.route('/jumble/check', methods=['POST'])
 def jumble_check():
 
@@ -602,7 +568,6 @@ def jumble_check():
 
     game = WORD_PUZZLES[level]
 
-    # ✅ SINGLE SESSION VARIABLE
     found = session.get("jumble_found", [])
 
     # ✅ CORRECT
@@ -614,7 +579,9 @@ def jumble_check():
 
         session["coins"] = session.get("coins", 0) + 5
 
-        # 🎉 LEVEL COMPLETE
+        session.modified = True
+
+        # 🎉 ALL WORDS FOUND
         if len(found) == len(game['words']):
 
             session['jumble_level'] += 1
@@ -622,14 +589,21 @@ def jumble_check():
             session["jumble_found"] = []
 
             return {
+
                 "result": "win",
+
                 "coins": session["coins"]
+
             }
 
         return {
+
             "result": "correct",
+
             "found": found,
+
             "coins": session["coins"]
+
         }
 
     # ❌ WRONG
@@ -641,20 +615,31 @@ def jumble_check():
 
         session['jumble_lives'] = lives
 
+        session.modified = True
+
         # 💀 GAME OVER
         if lives <= 0:
 
             session['jumble_lives'] = 5
+
             session["jumble_found"] = []
 
+            session.modified = True
+
             return {
+
                 "result": "gameover"
+
             }
 
         return {
+
             "result": "wrong",
+
             "lives": lives
+
         }
+
 
 @app.route('/jumble/hint')
 def jumble_hint():
@@ -665,26 +650,45 @@ def jumble_hint():
 
     found = session.get('jumble_found', [])
 
-    remaining = [w for w in game['words'] if w not in found]
+    remaining = [
+
+        w for w in game['words']
+
+        if w not in found
+
+    ]
 
     if session.get('coins', 0) < 5:
+
         return {
-            "error": "Not enough coins"
+
+            "error": "❌ Not enough coins"
+
         }
 
     if not remaining:
+
         return {
-            "error": "No words left"
+
+            "error": "✅ All words completed"
+
         }
 
     word = random.choice(remaining)
 
     session['coins'] -= 5
 
+    session.modified = True
+
     return {
+
         "hint": game['hints'][word],
+
         "coins": session['coins']
+
     }
+
+
     
 @app.route('/set_mode/<mode>')
 def set_mode(mode):
